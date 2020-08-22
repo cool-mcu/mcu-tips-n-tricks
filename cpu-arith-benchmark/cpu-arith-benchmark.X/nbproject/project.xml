@@ -23,7 +23,15 @@
                     <type>2</type>
                 </confElem>
                 <confElem>
+                    <name>dsPIC33EP256GP502</name>
+                    <type>2</type>
+                </confElem>
+                <confElem>
                     <name>PIC32MX170F256B</name>
+                    <type>2</type>
+                </confElem>
+                <confElem>
+                    <name>PIC32MZ1024EFH064</name>
                     <type>2</type>
                 </confElem>
             </confList>

@@ -3,15 +3,15 @@
  * 
  * File:        main.c
  * Project:     cpu-arith-benchmark
- * Compiler:    XC8 v2.20, XC16 v1.50, XC32 v2.41
+ * Compiler:    XC8 v2.20, XC16 v1.60, XC32 v2.41
  * Course:      MCU Tips n' Tricks
  * URL:         https://www.cool-mcu.com/courses/mcu-tips-n-tricks
  * Chapter:     Hardware Tips n Tricks
  * Lesson:      Selecting a Microcontroller
  * 
- * Simple project which uses the simulator stopwatch feature to display
- * cycle-counts for common arithmetic operations on PIC16F1, PIC24F, PIC32MX and
- * PIC32MZ-based MCUs
+ * Project uses the simulator stopwatch feature to display
+ * cycle-counts for common arithmetic operations on PIC16F1, PIC24F, dsPIC33E, 
+ * PIC32MX and PIC32MZ-based MCUs
  * 
  * SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
  * EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
@@ -33,6 +33,7 @@ int16_t g;
 int32_t d, e, f;
 int64_t h;
 float i, j, k;
+double l, m, n;
 
 // Local Function Prototypes
 int8_t sum8(int8_t a, int8_t b);            // 8-bit integer addition
@@ -55,6 +56,10 @@ int main(void) {
   i = 6.0;
   j = -7.125;
   k = i*j;
+  
+  l = 6.0;
+  m = -7.125;
+  n = l*m;
   
   while(1);
   

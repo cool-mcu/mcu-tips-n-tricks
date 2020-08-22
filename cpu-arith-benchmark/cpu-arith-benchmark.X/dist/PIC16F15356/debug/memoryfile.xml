@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <executable name="dist/PIC16F15356/debug/datapath-example.X.debug.hex">
+  <executable name="dist/PIC16F15356/debug/cpu-arith-benchmark.X.debug.hex">
     <memory name="program">
       <units>words</units>
       <length>16384</length>
-      <used>965</used>
-      <free>15419</free>
+      <used>1009</used>
+      <free>15375</free>
     </memory>
     <memory name="data">
       <units>bytes</units>
       <length>2048</length>
-      <used>76</used>
-      <free>1972</free>
+      <used>88</used>
+      <free>1960</free>
     </memory>
   </executable>
 </project>

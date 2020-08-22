@@ -10,9 +10,9 @@ CND_CONF=PIC24FJ256GA702
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/datapath-example.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=datapath-example.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=datapath-example.x/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/cpu-arith-benchmark.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=cpu-arith-benchmark.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=cpu-arith-benchmark.x/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/datapath-example.x/bin
+makeDirectory ${TMPDIR}/cpu-arith-benchmark.x/bin
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/datapath-example.x.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/cpu-arith-benchmark.x.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/datapath-example.x.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/cpu-arith-benchmark.x.tar *
 checkReturnCode
 
 # Cleanup

@@ -7,6 +7,7 @@
 # 1 "/Applications/microchip/mplabx/v5.40/packs/Microchip/PIC16F1xxxx_DFP/1.4.119/xc8/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "main.c" 2
+# 27 "main.c"
 # 1 "/Applications/microchip/mplabx/v5.40/packs/Microchip/PIC16F1xxxx_DFP/1.4.119/xc8/pic/include/xc.h" 1 3
 # 18 "/Applications/microchip/mplabx/v5.40/packs/Microchip/PIC16F1xxxx_DFP/1.4.119/xc8/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -12385,7 +12386,7 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 28 "/Applications/microchip/mplabx/v5.40/packs/Microchip/PIC16F1xxxx_DFP/1.4.119/xc8/pic/include/xc.h" 2 3
-# 1 "main.c" 2
+# 27 "main.c" 2
 
 # 1 "/Applications/microchip/xc8/v2.20/pic/include/c99/stdint.h" 1 3
 # 22 "/Applications/microchip/xc8/v2.20/pic/include/c99/stdint.h" 3
@@ -12469,7 +12470,7 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 140 "/Applications/microchip/xc8/v2.20/pic/include/c99/stdint.h" 2 3
-# 2 "main.c" 2
+# 28 "main.c" 2
 
 
 
@@ -12478,6 +12479,7 @@ int16_t g;
 int32_t d, e, f;
 int64_t h;
 float i, j, k;
+double l, m, n;
 
 
 int8_t sum8(int8_t a, int8_t b);
@@ -12500,6 +12502,10 @@ int main(void) {
   i = 6.0;
   j = -7.125;
   k = i*j;
+
+  l = 6.0;
+  m = -7.125;
+  n = l*m;
 
   while(1);
 

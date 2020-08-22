@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <project>                                  
-  <executable name="dist/PIC32MX170F256B/debug/datapath-example.X.debug.elf">                 
+  <executable name="dist/PIC32MX170F256B/debug/cpu-arith-benchmark.X.debug.elf">                 
     <memory name="program">                 
       <units>bytes</units>                 
       <length>263312</length>                 
-      <used>2528</used>                     
-      <free>260784</free>                     
+      <used>3436</used>                     
+      <free>259876</free>                     
     </memory>                              
     <memory name="data">              
       <units>bytes</units>                 
       <length>65536</length>                 
-      <used>560</used>                     
-      <free>64976</free>                     
+      <used>584</used>                     
+      <free>64952</free>                     
     </memory>                              
   </executable>                            
 </project>                                 
