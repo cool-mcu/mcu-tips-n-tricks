@@ -1,0 +1,9 @@
+v2020-08-29
+
+"PIC32MZ2048EFM144_CURIOSITY2"
+
+Workaround for "No Tool" in Project Properties
+
+From https://www.microchip.com/forums/m1147128.aspx
+
+I put in a support ticket for this -  This is a bug in MPLAB X. To work around this, Select "No Tool" as the programmer/debugger. Then in MPLAB X choose the either "Make and Program device" or "Debug", You'll be asked for a list of tools again, this time Curiosity Starter Kits PKOB 4 will be available, select it and it will connect - however in Project properties it still remains "No tool" - but still connects to the Curiosity board. (I have commented on another post with same info)

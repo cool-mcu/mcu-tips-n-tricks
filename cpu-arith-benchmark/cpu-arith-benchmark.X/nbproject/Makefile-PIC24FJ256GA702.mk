@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c
+SOURCEFILES_QUOTED_IF_SPACED=main.c pic32_init_cache.S
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/pic32_init_cache.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/pic32_init_cache.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o
+OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/pic32_init_cache.o
 
 # Source Files
-SOURCEFILES=main.c
+SOURCEFILES=main.c pic32_init_cache.S
 
 
 
@@ -121,7 +121,21 @@ endif
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemblePreproc
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+${OBJECTDIR}/pic32_init_cache.o: pic32_init_cache.S  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/pic32_init_cache.o.d 
+	@${RM} ${OBJECTDIR}/pic32_init_cache.o 
+	${MP_CC} $(MP_EXTRA_AS_PRE)  pic32_init_cache.S  -o ${OBJECTDIR}/pic32_init_cache.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/pic32_init_cache.o.d"  -D__DEBUG -D__MPLAB_DEBUGGER_SIMULATOR=1  -omf=elf -fast-math -DXPRJ_PIC24FJ256GA702=$(CND_CONF)  -legacy-libc  -Wa,-MD,"${OBJECTDIR}/pic32_init_cache.o.asm.d",--defsym=__MPLAB_BUILD=1,--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_SIMULATOR=1,-g,--no-relax$(MP_EXTRA_AS_POST)  -mdfp="${DFP_DIR}/xc16"
+	@${FIXDEPS} "${OBJECTDIR}/pic32_init_cache.o.d" "${OBJECTDIR}/pic32_init_cache.o.asm.d"  -t $(SILENT)  -rsi ${MP_CC_DIR}../  
+	
 else
+${OBJECTDIR}/pic32_init_cache.o: pic32_init_cache.S  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/pic32_init_cache.o.d 
+	@${RM} ${OBJECTDIR}/pic32_init_cache.o 
+	${MP_CC} $(MP_EXTRA_AS_PRE)  pic32_init_cache.S  -o ${OBJECTDIR}/pic32_init_cache.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/pic32_init_cache.o.d"  -omf=elf -fast-math -DXPRJ_PIC24FJ256GA702=$(CND_CONF)  -legacy-libc  -Wa,-MD,"${OBJECTDIR}/pic32_init_cache.o.asm.d",--defsym=__MPLAB_BUILD=1,-g,--no-relax$(MP_EXTRA_AS_POST)  -mdfp="${DFP_DIR}/xc16"
+	@${FIXDEPS} "${OBJECTDIR}/pic32_init_cache.o.d" "${OBJECTDIR}/pic32_init_cache.o.asm.d"  -t $(SILENT)  -rsi ${MP_CC_DIR}../  
+	
 endif
 
 # ------------------------------------------------------------------------------------
