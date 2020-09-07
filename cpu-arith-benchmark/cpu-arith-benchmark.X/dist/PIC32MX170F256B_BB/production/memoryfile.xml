@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<project>                                  
+  <executable name="dist/PIC32MX170F256B_BB/production/cpu-arith-benchmark.X.production.elf">                 
+    <memory name="program">                 
+      <units>bytes</units>                 
+      <length>263312</length>                 
+      <used>13012</used>                     
+      <free>250300</free>                     
+    </memory>                              
+    <memory name="data">              
+      <units>bytes</units>                 
+      <length>65536</length>                 
+      <used>496</used>                     
+      <free>65040</free>                     
+    </memory>                              
+  </executable>                            
+</project>                                 

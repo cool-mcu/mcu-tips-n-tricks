@@ -15,39 +15,15 @@
             <sourceRootList/>
             <confList>
                 <confElem>
-                    <name>PIC16F15356</name>
-                    <type>2</type>
-                </confElem>
-                <confElem>
                     <name>PIC16LF15356_BB</name>
                     <type>2</type>
                 </confElem>
                 <confElem>
-                    <name>PIC16F15376_CNANO</name>
-                    <type>2</type>
-                </confElem>
-                <confElem>
-                    <name>PIC24FJ256GA702</name>
-                    <type>2</type>
-                </confElem>
-                <confElem>
-                    <name>dsPIC33EP256GP502</name>
-                    <type>2</type>
-                </confElem>
-                <confElem>
-                    <name>PIC32MX170F256B</name>
-                    <type>2</type>
-                </confElem>
-                <confElem>
-                    <name>PIC32MZ1024EFH064</name>
+                    <name>PIC24FJ256GA702_BB</name>
                     <type>2</type>
                 </confElem>
                 <confElem>
                     <name>PIC32MZ1024EFH064_MINI32_BB</name>
-                    <type>2</type>
-                </confElem>
-                <confElem>
-                    <name>PIC32MZ2048EFM144_CURIOSITY2</name>
                     <type>2</type>
                 </confElem>
             </confList>
