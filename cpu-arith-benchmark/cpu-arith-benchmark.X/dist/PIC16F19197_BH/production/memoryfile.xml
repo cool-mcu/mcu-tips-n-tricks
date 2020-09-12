@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <executable name="dist/PIC16F19197_BH/production/cpu-arith-benchmark.X.production.hex">
+    <memory name="program">
+      <units>words</units>
+      <length>32768</length>
+      <used>3468</used>
+      <free>29300</free>
+    </memory>
+    <memory name="data">
+      <units>bytes</units>
+      <length>4096</length>
+      <used>208</used>
+      <free>3888</free>
+    </memory>
+  </executable>
+</project>

@@ -4,8 +4,11 @@
  * File:        main.c
  * Project:     cpu-arith-benchmark
  * Compiler:    XC8 v2.20, XC16 v1.60, XC32 v2.41
+ * Hardware:    PIC16F19197 Basic Hookup (Schematic #14-00058A)
+ *              PIC24FJ1024GA606 Basic Hookup (Schematic #14-00059A)
+ *              PIC32MZ1024EFH064 Basic Hookup (Schematic #14-00060A)
  * 
- * Project uses MCU 16-bit timer resource to compute then print out
+ * Project uses an MCU 16-bit timer resource to compute then print out
  * cycle-counts for several arithmetic functions/operations on PIC16F1, PIC24F,
  * and PIC32MZ-based MCUs. Nop() instructions are inserted to facilitate 
  * Hardware Debugger Stopwatch measurement where possible.
@@ -26,16 +29,16 @@
 #include <stdio.h>
 #include "configBits.h"     // Hardware Configuration bit settings
 
-#if defined(PIC16LF15356_BB)
+#if defined(PIC16F19197_BH)
 #define ELAPSED_TICKS_ADJUSTMENT 9
 #define NoOP() NOP()                        // Define macro for NOP assembly instruction
 #define MAX_LOOP_COUNT  1
-#elif defined(PIC24FJ256GA702_BB)
+#elif defined(PIC24FJ1024GA606_BH)
 #include <libpic30.h>                       // Added for printf() --> UART2 redirect support
 #define ELAPSED_TICKS_ADJUSTMENT 10         // Timer Tick Adjustment for reading the timer register
 #define NoOP() Nop()                        // Define macro for NOP assembly instruction
 #define MAX_LOOP_COUNT  1
-#elif defined(PIC32MZ1024EFH064_MINI32_BB)
+#elif defined(PIC32MZ1024EFH064_BH)
 #include <cp0defs.h>                        // CP0 access macros for PIC32M devices
 #define ELAPSED_TICKS_ADJUSTMENT 12         // Timer Tick Adjustment for reading the timer register
 #define NoOP() Nop()                        // Define macro for NOP assembly instruction
@@ -151,12 +154,12 @@ int main(void) {
     }
     
     // print the results
-#if defined(PIC16LF15356_BB)
-    printf("Configuration: PIC16LF15356 on a Breadboard @ 8 MIPs\r\n");
-#elif defined(PIC24FJ256GA702_BB)
-    printf("Configuration: PIC24FJ256GA702 on a Breadboard @ 8 MIPs\r\n");
-#elif defined(PIC32MZ1024EFH064_MINI32_BB)
-    printf("Configuration: PIC32MZ1024EFH064_MINI32 on a Breadboard @ 8 MIPs\r\n");
+#if defined(PIC16F19197_BH)
+    printf("Configuration: PIC16F19197 Basic Hookup on a Breadboard @ 8 MIPs\r\n");
+#elif defined(PIC24FJ1024GA606_BH)
+    printf("Configuration: PIC24FJ1024GA606 Basic Hookup on a Breadboard @ 8 MIPs\r\n");
+#elif defined(PIC32MZ1024EFH064_BH)
+    printf("Configuration: PIC32MZ1024EFH064 Basic Hookup on a Breadboard @ 8 MIPs\r\n");
 #endif
     printf("sum8():  %d cycles\r\n", elapsedTicks_sum8.Full);
     printf("sum32(): %d cycles\r\n", elapsedTicks_sum32.Full);
@@ -199,21 +202,21 @@ void SetPerformanceMode(void) {
     // Add any code below to adjust clocks and any other configuration for
     // desired performance before running your main code loop.
     
-#if defined(PIC32MZ1024EFH064_MINI32_BB)
+#if defined(PIC32MZ1024EFH064_BH)
     
     // At this point, the Hardware Clock Initialization is Complete
-	// The Internal Fast RC Oscillator (8 MHz) provides the clock source
+	// The Primary External XTAL OSC Oscillator Circuit (8 MHz) provides the clock source
 	// Instruction Clock, PBCLK7 (SYSCLK) set to 8 MHz
     // Peripheral Bus Clocks divisors set to defaults (divide by 2))
-    // Flash memory predictive prefetch disabled
+    // Flash memory predictive prefetch is disabled
     // Cache memory is enabled (per compiler default XC32 startup setting)
     // Interrupt controller is in single vector mode (per compiler default XC32 startup setting)
     // Interrupts are disabled (per compiler default XC32 startup setting)
     
     // Set the desired performance mode:
     // SYSCLK = 8 MHz, All PBCLKx = 8 MHz
-    // Cache Disabled (per setting in "pic32_init_cache.S")
-    // Pre-Fetch Disabled
+    // Cache Enabled (per default setting in "pic32_init_cache.S" - _CACHE_WRITEBACK_WRITEALLOCATE)
+    // Pre-Fetch Enabled
     
     unsigned int cp0;
 	
@@ -262,36 +265,32 @@ void SetPerformanceMode(void) {
 
     // Lock Sequence
     SYSKEY = 0x33333333;
-    asm volatile("ei");     // Enable all interrupts
+    asm volatile("ei");     // Enable all interrupts    
     
-#elif defined(PIC24FJ256GA702_BB)
+#elif defined(PIC24FJ1024GA606_BH)
     
     // At this point, the Hardware Clock Initialization is Complete
     // Primary OSC with 4X PLL provides 32 MHz Fosc (16 MIPs)
     
     // Need to set Fosc to 16 MHz (8 MIPs)
     
-    CLKDIVbits.CPDIV = 0x01;    // Select DIV2 clock scaling (16 MHz, 8 MIPs)
+    CLKDIVbits.CPDIV = 0x01;    // Select DIV2 clock scaling (16 MHz, 8 MIPs)    
     
 #endif
     
 }
 
 void PinConfig(void){
-    
-#if defined(PIC16LF15356_BB)
-    
-    // Disable Analog function on PIC16 pins used for this function
-    ANSELCbits.ANSC7 = 0;
-    ANSELCbits.ANSC6 = 0;
+        
+#if defined(PIC16F19197_BH)
     
     // Configure digital pins
-    TRISCbits.TRISC7 = 1;
-    TRISCbits.TRISC6 = 0;
+    TRISCbits.TRISC7 = 0;       // TX1 --> RC7
+    TRISCbits.TRISC6 = 1;       // RX1 <-- RC6
     
     // Initiallize PPS Pin Mapping for this Application
-    // TX2 --> RC6 
-    // RX2 <-- RC7 
+    // TX1 --> RC7 
+    // RX1 <-- RC6 
     // 1. Unlock PPS registers
     //bit oldGIE = INTCONbits.GIE;
     //INTCONbits.GIE = 0;
@@ -300,11 +299,11 @@ void PinConfig(void){
     PPSLOCKbits.PPSLOCKED = 0;
     //INTCONbits.GIE = oldGIE;
     // 2. Configure Output Functions
-    // Assign TX2 output function to pin RC6
-    RC6PPS = 0x11;
+    // Assign TX1 output function to pin RC7
+    RC7PPS = 0x0D;
     // 3. Configure Input Functions
-    // Assign RC7 pin to RX2 input function
-    RX2DTPPS = 0x17;
+    // Assign RC6 pin to RX1 input function
+    RX1PPS = 0x16;
     // 4 Lock the PPS registers
     //oldGIE = INTCONbits.GIE;
     //INTCONbits.GIE = 0;
@@ -313,29 +312,31 @@ void PinConfig(void){
     PPSLOCKbits.PPSLOCKED = 1;
     //INTCONbits.GIE = oldGIE;
     
-#elif defined(PIC24FJ256GA702_BB)
+#elif defined(PIC24FJ1024GA606_BH)
     
     // Set up PPS (I/O Pin-Mapping) for all I/O in this application
-    // U2RX <-- RP11   (DEBUG PORT PC-TX pin)
-    // U2TX --> RP10   (DEBUG PORT PC-RX pin)
+    // U2RX <-- RP10/RF4   (DEBUG PORT PC-TX pin)
+    // U2TX --> RP17/RF5   (DEBUG PORT PC-RX pin)
     // 1. Unlock PPS registers
     __builtin_write_OSCCONL(OSCCON & 0xBF);
     // 2. Configure Output Functions
-    // Assign U2TX output function to pin RP10
-    RPOR5bits.RP10R = 5;
+    // Assign U2TX output function to pin RP17
+    RPOR8bits.RP17R = 5;
     // 3. Configure Input Functions
-    // Assign pin RP11 to U2RX input function
-    RPINR19bits.U2RXR = 11;
+    // Assign pin RP10 to U2RX input function
+    RPINR19bits.U2RXR = 10;
     // 4 Lock the PPS registers
-    __builtin_write_OSCCONL(OSCCON | 0x40);
+    __builtin_write_OSCCONL(OSCCON | 0x40);    
     
-#elif defined(PIC32MZ1024EFH064_MINI32_BB)
+#elif defined(PIC32MZ1024EFH064_BH)
     
     // Set up PPS (I/O Pin-Mapping) for all I/O in this application
-    // U2RX <-- RPD4   (DEBUG PORT PC-TX pin)
-    // U2TX --> RPD5   (DEBUG PORT PC-RX pin)
+    // U2RX <-- RPB15   (DEBUG PORT PC-TX pin)
+    // U2TX --> RPB14   (DEBUG PORT PC-RX pin)
     
-    // U2RX pin (RPD4) is not an ADC input, so no need to configure ANSEL register
+    // U2RX pin (RPB15) is an ADC input, so need to configure ANSEL register to
+    // disable analog pin function
+    ANSELBbits.ANSB15 = 0;
     
     // PPS unlock sequence
     SYSKEY = 0x0;         
@@ -344,49 +345,49 @@ void PinConfig(void){
     CFGCONbits.IOLOCK = 0;  // unlock PPS registers for writing
     
     // modify the PPS registers for the application (per table 11-2 in data sheet)
-    U2RXRbits.U2RXR = 4;        // Map RPD04 to U2RX
-    RPD5Rbits.RPD5R = 2;        // Map U2TX to RPD05 
+    U2RXRbits.U2RXR = 3;        // Map RPB15 to U2RX
+    RPB14Rbits.RPB14R = 2;      // Map U2TX to RPB14
     
     // PPS re-lock sequence
     CFGCONbits.IOLOCK = 1;         
-    SYSKEY = 0x0;
+    SYSKEY = 0x0;    
     
 #endif
 }
 
 void UartConfig(void){
+
+#if defined(PIC16F19197_BH)
     
-#if defined(PIC16LF15356_BB)
-    
-    // Initialize UART2 for use as the DEBUG PORT for printf() messages
+    // Initialize UART1 for use as the DEBUG PORT for printf() messages
     
     // Turn the UART off
-    RC2STAbits.SPEN = 0;
-    TX2STAbits.TXEN = 0;
+    RC1STAbits.SPEN = 0;
+    TX1STAbits.TXEN = 0;
 
-    // Disable U2 Interrupts
-    PIR3bits.TX2IF = 0;                                                         // Clear the Transmit Interrupt Flag
-    PIE3bits.TX2IE = 0;                                                         // Disable Transmit Interrupts
-    PIR3bits.RC2IF = 0;                                                         // Clear the Receive Interrupt Flag
-    PIE3bits.RC2IE = 0;                                                         // Disable Receive Interrupts
+    // Disable U1 Interrupts
+    PIR3bits.TX1IF = 0;                                                         // Clear the Transmit Interrupt Flag
+    PIE3bits.TX1IE = 0;                                                         // Disable Transmit Interrupts
+    PIR3bits.RC1IF = 0;                                                         // Clear the Receive Interrupt Flag
+    PIE3bits.RC1IE = 0;                                                         // Disable Receive Interrupts
     
     // Configure TX Channel
-    TX2STAbits.SYNC = 0;                                                        // Async mode
-    TX2STAbits.BRGH = 1;                                                        // High speed BRG
+    TX1STAbits.SYNC = 0;                                                        // Async mode
+    TX1STAbits.BRGH = 1;                                                        // High speed BRG
     
     // Configure RX Channel
-    RC2STAbits.CREN = 1;                                                        // Enable continuous RX
+    RC1STAbits.CREN = 1;                                                        // Enable continuous RX
     
     // Configure BRG (BRGH = 1, BRG = 1)
-    BAUD2CONbits.BRG16 = 1;
-    SP2BRGH = 0x00;
-    SP2BRGL = 0x44;               // decimal 68 (115200 baud)
+    BAUD1CONbits.BRG16 = 1;
+    SP1BRGH = 0x00;
+    SP1BRGL = 0x44;               // decimal 68 (115200 baud)
     
     // ...And turn the UART on
-    RC2STAbits.SPEN = 1;
-    TX2STAbits.TXEN = 1;
+    RC1STAbits.SPEN = 1;
+    TX1STAbits.TXEN = 1;    
     
-#elif defined(PIC24FJ256GA702_BB)
+#elif defined(PIC24FJ1024GA606_BH)
     
     // Initialize UART2 for use as the DEBUG PORT for printf() messages
     
@@ -397,9 +398,9 @@ void UartConfig(void){
     U2MODEbits.BRGH = 1;    // Enable high rate baud clock
     U2BRG = 16;             // Baud Rate generator set to 115200 baud
     U2MODEbits.UARTEN = 1;
-    U2STAbits.UTXEN = 1;    // Enable UART
+    U2STAbits.UTXEN = 1;    // Enable UART    
     
-#elif defined(PIC32MZ1024EFH064_MINI32_BB)
+#elif defined(PIC32MZ1024EFH064_BH)
     
     // Initialize UART2 for use as the DEBUG PORT for printf() messages
     
@@ -411,19 +412,19 @@ void UartConfig(void){
     U2MODEbits.BRGH = 1;    // Enable high rate baud clock
     U2BRG = 16;             // Baud Rate generator set to 115200 baud
     U2MODEbits.UARTEN = 1;
-    U2STAbits.UTXEN = 1;    // Enable UART
+    U2STAbits.UTXEN = 1;    // Enable UART    
     
 #endif
     
 }
 
-#if defined(PIC16LF15356_BB)
+#if defined(PIC16F19197_BH)
     
-// XC8 Stub required to redirect printf() statements to UART 2
+// XC8 Stub required to redirect printf() statements to UART 1
 
 void putch(char c) {
-    while(!TX2STAbits.TRMT);   // wait while Tx buffer full
-    TX2REG = c;
+    while(!TX1STAbits.TRMT);   // wait while Tx buffer full
+    TX1REG = c;
 }
 
 #endif
@@ -434,30 +435,30 @@ void StopwatchConfig(void){
     // can be clocked at the CPU's frequency, and whose count value can be read
     // atomically.
     
-#if defined(PIC16LF15356_BB)
+#if defined(PIC16F19197_BH)
     
     // Use Timer 1 (clocked at Fosc/4 = 8 MIPs)
     
     T1CONbits.ON = 0;       // Disable Timer
     T1CLKbits.CS = 1;       // CLK source = Fosc/4 = Fcyc
     
-#elif defined(PIC24FJ256GA702_BB)
+#elif defined(PIC24FJ1024GA606_BH)
     
     // Use Timer 2 (clocked at PBCLK, which is set to CPUCLK via Initialization)
     
     T2CONbits.TON = 0;      // Disable Timer
     T2CONbits.TCS = 0;      // Select internal PBCLK as clock source
     T2CONbits.TGATE = 0;    // Disable gated timer mode
-    T2CONbits.TCKPS = 0;    // Select 1:1 CLK prescale
+    T2CONbits.TCKPS = 0;    // Select 1:1 CLK prescale    
     
-#elif defined(PIC32MZ1024EFH064_MINI32_BB)
+#elif defined(PIC32MZ1024EFH064_BH)
     
     // Use Timer 2 (clocked at PBCLK, which is set to CPUCLK via Initialization)
     
     T2CONbits.TON = 0;      // Disable Timer
     T2CONbits.TCS = 0;      // Select internal PBCLK as clock source
     T2CONbits.TGATE = 0;    // Disable gated timer mode
-    T2CONbits.TCKPS = 0;    // Select 1:1 CLK prescale
+    T2CONbits.TCKPS = 0;    // Select 1:1 CLK prescale    
     
 #endif
     
@@ -465,23 +466,23 @@ void StopwatchConfig(void){
 
 void StopwatchRestart(void){
     
-#if defined(PIC16LF15356_BB)
+#if defined(PIC16F19197_BH)
     
     TMR1H = 0;
     TMR1L = 0;
     T1CONbits.ON = 1;
     
-#elif defined(PIC24FJ256GA702_BB)
+#elif defined(PIC24FJ1024GA606_BH)
     
     T2CONbits.TON = 0;
     TMR2 = 0;
-    T2CONbits.TON = 1;
+    T2CONbits.TON = 1;     
     
-#elif defined(PIC32MZ1024EFH064_MINI32_BB)
+#elif defined(PIC32MZ1024EFH064_BH)
 
     T2CONbits.ON = 0;
     TMR2 = 0;
-    T2CONbits.ON = 1;    
+    T2CONbits.ON = 1;        
     
 #endif
 }
@@ -490,24 +491,24 @@ uint16_t StopwatchRead(void){
     
     elapsedTime tmp;
     
-#if defined(PIC16LF15356_BB)
+#if defined(PIC16F19197_BH)
     
     T1CONbits.ON = 0;
     tmp.Low = TMR1L;
     tmp.High = TMR1H;
     return tmp.Full;
     
-#elif defined(PIC24FJ256GA702_BB)
+#elif defined(PIC24FJ1024GA606_BH)
     
     tmp.Full = TMR2;
     T2CONbits.TON = 0;
-    return tmp.Full;
+    return tmp.Full;    
     
-#elif defined(PIC32MZ1024EFH064_MINI32_BB)
+#elif defined(PIC32MZ1024EFH064_BH)
 
     tmp.Full = TMR2;
     T2CONbits.ON = 0;
-    return tmp.Full;    
+    return tmp.Full;     
     
 #endif
 }

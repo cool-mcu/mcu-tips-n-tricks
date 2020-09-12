@@ -15,15 +15,15 @@
             <sourceRootList/>
             <confList>
                 <confElem>
-                    <name>PIC16LF15356_BB</name>
+                    <name>PIC16F19197_BH</name>
                     <type>2</type>
                 </confElem>
                 <confElem>
-                    <name>PIC24FJ256GA702_BB</name>
+                    <name>PIC24FJ1024GA606_BH</name>
                     <type>2</type>
                 </confElem>
                 <confElem>
-                    <name>PIC32MZ1024EFH064_MINI32_BB</name>
+                    <name>PIC32MZ1024EFH064_BH</name>
                     <type>2</type>
                 </confElem>
             </confList>

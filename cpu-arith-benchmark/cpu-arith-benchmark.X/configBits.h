@@ -4,10 +4,9 @@
  * File:        configBits.h
  * Project:     cpu-arith-benchmark
  * Compiler:    XC8 v2.20, XC16 v1.60, XC32 v2.41
- * Course:      MCU Tips n' Tricks
- * URL:         https://www.cool-mcu.com/courses/mcu-tips-n-tricks
- * Chapter:     Hardware Tips n Tricks
- * Lesson:      Selecting a Microcontroller
+ * Hardware:    PIC16F19197 Basic Hookup (Schematic #14-00058A)
+ *              PIC24FJ1024GA606 Basic Hookup (Schematic #14-00059A)
+ *              PIC32MZ1024EFH064 Basic Hookup (Schematic #14-00060A)
  * 
  * This module contains hardware configuration bit settings for hardware-based
  * project configurations.
@@ -27,22 +26,24 @@
 #ifndef CONFIGBITS_H
 #define	CONFIGBITS_H
 
-#if defined(PIC16LF15356_BB)
+#if defined(PIC16F19197_BH)
 
-// PIC16LF15356 Configuration Bit Settings
+// PIC16F19197 Configuration Bit Settings
 
 // 'C' source line config statements
 
 // CONFIG1
-#pragma config FEXTOSC = HS     // External Oscillator mode selection bits (HS (crystal oscillator) above 4MHz; PFM set to high power)
-#pragma config RSTOSC = EXT4X   // Power-up default value for COSC bits (EXTOSC with 4x PLL, with EXTOSC operating per FEXTOSC bits)
+#pragma config FEXTOSC = OFF    // External Oscillator mode selection bits (Oscillator not enabled)
+#pragma config RSTOSC = HFINT32 // Power-up default value for COSC bits (HFINTOSC with OSCFRQ= 32 MHz and CDIV = 1:1)
 #pragma config CLKOUTEN = ON    // Clock Out Enable bit (CLKOUT function is enabled; FOSC/4 clock appears at OSC2)
+#pragma config VBATEN = OFF     // VBAT Pin Enable bit (VBAT functionality is disabled)
+#pragma config LCDPEN = OFF     // LCD Charge Pump Mode bit (LCD Charge Pump is disabled.)
 #pragma config CSWEN = ON       // Clock Switch Enable bit (Writing to NOSC and NDIV is allowed)
 #pragma config FCMEN = ON       // Fail-Safe Clock Monitor Enable bit (FSCM timer enabled)
 
 // CONFIG2
 #pragma config MCLRE = ON       // Master Clear Enable bit (MCLR pin is Master Clear function)
-#pragma config PWRTE = OFF      // Power-up Timer Enable bit (PWRT disabled)
+#pragma config PWRTE = OFF      // Power-up Timer selection bits (PWRT disable)
 #pragma config LPBOREN = OFF    // Low-Power BOR enable bit (ULPBOR disabled)
 #pragma config BOREN = ON       // Brown-out reset enable bits (Brown-out Reset Enabled, SBOREN bit is ignored)
 #pragma config BORV = LO        // Brown-out Reset Voltage Selection (Brown-out Reset Voltage (VBOR) set to 1.9V on LF, and 2.45V on F Devices)
@@ -57,13 +58,14 @@
 #pragma config WDTCCS = SC      // WDT input clock selector (Software Control)
 
 // CONFIG4
-#pragma config BBSIZE = BB512   // Boot Block Size Selection bits (512 words boot block size)
+#pragma config BBSIZE = 512     // Boot Block Size Selection bits (Boot Block Size (Words) 512)
 #pragma config BBEN = OFF       // Boot Block Enable bit (Boot Block disabled)
 #pragma config SAFEN = OFF      // SAF Enable bit (SAF disabled)
-#pragma config WRTAPP = OFF     // Application Block Write Protection bit (Application Block not write protected)
-#pragma config WRTB = OFF       // Boot Block Write Protection bit (Boot Block not write protected)
-#pragma config WRTC = OFF       // Configuration Register Write Protection bit (Configuration Register not write protected)
-#pragma config WRTSAF = OFF     // Storage Area Flash Write Protection bit (SAF not write protected)
+#pragma config WRTAPP = OFF     // Application Block Write Protection bit (Application Block NOT write-protected)
+#pragma config WRTB = OFF       // Boot Block Write Protection bit (Boot Block NOT write-protected)
+#pragma config WRTC = OFF       // Configuration Register Write Protection bit (Configuration Words NOT write-protected)
+#pragma config WRTD = OFF       // Data EEPROM Write Protection bit (Data EEPROM NOT write-protected)
+#pragma config WRTSAF = OFF     // Storage Area Flash Write Protection bit (SAF NOT write-protected)
 #pragma config LVP = ON         // Low Voltage Programming Enable bit (Low Voltage programming enabled. MCLR/Vpp pin function is MCLR.)
 
 // CONFIG5
@@ -72,9 +74,9 @@
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
 
-#elif defined(PIC24FJ256GA702_BB)
+#elif defined(PIC24FJ1024GA606_BH)
 
-// PIC24FJ256GA702 Configuration Bit Settings
+// PIC24FJ1024GA606 Configuration Bit Settings
 
 // 'C' source line config statements
 
@@ -119,19 +121,20 @@
 #pragma config DNVPEN = ENABLE          // Downside Voltage Protection Enable bit (Downside protection enabled using ZPBOR when BOR is inactive)
 
 // FICD
-#pragma config ICS = PGD1               // ICD Communication Channel Select bits (Communicate on PGEC1 and PGED1)
+#pragma config ICS = PGD3               // ICD Communication Channel Select bits (Communicate on PGEC3 and PGED3)
 #pragma config JTAGEN = OFF             // JTAG Enable bit (JTAG is disabled)
+#pragma config BTSWP = OFF              // BOOTSWP Disable (BOOTSWP instruction disabled)
 
 // FDEVOPT1
 #pragma config ALTCMPI = DISABLE        // Alternate Comparator Input Enable bit (C1INC, C2INC, and C3INC are on their standard pin locations)
 #pragma config TMPRPIN = OFF            // Tamper Pin Enable bit (TMPRN pin function is disabled)
 #pragma config SOSCHP = ON              // SOSC High Power Enable bit (valid only when SOSCSEL = 1 (Enable SOSC high power mode (default))
-#pragma config ALTI2C1 = ALTI2CEN       // Alternate I2C pin Location (SDA1 and SCL1 on RB9 and RB8)
+#pragma config ALTVREF = ALTREFEN       // Alternate Voltage Reference Location Enable bit (VREF+ and CVREF+ on RA10, VREF- and CVREF- on RA9)
 
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
 
-#elif defined(PIC32MZ1024EFH064_MINI32_BB)
+#elif defined(PIC32MZ1024EFH064_BH)
 
 // PIC32MZ1024EFH064 Configuration Bit Settings
 
@@ -155,12 +158,12 @@
 #pragma config UPLLFSEL = FREQ_24MHZ    // USB PLL Input Frequency Selection (USB PLL input is 24 MHz)
 
 // DEVCFG1
-#pragma config FNOSC = FRCDIV           // Oscillator Selection Bits (Fast RC Osc w/Div-by-N (FRCDIV))
+#pragma config FNOSC = POSC             // Oscillator Selection Bits (Primary Osc (HS,EC))
 #pragma config DMTINTV = WIN_127_128    // DMT Count Window Interval (Window/Interval value is 127/128 counter value)
 #pragma config FSOSCEN = ON             // Secondary Oscillator Enable (Enable SOSC)
 #pragma config IESO = ON                // Internal/External Switch Over (Enabled)
-#pragma config POSCMOD = OFF            // Primary Oscillator Configuration (Primary osc disabled)
-#pragma config OSCIOFNC = OFF           // CLKO Output Signal Active on the OSCO Pin (Disabled)
+#pragma config POSCMOD = HS             // Primary Oscillator Configuration (HS osc mode)
+#pragma config OSCIOFNC = ON            // CLKO Output Signal Active on the OSCO Pin (Enabled)
 #pragma config FCKSM = CSECME           // Clock Switching and Monitor Selection (Clock Switch Enabled, FSCM Enabled)
 #pragma config WDTPS = PS1048576        // Watchdog Timer Postscaler (1:1048576)
 #pragma config WDTSPGM = STOP           // Watchdog Timer Stop During Flash Programming (WDT stops during Flash programming)
