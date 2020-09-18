@@ -1,0 +1,31 @@
+[p GLOBOPT AUTOSTATIC IEEE_DBL IEEE_FLT PIC14 PIC14E ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 16F15356 ]
+[d frameptr 6 ]
+"10 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c99\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"4 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c99\common\Umul8_16.c
+[v __Umul8_16 _Umul8_16 `(ui  1 e 2 0 ]
+"10 C:\Users\Dennis\design.projects\thinkific.cool-mcu.com\courses\mcu-tips-n-tricks\v2020-09-30\ch2-hardware-tips-n-tricks\l1-selecting-a-microcontroller\projects\datapath-example\datapath-example.X\main.c
+[v _main main `(i  1 e 2 0 ]
+"20
+[v _sum sum `(c  1 e 1 0 ]
+"5
+[v _f f `c  1 e 1 0 ]
+[v _g g `c  1 e 1 0 ]
+[v _y y `c  1 e 1 0 ]
+"10
+[v _main main `(i  1 e 2 0 ]
+{
+"17
+} 0
+"20
+[v _sum sum `(c  1 e 1 0 ]
+{
+[v sum@a a `c  1 a 1 wreg ]
+[v sum@a a `c  1 a 1 wreg ]
+[v sum@b b `c  1 p 1 0 ]
+[v sum@a a `c  1 a 1 1 ]
+"22
+} 0
