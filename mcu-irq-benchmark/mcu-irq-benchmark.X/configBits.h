@@ -2,7 +2,7 @@
  * Copyright (c) 2020 dBm Signal Dynamics Inc.
  * 
  * File:        configBits.h
- * Project:     cpu-arith-benchmark
+ * Project:     mcu-irq-benchmark
  * Compiler:    XC8 v2.20, XC16 v1.60, XC32 v2.41
  * Hardware:    PIC16F19197 Basic Hookup (Schematic #14-00058A)
  *              PIC24FJ1024GA606 Basic Hookup (Schematic #14-00059A)

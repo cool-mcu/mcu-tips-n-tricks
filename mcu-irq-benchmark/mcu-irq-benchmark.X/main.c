@@ -102,6 +102,11 @@ void Initiallize(void){
     TRISEbits.TRISE5 = 0;
     LATEbits.LATE5 = 0;
 
+#elif defined(PIC24FJ1024GA606_BH)
+    
+    TRISEbits.TRISE2 = 0;
+    LATEbits.LATE2 = 0;
+    
 #endif      
     
     // Enable Interrupts Globally
@@ -111,6 +116,10 @@ void Initiallize(void){
     INTCONbits.PEIE = 1;    // Enable all peripheral interrupt sources
     INTCONbits.GIE = 1;     // Enable interrupts globally    
 
+#elif defined(PIC24FJ1024GA606_BH)
+    
+    INTCON2bits.GIE = 1;    // Enable interrupts globally
+    
 #endif    
     
     
@@ -246,14 +255,24 @@ void PinConfig(void){
     
 #elif defined(PIC24FJ1024GA606_BH)
     
+    // RD0 used as OC1 PWM output signal
+    // Make pin digital
+    // ANSELEbits.ANSE6 = 0;
+    // Make pin digital output and initialize level
+    TRISDbits.TRISD0 = 0;
+    LATDbits.LATD0 = 0;
+    
     // Set up PPS (I/O Pin-Mapping) for all I/O in this application
     // U2RX <-- RP10/RF4   (DEBUG PORT PC-TX pin)
     // U2TX --> RP17/RF5   (DEBUG PORT PC-RX pin)
+    // OC1 --> RP11/RD0     1 kHz PWM output
     // 1. Unlock PPS registers
     __builtin_write_OSCCONL(OSCCON & 0xBF);
     // 2. Configure Output Functions
     // Assign U2TX output function to pin RP17
     RPOR8bits.RP17R = 5;
+    // Assign OC1 output function to pin RP11
+    RPOR5bits.RP11R = 13;
     // 3. Configure Input Functions
     // Assign pin RP10 to U2RX input function
     RPINR19bits.U2RXR = 10;
@@ -367,23 +386,44 @@ void PWMConfig(void){
     
     T2CONbits.T2ON = 0;         // turn Timer2 off
     T2TMR = 0;                  // reset the count   
-    T2CLKCONbits.CS = 1;        // Select Fcyc (8 MHz) clock source
+    T2CLKCONbits.CS = 1;        // Select Fcyc (8 MHz) as clock source
     T2CONbits.T2CKPS = 5;       // 1:32 prescale (250 kHz)
     T2PR = 250;                 // set the PWM period value for 1000 uS (1mS)
+    
     CCP1CONbits.EN = 0;         // turn CCP1 off
     CCP1CONbits.MODE = 15;      // set CCP1 mode to PWM
     CCPR1H = 0x01;
     CCPR1L = 0xF4;              // set up 50% duty cycle on output (count = 500)
     CCP1CONbits.EN = 1;         // turn CCP1 on
+    
     PIR4bits.TMR2IF = 0;
     PIE4bits.TMR2IE = 1;        // enable Timer2 interrupt on start of PWM cycle
     T2CONbits.T2ON = 1;         // turn Timer2 on
 
+#elif defined(PIC24FJ1024GA606_BH)
+ 
+    T2CONbits.TON = 0;          // turn Timer2 off
+    TMR2 = 0x00;                // reset the count
+    T2CONbits.TCS = 0;          // Select Fcyc (8 MHz) as clock source
+    T2CONbits.TCKPS = 1;        // 1:8 prescale (1 MHz)
+    PR2 = 1000;                 // set the PWM period value for 1000 uS (1mS)
+    
+    OC1CON1bits.OCM = 0;        // turn OC1 off
+    OC1R = 500;                 // set up 50% duty cycle on output (count = 500)
+    OC1CON1bits.OCTSEL = 0;     // select Timer 2 as the OC time base
+    OC1CON1bits.OCM = 0b110;    // set OC1 mode to PWM (Edge PWM)
+    
+    IFS0bits.T2IF = 0;          // clear Timer 2 interrupt flag
+    //IEC0bits.T2IE = 1;          // enable Timer 2 interrupts
+    IFS0bits.OC1IF = 0;
+    IEC0bits.OC1IE = 1;
+    T2CONbits.TON = 1;          // start timer (starts PWMs)
+    
 #endif    
     
 }
 
-// 1 kHz ISR to toggle USER LED
+// 1 kHz ISR (generated on rising edge of PWM signal) to toggle USER LED
 
 #if defined(PIC16F19197_BH)
 
@@ -391,6 +431,14 @@ void __interrupt() interruptHandler(void)
 {
     LATEbits.LATE5 ^= 1;
     PIR4bits.TMR2IF = 0;
+}
+
+#elif defined(PIC24FJ1024GA606_BH)
+
+void __attribute__((interrupt, no_auto_psv)) _OC1Interrupt(void)
+{
+    LATEbits.LATE2 ^= 1;
+    IFS0bits.OC1IF = 0;
 }
 
 #endif

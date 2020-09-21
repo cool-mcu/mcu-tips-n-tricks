@@ -1,2589 +1,603 @@
 Disassembly Listing for mcu-irq-benchmark
 Generated From:
-/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.elf
-Sep 18, 2020 2:14:29 PM
+/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/dist/PIC24FJ1024GA606_BH/production/mcu-irq-benchmark.X.production.elf
+Sep 20, 2020 10:09:29 AM
 
----  /tmp/xcsApERRy.s  ----------------------------------------------------------------------------------
-036B  00FE     MOVWF 0x7E
-036C  0012     MOVIW FSR0++
-036D  001E     MOVWI FSR1++
-036E  0BFE     DECFSZ 0x7E, F
-036F  2B6C     GOTO 0x36C
-0370  3400     RETLW 0x0
-001B  3064     MOVLW 0x64
-001C  0084     MOVWF FSR0
-001D  3083     MOVLW 0x83
-001E  0085     MOVWF FSR0H
-001F  3056     MOVLW 0x56
-0020  0086     MOVWF FSR1
-0021  3000     MOVLW 0x0
-0022  0087     MOVWF FSR1H
-0023  3007     MOVLW 0x7
-0024  3183     MOVLP 0x3
-0371  0064     CLRWDT
-0372  0180     CLRF INDF0
-0373  3101     ADDFSR 0, 1
-0374  0B89     DECFSZ WREG, F
-0375  2B72     GOTO 0x372
-0376  3400     RETLW 0x0
-0027  304E     MOVLW 0x4E
-0028  0084     MOVWF FSR0
-0029  3000     MOVLW 0x0
-002A  0085     MOVWF FSR0H
-002B  3008     MOVLW 0x8
-002C  3183     MOVLP 0x3
-002F  30A0     MOVLW 0xA0
-0030  0084     MOVWF FSR0
-0031  3000     MOVLW 0x0
-0032  0085     MOVWF FSR0H
-0033  3020     MOVLW 0x20
-0034  3183     MOVLP 0x3
-0037  107E     BCF 0x7E, 0x0
-0038  0140     MOVLB 0x0
-0039  3183     MOVLP 0x3
 ---  /Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1:             /*******************************************************************************
-2:              * Copyright (c) 2020 dBm Signal Dynamics Inc.
-3:              * 
-4:              * File:        main.c
-5:              * Project:     mcu-irq-benchmark
-6:              * Compiler:    XC8 v2.20, XC16 v1.60, XC32 v2.41
-7:              * Hardware:    PIC16F19197 Basic Hookup (Schematic #14-00058A)
-8:              *              PIC24FJ1024GA606 Basic Hookup (Schematic #14-00059A)
-9:              *              PIC32MZ1024EFH064 Basic Hookup (Schematic #14-00060A)
-10:             * 
-11:             * Project used to measure the latency between interrupt assertion and the first
-12:             * instruction executed in the ISR for all 3 MCUs. An Oscilloscope is required.
-13:             * 
-14:             * Project produces a 1 kHz, 50% duty-cycle PWM output signal (and IRQ),
-15:             * The IRQ's ISR routine toggles a digital output pin (USER LED pin).
-16:             * 
-17:             * An Oscilloscope is used to measure IRQ latency (PWM 0-->1 to LED toggle).
-18:             * 
-19:             * The Disassembly listing must be consulted to subtract the #instruction cycles
-20:             * used to toggle the USER LED. 
-21:             * 
-22:             * SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-23:             * EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
-24:             * MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-25:             * IN NO EVENT SHALL DBM SIGNAL DYNAMICS OR ITS LICENSORS BE LIABLE OR OBLIGATED
-26:             * UNDER CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY,
-27:             * OR OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-28:             * INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
-29:             * CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
-30:             * SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-31:             * (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-32:            *******************************************************************************/
-33:            #include <xc.h>
-34:            #include <stdint.h>
-35:            #include <stdio.h>
-36:            #include "configBits.h"     // Hardware Configuration bit settings
-37:            
-38:            #if defined(PIC16F19197_BH)
-39:            #define ELAPSED_TICKS_ADJUSTMENT 9
-40:            #define NoOP() NOP()                        // Define macro for NOP assembly instruction
-41:            #define MAX_LOOP_COUNT  1
-42:            #elif defined(PIC24FJ1024GA606_BH)
-43:            #include <libpic30.h>                       // Added for printf() --> UART2 redirect support
-44:            #define ELAPSED_TICKS_ADJUSTMENT 10         // Timer Tick Adjustment for reading the timer register
-45:            #define NoOP() Nop()                        // Define macro for NOP assembly instruction
-46:            #define MAX_LOOP_COUNT  1
-47:            #elif defined(PIC32MZ1024EFH064_BH)
-48:            #include <cp0defs.h>                        // CP0 access macros for PIC32M devices
-49:            #define ELAPSED_TICKS_ADJUSTMENT 12         // Timer Tick Adjustment for reading the timer register
-50:            #define NoOP() Nop()                        // Define macro for NOP assembly instruction
-51:            #define MAX_LOOP_COUNT  4
-52:            #endif
-53:            
-54:            // Global Variables
-55:            
-56:            const char Project[] = "mcu-irq-benchmark";
-57:            const char Version[] = "00.01";
-58:            const char CompileDate[] = __DATE__;
-59:            const char CompileTime[] = __TIME__;
-60:            
-61:            
-62:            // Local Function Prototypes
-63:            void Initiallize(void);                     // 1-time System Initialization
-64:            void SetPerformanceMode(void);              // Configure Clocks, Interrupts, Cache, Pre-fetch for desired performance
-65:            void PinConfig(void);                       // Configure Programmable I/O pins
-66:            void UartConfig(void);                      // Configure UART for printf() statement
-67:            void PWMConfig(void);                       // Configure a PWM resource to produce a 1 kHz signal (and irq) on selected output pin
-68:            
-69:            int main(void) {
-70:                
-71:                Initiallize();
-0377  3181     MOVLP 0x1
-0378  21B6     CALL 0x1B6
-0379  3183     MOVLP 0x3
-72:                
-73:                while(1);
-037A  2B7A     GOTO 0x37A
-037B  3180     MOVLP 0x0
-037C  2819     GOTO 0x19
-74:              
-75:            }
-76:            
-77:            void Initiallize(void){
-78:                
-79:                // Configure Clocks, Interrupts, Cache, Pre-fetch for desired performance
-80:                SetPerformanceMode();       
-01B6  3183     MOVLP 0x3
-01B7  237D     CALL 0x37D
-01B8  3181     MOVLP 0x1
-81:                
-82:                // Configure Programmable I/O Pins for all I/O in this application
-83:                PinConfig();
-01B9  3182     MOVLP 0x2
-01BA  2269     CALL 0x269
-01BB  3181     MOVLP 0x1
-84:                
-85:                // Configure UART resource for printf() statement
-86:                UartConfig();
-01BC  3182     MOVLP 0x2
-01BD  22D3     CALL 0x2D3
-01BE  3181     MOVLP 0x1
-87:                
-88:                printf("Cool-MCU.com\r\n");
-01BF  301B     MOVLW 0x1B
-01C0  0140     MOVLB 0x0
-01C1  00C7     MOVWF fmt
-01C2  3083     MOVLW 0x83
-01C3  00C8     MOVWF 0x48
-01C4  3182     MOVLP 0x2
-01C5  22F8     CALL 0x2F8
-01C6  3181     MOVLP 0x1
-89:                printf("Project: %s\r\n", Project);
-01C7  3038     MOVLW 0x38
-01C8  0140     MOVLB 0x0
-01C9  00C7     MOVWF fmt
-01CA  3083     MOVLW 0x83
-01CB  00C8     MOVWF 0x48
-01CC  30E6     MOVLW 0xE6
-01CD  00C9     MOVWF 0x49
-01CE  3082     MOVLW 0x82
-01CF  00CA     MOVWF 0x4A
-01D0  3182     MOVLP 0x2
-01D1  22F8     CALL 0x2F8
-01D2  3181     MOVLP 0x1
-90:                printf("Version: %s\r\n", Version);
-01D3  302A     MOVLW 0x2A
-01D4  0140     MOVLB 0x0
-01D5  00C7     MOVWF fmt
-01D6  3083     MOVLW 0x83
-01D7  00C8     MOVWF 0x48
-01D8  30A1     MOVLW 0xA1
-01D9  00C9     MOVWF 0x49
-01DA  3082     MOVLW 0x82
-01DB  00CA     MOVWF 0x4A
-01DC  3182     MOVLP 0x2
-01DD  22F8     CALL 0x2F8
-01DE  3181     MOVLP 0x1
-91:                printf("Build date: %s\r\n", CompileDate);
-01DF  300A     MOVLW 0xA
-01E0  0140     MOVLB 0x0
-01E1  00C7     MOVWF fmt
-01E2  3083     MOVLW 0x83
-01E3  00C8     MOVWF 0x48
-01E4  3046     MOVLW 0x46
-01E5  00C9     MOVWF 0x49
-01E6  3083     MOVLW 0x83
-01E7  00CA     MOVWF 0x4A
-01E8  3182     MOVLP 0x2
-01E9  22F8     CALL 0x2F8
-01EA  3181     MOVLP 0x1
-92:                printf("Build time: %s\r\n\r\n", CompileTime);
-01EB  30A7     MOVLW 0xA7
-01EC  0140     MOVLB 0x0
-01ED  00C7     MOVWF fmt
-01EE  3082     MOVLW 0x82
-01EF  00C8     MOVWF 0x48
-01F0  3052     MOVLW 0x52
-01F1  00C9     MOVWF 0x49
-01F2  3083     MOVLW 0x83
-01F3  00CA     MOVWF 0x4A
-01F4  3182     MOVLP 0x2
-01F5  22F8     CALL 0x2F8
-01F6  3181     MOVLP 0x1
-93:            
-94:                // Configure a PWM resource to produce a 50% duty cycle, 1 kHz signal (and interrupt)
-95:                PWMConfig();
-01F7  3182     MOVLP 0x2
-01F8  2285     CALL 0x285
-01F9  3181     MOVLP 0x1
-96:                
-97:                // Configure LED output
-98:            
-99:            #if defined(PIC16F19197_BH)
-100:           
-101:               ANSELEbits.ANSE5 = 0;
-01FA  017E     MOVLB 0x3E
-01FB  12E4     BCF ANSELE, 0x5
-102:               TRISEbits.TRISE5 = 0;
-01FC  0140     MOVLB 0x0
-01FD  1296     BCF TRISE, 0x5
-103:               LATEbits.LATE5 = 0;
-01FE  129C     BCF LATE, 0x5
-104:           
-105:           #endif      
-106:               
-107:               // Enable Interrupts Globally
-108:           
-109:           #if defined(PIC16F19197_BH)
-110:               
-111:               INTCONbits.PEIE = 1;    // Enable all peripheral interrupt sources
-01FF  170B     BSF INTCON, 0x6
-112:               INTCONbits.GIE = 1;     // Enable interrupts globally    
-0200  178B     BSF INTCON, 0x7
-113:           
-114:           #endif    
-115:               
-116:               
-117:           }
-0201  0008     RETURN
-118:           
-119:           void SetPerformanceMode(void) {
-120:               
-121:               // At this point, the CPU is operating using the default oscillator and
-122:               // clocking options defined by the hardware configuration bits.
-123:               
-124:               // Add any code below to adjust clocks and any other configuration for
-125:               // desired performance before running your main code loop.
-126:               
-127:           #if defined(PIC32MZ1024EFH064_BH)
-128:               
-129:               // At this point, the Hardware Clock Initialization is Complete
-130:           	// The Primary External XTAL OSC Oscillator Circuit (8 MHz) provides the clock source
-131:           	// Instruction Clock, PBCLK7 (SYSCLK) set to 8 MHz
-132:               // Peripheral Bus Clocks divisors set to defaults (divide by 2))
-133:               // Flash memory predictive prefetch is disabled
-134:               // Cache memory is enabled (per compiler default XC32 startup setting)
-135:               // Interrupt controller is in single vector mode (per compiler default XC32 startup setting)
-136:               // Interrupts are disabled (per compiler default XC32 startup setting)
-137:               
-138:               // Set the desired performance mode:
-139:               // SYSCLK = 8 MHz, All PBCLKx = 8 MHz
-140:               // Cache Enabled (per default setting in "pic32_init_cache.S" - _CACHE_WRITEBACK_WRITEALLOCATE)
-141:               // Pre-Fetch Enabled
-142:               
-143:               unsigned int cp0;
-144:           	
-145:               // Unlock Sequence
-146:               asm volatile("di");     // disable all interrupts
-147:               SYSKEY = 0xAA996655;
-148:               SYSKEY = 0x556699AA;  
-149:           
-150:               // PB1DIV
-151:                                       // Peripheral Bus 1 cannot be turned off, so there's no need to turn it on
-152:               PB1DIVbits.PBDIV = 0;   // Peripheral Bus 1 Clock Divisor Control (PBCLK1 is SYSCLK divided by 1)
-153:           
-154:               // PB2DIV
-155:               PB2DIVbits.ON = 1;      // Peripheral Bus 2 Output Clock Enable (Output clock is enabled)
-156:               PB2DIVbits.PBDIV = 0;   // Peripheral Bus 2 Clock Divisor Control (PBCLK2 is SYSCLK divided by 1)
-157:           
-158:               // PB3DIV
-159:               PB3DIVbits.ON = 1;      // Peripheral Bus 2 Output Clock Enable (Output clock is enabled)
-160:               PB3DIVbits.PBDIV = 0;   // Peripheral Bus 3 Clock Divisor Control (PBCLK3 is SYSCLK divided by 1)
-161:           
-162:               // PB4DIV
-163:               PB4DIVbits.ON = 1;      // Peripheral Bus 4 Output Clock Enable (Output clock is enabled)
-164:               while (!PB4DIVbits.PBDIVRDY); // Wait until it is ready to write to
-165:               PB4DIVbits.PBDIV = 0;   // Peripheral Bus 4 Clock Divisor Control (PBCLK4 is SYSCLK divided by 1)
-166:           
-167:               // PB5DIV
-168:               PB5DIVbits.ON = 1;      // Peripheral Bus 5 Output Clock Enable (Output clock is enabled)
-169:               PB5DIVbits.PBDIV = 0;   // Peripheral Bus 5 Clock Divisor Control (PBCLK5 is SYSCLK divided by 1)
-170:           
-171:               // PB7DIV
-172:               PB7DIVbits.ON = 1;      // Peripheral Bus 7 Output Clock Enable (Output clock is enabled)
-173:               PB7DIVbits.PBDIV = 0;   // Peripheral Bus 7 Clock Divisor Control (PBCLK7 is SYSCLK divided by 1)
-174:           
-175:               // PB8DIV
-176:               PB8DIVbits.ON = 1;      // Peripheral Bus 8 Output Clock Enable (Output clock is enabled)
-177:               PB8DIVbits.PBDIV = 0;   // Peripheral Bus 8 Clock Divisor Control (PBCLK8 is SYSCLK divided by 1)
-178:           
-179:               // PRECON - Set up prefetch (60 MHz operation))
-180:               //PRECONbits.PFMSECEN = 0; // Flash SEC Interrupt Enable (Do not generate an interrupt when the PFMSEC bit is set)
-181:               PRECONbits.PREFEN = 0b11; // Predictive Prefetch Enable (Enable predictive prefetch for any address)
-182:               PRECONbits.PFMWS = 0b000; // PFM Access Time Defined in Terms of SYSCLK Wait States (Zero wait states @ 8 MHz)
-183:           
-184:               // Set up caching
-185:               // See  https://microchipdeveloper.com/32bit:mz-cache-disable
-186:               // Added "pic32_init_cache.S" to project from XC32 tool chain, and set __PIC32_CACHE_MODE to _CACHE_WRITEBACK_WRITEALLOCATE
-187:           
-188:               // Lock Sequence
-189:               SYSKEY = 0x33333333;
-190:               asm volatile("ei");     // Enable all interrupts    
-191:               
-192:           #elif defined(PIC24FJ1024GA606_BH)
-193:               
-194:               // At this point, the Hardware Clock Initialization is Complete
-195:               // Primary OSC with 4X PLL provides 32 MHz Fosc (16 MIPs)
-196:               
-197:               // Need to set Fosc to 16 MHz (8 MIPs)
-198:               
-199:               CLKDIVbits.CPDIV = 0x01;    // Select DIV2 clock scaling (16 MHz, 8 MIPs)    
-200:               
-201:           #endif
-202:               
-203:           }
-037D  0008     RETURN
-204:           
-205:           void PinConfig(void){
-206:                   
-207:           #if defined(PIC16F19197_BH)
-208:               
-209:               // Configure digital pins for UART function
-210:               TRISCbits.TRISC7 = 0;       // TX1 --> RC7
-0269  0140     MOVLB 0x0
-026A  1394     BCF TRISC, 0x7
-211:               TRISCbits.TRISC6 = 1;       // RX1 <-- RC6
-026B  1714     BSF TRISC, 0x6
-212:               
-213:               // RE6 used as CCP1 PWM output signal
-214:               // Make pin digital
-215:               ANSELEbits.ANSE6 = 0;
-026C  017E     MOVLB 0x3E
-026D  1364     BCF ANSELE, 0x6
-216:               // Make pin digital output and initialize level
-217:               TRISEbits.TRISE6 = 0;
-026E  0140     MOVLB 0x0
-026F  1316     BCF TRISE, 0x6
-218:               LATEbits.LATE6 = 0;
-0270  131C     BCF LATE, 0x6
-219:               
-220:               // Initiallize PPS Pin Mapping for this Application
-221:               // TX1 --> RC7 
-222:               // RX1 <-- RC6
-223:               // CCP1 --> RE6
-224:               // 1. Unlock PPS registers
-225:               //bit oldGIE = INTCONbits.GIE;
-226:               //INTCONbits.GIE = 0;
-227:               PPSLOCK = 0x55;
-0271  3055     MOVLW 0x55
-0272  017D     MOVLB 0x3D
-0273  008F     MOVWF PPSLOCK
-228:               PPSLOCK = 0xAA;
-0274  30AA     MOVLW 0xAA
-0275  008F     MOVWF PPSLOCK
-229:               PPSLOCKbits.PPSLOCKED = 0;
-0276  100F     BCF PPSLOCK, 0x0
-230:               //INTCONbits.GIE = oldGIE;
-231:               // 2. Configure Output Functions
-232:               // Assign TX1 output function to pin RC7
-233:               RC7PPS = 0x0D;
-0277  300D     MOVLW 0xD
-0278  017E     MOVLB 0x3E
-0279  00A7     MOVWF RC7PPS
-234:               // Assign CCP1 output function to pin RE6
-235:               RE6PPS = 0x09;
-027A  3009     MOVLW 0x9
-027B  00B6     MOVWF RE6PPS
-236:               // 3. Configure Input Functions
-237:               // Assign RC6 pin to RX1 input function
-238:               RX1PPS = 0x16;
-027C  3016     MOVLW 0x16
-027D  017D     MOVLB 0x3D
-027E  00CB     MOVWF RX1PPS
-239:               // 4 Lock the PPS registers
-240:               //oldGIE = INTCONbits.GIE;
-241:               //INTCONbits.GIE = 0;
-242:               PPSLOCK = 0x55;
-027F  3055     MOVLW 0x55
-0280  008F     MOVWF PPSLOCK
-243:               PPSLOCK = 0xAA;
-0281  30AA     MOVLW 0xAA
-0282  008F     MOVWF PPSLOCK
-244:               PPSLOCKbits.PPSLOCKED = 1;
-0283  140F     BSF PPSLOCK, 0x0
-245:               //INTCONbits.GIE = oldGIE;
-246:               
-247:           #elif defined(PIC24FJ1024GA606_BH)
-248:               
-249:               // Set up PPS (I/O Pin-Mapping) for all I/O in this application
-250:               // U2RX <-- RP10/RF4   (DEBUG PORT PC-TX pin)
-251:               // U2TX --> RP17/RF5   (DEBUG PORT PC-RX pin)
-252:               // 1. Unlock PPS registers
-253:               __builtin_write_OSCCONL(OSCCON & 0xBF);
-254:               // 2. Configure Output Functions
-255:               // Assign U2TX output function to pin RP17
-256:               RPOR8bits.RP17R = 5;
-257:               // 3. Configure Input Functions
-258:               // Assign pin RP10 to U2RX input function
-259:               RPINR19bits.U2RXR = 10;
-260:               // 4 Lock the PPS registers
-261:               __builtin_write_OSCCONL(OSCCON | 0x40);    
-262:               
-263:           #elif defined(PIC32MZ1024EFH064_BH)
-264:               
-265:               // Set up PPS (I/O Pin-Mapping) for all I/O in this application
-266:               // U2RX <-- RPB15   (DEBUG PORT PC-TX pin)
-267:               // U2TX --> RPB14   (DEBUG PORT PC-RX pin)
-268:               
-269:               // U2RX pin (RPB15) is an ADC input, so need to configure ANSEL register to
-270:               // disable analog pin function
-271:               ANSELBbits.ANSB15 = 0;
-272:               
-273:               // PPS unlock sequence
-274:               SYSKEY = 0x0;         
-275:               SYSKEY = 0xAA996655;         
-276:               SYSKEY = 0x556699AA; 
-277:               CFGCONbits.IOLOCK = 0;  // unlock PPS registers for writing
-278:               
-279:               // modify the PPS registers for the application (per table 11-2 in data sheet)
-280:               U2RXRbits.U2RXR = 3;        // Map RPB15 to U2RX
-281:               RPB14Rbits.RPB14R = 2;      // Map U2TX to RPB14
-282:               
-283:               // PPS re-lock sequence
-284:               CFGCONbits.IOLOCK = 1;         
-285:               SYSKEY = 0x0;    
-286:               
-287:           #endif
-288:           }
-0284  0008     RETURN
-289:           
-290:           void UartConfig(void){
-291:           
-292:           #if defined(PIC16F19197_BH)
-293:               
-294:               // Initialize UART1 for use as the DEBUG PORT for printf() messages
-295:               
-296:               // Turn the UART off
-297:               RC1STAbits.SPEN = 0;
-02D3  0142     MOVLB 0x2
-02D4  139D     BCF RC1STA, 0x7
-298:               TX1STAbits.TXEN = 0;
-02D5  129E     BCF TX1STA, 0x5
-299:           
-300:               // Disable U1 Interrupts
-301:               PIR3bits.TX1IF = 0;                                                         // Clear the Transmit Interrupt Flag
-02D6  014E     MOVLB 0xE
-02D7  120F     BCF PIR3, 0x4
-302:               PIE3bits.TX1IE = 0;                                                         // Disable Transmit Interrupts
-02D8  1219     BCF PIE3, 0x4
-303:               PIR3bits.RC1IF = 0;                                                         // Clear the Receive Interrupt Flag
-02D9  128F     BCF PIR3, 0x5
-304:               PIE3bits.RC1IE = 0;                                                         // Disable Receive Interrupts
-02DA  1299     BCF PIE3, 0x5
-305:               
-306:               // Configure TX Channel
-307:               TX1STAbits.SYNC = 0;                                                        // Async mode
-02DB  0142     MOVLB 0x2
-02DC  121E     BCF TX1STA, 0x4
-308:               TX1STAbits.BRGH = 1;                                                        // High speed BRG
-02DD  151E     BSF TX1STA, 0x2
-309:               
-310:               // Configure RX Channel
-311:               RC1STAbits.CREN = 1;                                                        // Enable continuous RX
-02DE  161D     BSF RC1STA, 0x4
-312:               
-313:               // Configure BRG (BRGH = 1, BRG = 1)
-314:               BAUD1CONbits.BRG16 = 1;
-02DF  159F     BSF BAUD1CON, 0x3
-315:               SP1BRGH = 0x00;
-02E0  019C     CLRF SP1BRGH
-316:               SP1BRGL = 0x44;               // decimal 68 (115200 baud)
-02E1  3044     MOVLW 0x44
-02E2  009B     MOVWF SP1BRG
-317:               
-318:               // ...And turn the UART on
-319:               RC1STAbits.SPEN = 1;
-02E3  179D     BSF RC1STA, 0x7
-320:               TX1STAbits.TXEN = 1;    
-02E4  169E     BSF TX1STA, 0x5
-321:               
-322:           #elif defined(PIC24FJ1024GA606_BH)
-323:               
-324:               // Initialize UART2 for use as the DEBUG PORT for printf() messages
-325:               
-326:               __C30_UART = 2;         // MACRO: Divert printf() output to UART 2 - see XC16 manual
-327:               
-328:               U2MODEbits.UARTEN = 0;  // Disable UART  
-329:               U2STAbits.UTXEN = 0;
-330:               U2MODEbits.BRGH = 1;    // Enable high rate baud clock
-331:               U2BRG = 16;             // Baud Rate generator set to 115200 baud
-332:               U2MODEbits.UARTEN = 1;
-333:               U2STAbits.UTXEN = 1;    // Enable UART    
-334:               
-335:           #elif defined(PIC32MZ1024EFH064_BH)
-336:               
-337:               // Initialize UART2 for use as the DEBUG PORT for printf() messages
-338:               
-339:               // Note: No special initialization is required for printf()
-340:               // printf() uses UART 2 for output by default as long as UART 2 is initialized before use
-341:               
-342:               U2MODEbits.UARTEN = 0;  // Disable UART  
-343:               U2STAbits.UTXEN = 0;
-344:               U2MODEbits.BRGH = 1;    // Enable high rate baud clock
-345:               U2BRG = 16;             // Baud Rate generator set to 115200 baud
-346:               U2MODEbits.UARTEN = 1;
-347:               U2STAbits.UTXEN = 1;    // Enable UART    
-348:               
-349:           #endif
-350:               
-351:           }
-02E5  0008     RETURN
-352:           
-353:           #if defined(PIC16F19197_BH)
-354:               
-355:           // XC8 Stub required to redirect printf() statements to UART 1
-356:           
-357:           void putch(char c) {
-035B  00F1     MOVWF 0x171
-358:               while(!TX1STAbits.TRMT);   // wait while Tx buffer full
-035C  0142     MOVLB 0x2
-035D  1C9E     BTFSS TX1STA, 0x1
-035E  2B60     GOTO 0x360
-035F  2B61     GOTO 0x361
-0360  2B5C     GOTO 0x35C
-359:               TX1REG = c;
-0361  0871     MOVF 0x171, W
-0362  009A     MOVWF TX1REG
-360:           }
-0363  0008     RETURN
-361:           
-362:           #endif
-363:           
-364:           void PWMConfig(void){
-365:               
-366:           #if defined(PIC16F19197_BH)
-367:               
-368:               T2CONbits.T2ON = 0;         // turn Timer2 off
-0285  0145     MOVLB 0x5
-0286  138E     BCF T2CON, 0x7
-369:               T2TMR = 0;                  // reset the count   
-0287  018C     CLRF T2TMR
-370:               T2CLKCONbits.CS = 1;        // Select Fcyc (8 MHz) clock source
-0288  0810     MOVF T2CLKCON, W
-0289  39F0     ANDLW 0xF0
-028A  3801     IORLW 0x1
-028B  0090     MOVWF T2CLKCON
-371:               T2CONbits.T2CKPS = 5;       // 1:32 prescale (250 kHz)
-028C  080E     MOVF T2CON, W
-028D  398F     ANDLW 0x8F
-028E  3850     IORLW 0x50
-028F  008E     MOVWF T2CON
-372:               T2PR = 250;                 // set the PWM period value for 1000 uS (1mS)
-0290  30FA     MOVLW 0xFA
-0291  008D     MOVWF T2PR
-373:               CCP1CONbits.EN = 0;         // turn CCP1 off
-0292  0146     MOVLB 0x6
-0293  138E     BCF CCP1CON, 0x7
-374:               CCP1CONbits.MODE = 15;      // set CCP1 mode to PWM
-0294  300F     MOVLW 0xF
-0295  048E     IORWF CCP1CON, F
-375:               CCPR1H = 0x01;
-0296  3001     MOVLW 0x1
-0297  008D     MOVWF CCPR1H
-376:               CCPR1L = 0xF4;              // set up 50% duty cycle on output (count = 500)
-0298  30F4     MOVLW 0xF4
-0299  008C     MOVWF CCPR1
-377:               CCP1CONbits.EN = 1;         // turn CCP1 on
-029A  178E     BSF CCP1CON, 0x7
-378:               PIR4bits.TMR2IF = 0;
-029B  014E     MOVLB 0xE
-029C  1090     BCF PIR4, 0x1
-379:               PIE4bits.TMR2IE = 1;        // enable Timer2 interrupt on start of PWM cycle
-029D  149A     BSF PIE4, 0x1
-380:               T2CONbits.T2ON = 1;         // turn Timer2 on
-029E  0145     MOVLB 0x5
-029F  178E     BSF T2CON, 0x7
-381:           
-382:           #endif    
-383:               
-384:           }
-02A0  0008     RETURN
-385:           
-386:           // 1 kHz ISR to toggle USER LED
-387:           
-388:           #if defined(PIC16F19197_BH)
-389:           
-390:           void __interrupt() interruptHandler(void)
-0004  147E     BSF 0x2FE, 0x0
-0005  3180     MOVLP 0x0
-391:           {
-392:               LATEbits.LATE5 ^= 1;
-0006  0140     MOVLB 0x0
-0007  0E1C     SWAPF LATE, W
-0008  00F0     MOVWF __pcstackCOMMON
-0009  0C70     RRF __pcstackCOMMON, W
-000A  3901     ANDLW 0x1
-000B  00F0     MOVWF __pcstackCOMMON
-000C  3001     MOVLW 0x1
-000D  06F0     XORWF __pcstackCOMMON, F
-000E  0EF0     SWAPF __pcstackCOMMON, F
-000F  0DF0     RLF __pcstackCOMMON, F
-0010  081C     MOVF LATE, W
-0011  0670     XORWF __pcstackCOMMON, W
-0012  39DF     ANDLW 0xDF
-0013  0670     XORWF __pcstackCOMMON, W
-0014  009C     MOVWF LATE
-393:               PIR4bits.TMR2IF = 0;
-0015  014E     MOVLB 0xE
-0016  1090     BCF PIR4, 0x1
-394:           }
-0017  107E     BCF 0x77E, 0x0
-0018  0009     RETFIE
-395:           
-396:           #endif
-397:           
-398:           
-399:           
-400:           
----  /Applications/microchip/xc8/v2.20/pic/sources/c99/common/strlen.c  ---------------------------------
-1:             #include <string.h>
-2:             #include <stdint.h>
-3:             #include <limits.h>
-4:             
-5:             size_t strlen(const char *s)
-6:             {
-7:             	const char *a = s;
-02BA  0872     MOVF 0x772, W
-02BB  00F5     MOVWF 0x775
-02BC  0871     MOVF 0x771, W
-02BD  00F4     MOVWF 0x774
-8:             	while(*s) {
-02BE  2AC3     GOTO 0x2C3
-02C3  0871     MOVF 0x771, W
-02C4  0084     MOVWF FSR0L
-02C5  0872     MOVF 0x772, W
-02C6  0085     MOVWF FSR0H
-02C7  0012     MOVIW FSR0++
-02C8  1D03     BTFSS STATUS, 0x2
-02C9  2ACB     GOTO 0x2CB
-02CA  2ACC     GOTO 0x2CC
-02CB  2ABF     GOTO 0x2BF
-9:             		s++;
-02BF  3001     MOVLW 0x1
-02C0  07F1     ADDWF 0x771, F
-02C1  3000     MOVLW 0x0
-02C2  3DF2     ADDWFC 0x772, F
-10:            	}
-11:            	return s-a;
-02CC  0874     MOVF 0x774, W
-02CD  0271     SUBWF 0x771, W
-02CE  00F1     MOVWF 0x771
-02CF  0875     MOVF 0x775, W
-02D0  3B72     SUBWFB 0x772, W
-02D1  00F2     MOVWF 0x772
-12:            }
-02D2  0008     RETURN
----  /Applications/microchip/xc8/v2.20/pic/sources/c99/common/printf.c  ---------------------------------
-1:             #include <stdio.h>
-2:             #include <stdarg.h>
-3:             #include "stdio_impl.h"
-4:             
-5:             int printf(const char *restrict fmt, ...)
-6:             {
-7:             	int ret;
-8:             	va_list ap;
-9:             	va_start(ap, fmt);
-02F8  3049     MOVLW 0x49
-02F9  00FC     MOVWF 0x77C
-02FA  087C     MOVF 0x77C, W
-02FB  0140     MOVLB 0x0
-02FC  00CD     MOVWF ap
-10:            	ret = vfprintf(stdout, fmt, ap);
-02FD  0848     MOVF 0x48, W
-02FE  00C0     MOVWF 0x40
-02FF  0847     MOVF fmt, W
-0300  00BF     MOVWF fmt
-0301  304D     MOVLW 0x4D
-0302  00FC     MOVWF 0x7C
-0303  087C     MOVF 0x7C, W
-0304  00C1     MOVWF ap
-0305  3000     MOVLW 0x0
-0306  3182     MOVLP 0x2
-0307  2241     CALL 0x241
-0308  3182     MOVLP 0x2
-11:            	va_end(ap);
-12:            	return ret;
-13:            }
-0309  0008     RETURN
----  /Applications/microchip/xc8/v2.20/pic/sources/c99/common/nf_fputc.c  -------------------------------
-1:             #include <stdio.h>
-2:             
-3:             #include "stdio_impl.h"
-4:             
-5:             #ifdef STDIO_NO_FILE_IO
-6:             /* "No file system" fputc */
-7:             
-8:             int fputc(int c, FILE *fp)
-9:             {
-10:                extern void putch(char);
-11:            
-12:                if ((fp == stdout) || (fp == stderr)) {
-0202  0874     MOVF fp, W
-0203  1903     BTFSC STATUS, 0x2
-0204  2A06     GOTO 0x206
-0205  2A07     GOTO 0x207
-0206  2A0C     GOTO 0x20C
-0207  0874     MOVF fp, W
-0208  1D03     BTFSS STATUS, 0x2
-0209  2A0B     GOTO 0x20B
-020A  2A0C     GOTO 0x20C
-020B  2A11     GOTO 0x211
-13:                    putch(c);
-020C  0872     MOVF c, W
-020D  3183     MOVLP 0x3
-020E  235B     CALL 0x35B
-020F  3182     MOVLP 0x2
-14:                } else {
-0210  2A40     GOTO 0x240
-15:            	if((fp->limit == 0) || (fp->count < fp->limit)) {
-0211  0874     MOVF fp, W
-0212  3E03     ADDLW 0x3
-0213  0086     MOVWF FSR1
-0214  0187     CLRF FSR1H
-0215  0016     MOVIW FSR1++
-0216  0401     IORWF INDF1, W
-0217  1903     BTFSC STATUS, 0x2
-0218  2A1A     GOTO 0x21A
-0219  2A1B     GOTO 0x21B
-021A  2A38     GOTO 0x238
-021B  0874     MOVF fp, W
-021C  3E03     ADDLW 0x3
-021D  0086     MOVWF FSR1
-021E  0187     CLRF FSR1H
-021F  3F40     MOVIW [0]FSR1
-0220  00F5     MOVWF 0x75
-0221  3F41     MOVIW [1]FSR1
-0222  00F6     MOVWF 0x76
-0223  0A74     INCF fp, W
-0224  0086     MOVWF FSR1
-0225  0187     CLRF FSR1H
-0226  3F40     MOVIW [0]FSR1
-0227  00F7     MOVWF 0x77
-0228  3F41     MOVIW [1]FSR1
-0229  00F8     MOVWF 0x78
-022A  0878     MOVF 0x78, W
-022B  3A80     XORLW 0x80
-022C  00F9     MOVWF 0x79
-022D  0876     MOVF 0x76, W
-022E  3A80     XORLW 0x80
-022F  0279     SUBWF 0x79, W
-0230  1D03     BTFSS STATUS, 0x2
-0231  2A34     GOTO 0x234
-0232  0875     MOVF 0x75, W
-0233  0277     SUBWF 0x77, W
-0234  1803     BTFSC STATUS, 0x0
-0235  2A37     GOTO 0x237
-0236  2A38     GOTO 0x238
-0237  2A40     GOTO 0x240
-16:            	        fp->buffer[fp->count] = (char)c;
-17:            		++fp->count;
-0238  0A74     INCF fp, W
-0239  0086     MOVWF FSR1
-023A  0187     CLRF FSR1H
-023B  3001     MOVLW 0x1
-023C  0781     ADDWF INDF1, F
-023D  3141     ADDFSR 1, 1
-023E  1803     BTFSC STATUS, 0x0
-023F  0A81     INCF INDF1, F
-18:            	}
-19:                }
-20:                return (unsigned char)c;
-21:            }
-0240  0008     RETURN
-22:            
-23:            #endif
----  /Applications/microchip/xc8/v2.20/pic/sources/c99/common/doprnt.c  ---------------------------------
-1:             /* vfprintf with configurable support for format conversions */
-2:             /* This code is specifically for XC8 */
-3:             #include <ctype.h>
-4:             #include <math.h>
-5:             #include <stdarg.h>
-6:             #include <stddef.h>
-7:             #include <stdint.h>
-8:             #include <stdio.h>
-9:             #include <stdlib.h>
-10:            #include <string.h>
-11:            #include <inline.h>
-12:            
-13:            /* Configuration options */
-14:            #ifdef _VFPF_ALL
-15:            #define _VFPF_CONVERT
-16:            #define _VFPF_FLAGS
-17:            #define _VFPF_WIDTH
-18:            #define _VFPF_PRECISION
-19:            
-20:            #define _VFPF_HH
-21:            #define _VFPF_H
-22:            #define _VFPF_L
-23:            #define _VFPF_LL
-24:            #define _VFPF_J
-25:            #define _VFPF_T
-26:            #define _VFPF_Z
-27:            
-28:            #define _VFPF_A
-29:            #define _VFPF_C
-30:            #define _VFPF_D
-31:            #define _VFPF_E
-32:            #define _VFPF_F
-33:            #define _VFPF_G
-34:            #define _VFPF_O
-35:            #define _VFPF_N
-36:            #define _VFPF_P
-37:            #define _VFPF_S
-38:            #define _VFPF_U
-39:            #define _VFPF_X
-40:            #endif
-41:            
-42:            #ifndef ARRAYSIZE
-43:            #define ARRAYSIZE(a)	(sizeof(a)/sizeof(a[0]))
-44:            #endif
-45:            #ifndef CSTRLEN
-46:            #define CSTRLEN(s)	(ARRAYSIZE(s)-1)
-47:            #endif
-48:            
-49:            /* Flags, precision, width */
-50:            #define MINUS_FLAG (1 << 0)
-51:            #define ZERO_FLAG (1 << 1)
-52:            #define PLUS_FLAG (1 << 2)
-53:            #define SPACE_FLAG (1 << 3)
-54:            #define POUND_FLAG (1 << 4)
-55:            static int flags, prec, width;
-56:            
-57:            #ifdef _VFPF_CONVERT
-58:            /* This buffer must be at least 32 bytes long for this code to be safe */
-59:            /* Output that would exceed buffer capacity is truncated */
-60:            #if defined(_VFPF_A) || defined(_VFPF_E) || defined(_VFPF_F) || defined(_VFPF_G)
-61:            #define DBLEN 80
-62:            #define EXPLEN 5
-63:            #else
-64:            #define DBLEN 32
-65:            #endif
-66:            static char dbuf[DBLEN];
-67:            
-68:            /* Character count */
-69:            static int nout;
-70:            
-71:            /* Output the string in dbuf, padded on the left or right */
-72:            static _INLINE int pad(FILE *fp, char *buf, int p)
-73:            {
-74:                int i, w;
-75:            
-76:                /* Left justify ? Put out string */
-77:                if (flags & MINUS_FLAG) {
-78:                    fputs((const char *)buf, fp);
-79:                }
-80:            
-81:                /* Put out padding */
-82:                w = (p < 0) ? 0 : p;
-83:                i = 0;
-84:                while (i < w) {
-85:                    fputc(' ', fp);
-86:                    ++i;
-87:                }
-88:            
-89:                /* Right justify ? Put out string */
-90:                if (!(flags & MINUS_FLAG)) {
-91:                    fputs((const char *)buf, fp);
-92:                }
-93:            
-94:                return strlen(buf) + w;
-95:            }
-96:            #endif
-97:            
-98:            #ifdef _VFPF_A
-99:            static _INLINE int atoa(FILE *fp, long double f, char c)
-100:           {
-101:               char mode, nmode;
-102:               int d, e, i, m, n, ne, p, pp, sign, t, w;
-103:               long double g, h, l, ou, u;
-104:           
-105:               /* Record sign, get absolute value */
-106:               sign = 0;
-107:               g = f;
-108:               if (g < 0.0) {
-109:                   sign = 1;
-110:                   g = -g;
-111:               }
-112:           
-113:               /* Print sign, prefix */
-114:               n = 0;
-115:               w = width;
-116:               if (sign || (flags & PLUS_FLAG)) {
-117:                   dbuf[n] = sign ? '-' : '+';
-118:                   ++n;
-119:                   --w;
-120:               }
-121:               dbuf[n++] = '0';
-122:               dbuf[n++] = isupper((int)c) ? 'X' : 'x';
-123:           
-124:               /* Catch infinities, NaNs here */
-125:               if (isinf(g)) {
-126:                   if (isupper((int)c)) {
-127:                       strcpy(&dbuf[n], "INF");
-128:                   } else {
-129:                       strcpy(&dbuf[n], "inf");
-130:                   }
-131:                   w -= CSTRLEN("inf");
-132:                   return pad(fp, &dbuf[0], w);
-133:               }
-134:               if (isnan(g)) {
-135:                   if (isupper((int)c)) {
-136:                       strcpy(&dbuf[n], "NAN");
-137:                   } else {
-138:                       strcpy(&dbuf[n], "nan");
-139:                   }
-140:                   w -= CSTRLEN("inf");
-141:                   return pad(fp, &dbuf[0], w);
-142:               }
-143:           
-144:               /* First find the largest power of 2 not larger than number to print */
-145:               u = 1.0;
-146:               e = 0;
-147:               if (!(g == 0.0)) {
-148:                   while (!(g < (u*2.0))) {
-149:                       u = u*2.0;
-150:                       ++e;
-151:                   }
-152:                   while (g < u) {
-153:                       u = u/2.0;
-154:                       --e;
-155:                   }
-156:               }
-157:           
-158:               /* Get precision */
-159:               p = (prec < 0) ? 6 : prec;
-160:           
-161:               /* Hex places, total */
-162:               m = p + 1;
-163:           
-164:               /* Go through the conversion once to get to the rounding step */
-165:               i = 0;
-166:               h = g;
-167:               ou = u;
-168:               while (i < m) {
-169:                   l = floor(h/u);
-170:                   d = (int)l;
-171:                   h -= l*u;
-172:                   u = u/16.0;
-173:                   ++i;
-174:               }
+1:                 /*******************************************************************************
+2:                  * Copyright (c) 2020 dBm Signal Dynamics Inc.
+3:                  * 
+4:                  * File:        main.c
+5:                  * Project:     mcu-irq-benchmark
+6:                  * Compiler:    XC8 v2.20, XC16 v1.60, XC32 v2.41
+7:                  * Hardware:    PIC16F19197 Basic Hookup (Schematic #14-00058A)
+8:                  *              PIC24FJ1024GA606 Basic Hookup (Schematic #14-00059A)
+9:                  *              PIC32MZ1024EFH064 Basic Hookup (Schematic #14-00060A)
+10:                 * 
+11:                 * Project used to measure the latency between interrupt assertion and the first
+12:                 * instruction executed in the ISR for all 3 MCUs. An Oscilloscope is required.
+13:                 * 
+14:                 * Project produces a 1 kHz, 50% duty-cycle PWM output signal (and IRQ),
+15:                 * The IRQ's ISR routine toggles a digital output pin (USER LED pin).
+16:                 * 
+17:                 * An Oscilloscope is used to measure IRQ latency (PWM 0-->1 to LED toggle).
+18:                 * 
+19:                 * The Disassembly listing must be consulted to subtract the #instruction cycles
+20:                 * used to toggle the USER LED. 
+21:                 * 
+22:                 * SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+23:                 * EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
+24:                 * MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
+25:                 * IN NO EVENT SHALL DBM SIGNAL DYNAMICS OR ITS LICENSORS BE LIABLE OR OBLIGATED
+26:                 * UNDER CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY,
+27:                 * OR OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
+28:                 * INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
+29:                 * CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
+30:                 * SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
+31:                 * (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
+32:                *******************************************************************************/
+33:                #include <xc.h>
+34:                #include <stdint.h>
+35:                #include <stdio.h>
+36:                #include "configBits.h"     // Hardware Configuration bit settings
+37:                
+38:                #if defined(PIC16F19197_BH)
+39:                #define ELAPSED_TICKS_ADJUSTMENT 9
+40:                #define NoOP() NOP()                        // Define macro for NOP assembly instruction
+41:                #define MAX_LOOP_COUNT  1
+42:                #elif defined(PIC24FJ1024GA606_BH)
+43:                #include <libpic30.h>                       // Added for printf() --> UART2 redirect support
+44:                #define ELAPSED_TICKS_ADJUSTMENT 10         // Timer Tick Adjustment for reading the timer register
+45:                #define NoOP() Nop()                        // Define macro for NOP assembly instruction
+46:                #define MAX_LOOP_COUNT  1
+47:                #elif defined(PIC32MZ1024EFH064_BH)
+48:                #include <cp0defs.h>                        // CP0 access macros for PIC32M devices
+49:                #define ELAPSED_TICKS_ADJUSTMENT 12         // Timer Tick Adjustment for reading the timer register
+50:                #define NoOP() Nop()                        // Define macro for NOP assembly instruction
+51:                #define MAX_LOOP_COUNT  4
+52:                #endif
+53:                
+54:                // Global Variables
+55:                
+56:                const char Project[] = "mcu-irq-benchmark";
+57:                const char Version[] = "00.01";
+58:                const char CompileDate[] = __DATE__;
+59:                const char CompileTime[] = __TIME__;
+60:                
+61:                
+62:                // Local Function Prototypes
+63:                void Initiallize(void);                     // 1-time System Initialization
+64:                void SetPerformanceMode(void);              // Configure Clocks, Interrupts, Cache, Pre-fetch for desired performance
+65:                void PinConfig(void);                       // Configure Programmable I/O pins
+66:                void UartConfig(void);                      // Configure UART for printf() statement
+67:                void PWMConfig(void);                       // Configure a PWM resource to produce a 1 kHz signal (and irq) on selected output pin
+68:                
+69:                int main(void) {
+000E42  FA0000     LNK #0x0
+70:                    
+71:                    Initiallize();
+000E44  070001     RCALL Initiallize
+72:                    
+73:                    while(1);
+000E46  37FFFF     BRA .L2
+74:                  
+75:                }
+76:                
+77:                void Initiallize(void){
+000E48  FA0000     LNK #0x0
+78:                    
+79:                    // Configure Clocks, Interrupts, Cache, Pre-fetch for desired performance
+80:                    SetPerformanceMode();       
+000E4A  070022     RCALL SetPerformanceMode
+81:                    
+82:                    // Configure Programmable I/O Pins for all I/O in this application
+83:                    PinConfig();
+000E4C  070029     RCALL PinConfig
+84:                    
+85:                    // Configure UART resource for printf() statement
+86:                    UartConfig();
+000E4E  070050     RCALL UartConfig
+87:                    
+88:                    printf("Cool-MCU.com\r\n");
+000E50  28DF30     MOV #0x8DF3, W0
+000E52  07FA6A     RCALL _puts
+89:                    printf("Project: %s\r\n", Project);
+000E54  28DC60     MOV #0x8DC6, W0
+000E56  781F80     MOV W0, [W15++]
+000E58  28E010     MOV #0x8E01, W0
+000E5A  781F80     MOV W0, [W15++]
+000E5C  07FBF5     RCALL __dprintf_s, __dprintf_0
+000E5E  5787E4     SUB W15, #0x4, W15
+90:                    printf("Version: %s\r\n", Version);
+000E60  28DD80     MOV #0x8DD8, W0
+000E62  781F80     MOV W0, [W15++]
+000E64  28E0F0     MOV #0x8E0F, W0
+000E66  781F80     MOV W0, [W15++]
+000E68  07FBEF     RCALL __dprintf_s, __dprintf_0
+000E6A  5787E4     SUB W15, #0x4, W15
+91:                    printf("Build date: %s\r\n", CompileDate);
+000E6C  28DDE0     MOV #0x8DDE, W0
+000E6E  781F80     MOV W0, [W15++]
+000E70  28E1D0     MOV #0x8E1D, W0
+000E72  781F80     MOV W0, [W15++]
+000E74  07FBE9     RCALL __dprintf_s, __dprintf_0
+000E76  5787E4     SUB W15, #0x4, W15
+92:                    printf("Build time: %s\r\n\r\n", CompileTime);
+000E78  28DEA0     MOV #0x8DEA, W0
+000E7A  781F80     MOV W0, [W15++]
+000E7C  28E2E0     MOV #0x8E2E, W0
+000E7E  781F80     MOV W0, [W15++]
+000E80  07FBE3     RCALL __dprintf_s, __dprintf_0
+000E82  5787E4     SUB W15, #0x4, W15
+93:                
+94:                    // Configure a PWM resource to produce a 50% duty cycle, 1 kHz signal (and interrupt)
+95:                    PWMConfig();
+000E84  070041     RCALL PWMConfig
+96:                    
+97:                    // Configure LED output
+98:                
+99:                #if defined(PIC16F19197_BH)
+100:               
+101:                   ANSELEbits.ANSE5 = 0;
+102:                   TRISEbits.TRISE5 = 0;
+103:                   LATEbits.LATE5 = 0;
+104:               
+105:               #elif defined(PIC24FJ1024GA606_BH)
+106:                   
+107:                   TRISEbits.TRISE2 = 0;
+000E86  A946B2     BCLR TRISE, #2
+108:                   LATEbits.LATE2 = 0;
+000E88  A946B6     BCLR LATE, #2
+109:                   
+110:               #endif      
+111:                   
+112:                   // Enable Interrupts Globally
+113:               
+114:               #if defined(PIC16F19197_BH)
+115:                   
+116:                   INTCONbits.PEIE = 1;    // Enable all peripheral interrupt sources
+117:                   INTCONbits.GIE = 1;     // Enable interrupts globally    
+118:               
+119:               #elif defined(PIC24FJ1024GA606_BH)
+120:                   
+121:                   INTCON2bits.GIE = 1;    // Enable interrupts globally
+000E8A  A8E083     BSET 0x83, #7
+122:                   
+123:               #endif    
+124:                   
+125:                   
+126:               }
+000E8C  FA8000     ULNK
+000E8E  060000     RETURN
+127:               
+128:               void SetPerformanceMode(void) {
+000E90  FA0000     LNK #0x0
+129:                   
+130:                   // At this point, the CPU is operating using the default oscillator and
+131:                   // clocking options defined by the hardware configuration bits.
+132:                   
+133:                   // Add any code below to adjust clocks and any other configuration for
+134:                   // desired performance before running your main code loop.
+135:                   
+136:               #if defined(PIC32MZ1024EFH064_BH)
+137:                   
+138:                   // At this point, the Hardware Clock Initialization is Complete
+139:               	// The Primary External XTAL OSC Oscillator Circuit (8 MHz) provides the clock source
+140:               	// Instruction Clock, PBCLK7 (SYSCLK) set to 8 MHz
+141:                   // Peripheral Bus Clocks divisors set to defaults (divide by 2))
+142:                   // Flash memory predictive prefetch is disabled
+143:                   // Cache memory is enabled (per compiler default XC32 startup setting)
+144:                   // Interrupt controller is in single vector mode (per compiler default XC32 startup setting)
+145:                   // Interrupts are disabled (per compiler default XC32 startup setting)
+146:                   
+147:                   // Set the desired performance mode:
+148:                   // SYSCLK = 8 MHz, All PBCLKx = 8 MHz
+149:                   // Cache Enabled (per default setting in "pic32_init_cache.S" - _CACHE_WRITEBACK_WRITEALLOCATE)
+150:                   // Pre-Fetch Enabled
+151:                   
+152:                   unsigned int cp0;
+153:               	
+154:                   // Unlock Sequence
+155:                   asm volatile("di");     // disable all interrupts
+156:                   SYSKEY = 0xAA996655;
+157:                   SYSKEY = 0x556699AA;  
+158:               
+159:                   // PB1DIV
+160:                                           // Peripheral Bus 1 cannot be turned off, so there's no need to turn it on
+161:                   PB1DIVbits.PBDIV = 0;   // Peripheral Bus 1 Clock Divisor Control (PBCLK1 is SYSCLK divided by 1)
+162:               
+163:                   // PB2DIV
+164:                   PB2DIVbits.ON = 1;      // Peripheral Bus 2 Output Clock Enable (Output clock is enabled)
+165:                   PB2DIVbits.PBDIV = 0;   // Peripheral Bus 2 Clock Divisor Control (PBCLK2 is SYSCLK divided by 1)
+166:               
+167:                   // PB3DIV
+168:                   PB3DIVbits.ON = 1;      // Peripheral Bus 2 Output Clock Enable (Output clock is enabled)
+169:                   PB3DIVbits.PBDIV = 0;   // Peripheral Bus 3 Clock Divisor Control (PBCLK3 is SYSCLK divided by 1)
+170:               
+171:                   // PB4DIV
+172:                   PB4DIVbits.ON = 1;      // Peripheral Bus 4 Output Clock Enable (Output clock is enabled)
+173:                   while (!PB4DIVbits.PBDIVRDY); // Wait until it is ready to write to
+174:                   PB4DIVbits.PBDIV = 0;   // Peripheral Bus 4 Clock Divisor Control (PBCLK4 is SYSCLK divided by 1)
 175:               
-176:               /* Remainder >= halfway ? */
-177:               l = u*8.0;
-178:               if (h < l) {
-179:                   l = 0.0;
-180:               } else {
-181:                   /* On tie choose even number */
-182:                   if ((h == l) && !(d % 2)) {
-183:                       l = 0.0;
-184:                   }
-185:               }
-186:           
-187:               /* Round */
-188:               h = g + l;
-189:               
-190:               /* Convert again, after rounding */
-191:               u = ou;
-192:               ne = 0;
-193:               pp = 0;
-194:               t = 0;
-195:               i = 0;
-196:               while ((i < m) && (n < (DBLEN - EXPLEN))) {
-197:                   l = floor(h/u);
-198:                   d = (int)l;
-199:                   if (!(flags & POUND_FLAG) && !d && (ne < 0)) {
-200:                       ++t;
-201:                   } else {
-202:                       if (!pp && (ne < 0)) {
-203:                           dbuf[n++] = '.';
-204:                           --w;
-205:                           pp = 1;
-206:                       }
-207:                       while (t) {
-208:                           dbuf[n++] = '0';
-209:                           --w;
-210:                           --t;
-211:                       }
-212:                       d = (d < 10) ? '0' + d : 'a' + (d - 10);
-213:                       if (isupper((int)c) && isalpha(d)) {
-214:                           d = toupper(d);
-215:                       }
-216:                       dbuf[n++] = d;
-217:                       --w;
-218:                   }
-219:                   h -= l*u;
-220:                   u = u/16.0;
-221:                   --ne;
-222:                   ++i;
-223:               }
-224:               if (!pp && (flags & POUND_FLAG)) {
-225:                   dbuf[n++] = '.';
-226:               }
-227:               dbuf[n] = '\0';
-228:           
-229:               /* Convert exponent */
-230:               i = sizeof(dbuf) - 1;
-231:               dbuf[i] = '\0';
-232:               sign = 0;
-233:               if (e < 0) {
-234:                   sign = 1;
-235:                   e = -e;
-236:               }
-237:               p = 1;
-238:               while (e || (0 < p)) {
-239:                   --i;
-240:                   dbuf[i] = '0' + (e % 10);
-241:                   e = e / 10;
-242:                   --p;
-243:                   --w;
-244:               }
-245:               --i;
-246:               dbuf[i] = sign ? '-' : '+';
-247:               --w;
-248:               --i;
-249:               dbuf[i] = isupper((int)c) ? 'P' : 'p';
-250:               --w;
-251:               strcpy(&dbuf[n], &dbuf[i]);
-252:           
-253:               /* Put out padded string */
-254:               return pad(fp, &dbuf[0], w);
-255:           }
-256:           #endif
-257:           
-258:           #ifdef _VFPF_C
-259:           static _INLINE int ctoa(FILE *fp, char c)
-260:           {
-261:               int l, w;
-262:           
-263:               /* Get width */
-264:               w = width ? width - 1 : width;
-265:           
-266:               /* Put out padded string */
-267:               dbuf[0] = c;
-268:               dbuf[1] = '\0';
-269:               return pad(fp, &dbuf[0], w);
-270:           }
-271:           #endif
-272:           
-273:           #ifdef _VFPF_D
-274:           static _INLINE int dtoa(FILE *fp, long long d)
-275:           {
-276:               int i, p, s, w;
-277:               long long n;
-278:           
-279:               /* Record sign, get absolute value */
-280:               n = d;
-281:               s = n < 0 ? 1 : 0;
-282:               if (s) {
-283:                   n = -n;
-284:               }
-285:           
-286:               /* Adjust flags, precision, width */
-287:               if (!(prec < 0)) {
-288:                   flags &= ~ZERO_FLAG;
-289:               }
-290:               p = (0 < prec) ? prec : 1;
-291:               w = width;
-292:               if (s || (flags & PLUS_FLAG)) {
-293:                   --w;
-294:               }
-295:           
-296:               /* Convert to decimal, possibly filling on the left with zeroes */
-297:               i = sizeof(dbuf) - 1;
-298:               dbuf[i] = '\0';
-299:               while (!(i < 1) && (n || (0 < p) || ((0 < w) && (flags & ZERO_FLAG)))) {
-300:                   --i;
-301:                   dbuf[i] = '0' + abs(n % 10);
-302:                   --p;
-303:                   --w;
-304:                   n = n / 10;
-305:               }
-306:           
-307:               /* Display sign if required */
-308:               if (s || (flags & PLUS_FLAG)) {
-309:                   --i;
-310:                   dbuf[i] = s ? '-' : '+';
-311:               }
-312:           
-313:               /* Put out padded string */
-314:               return pad(fp, &dbuf[i], w);
-315:           }
-316:           #endif
-317:           
-318:           #if defined(_VFPF_E) || defined(_VFPF_F) || defined(_VFPF_G)
-319:           static _INLINE int efgtoa(FILE *fp, long double f, char c)
-320:           {
-321:               char mode, nmode;
-322:               int d, e, i, m, n, ne, p, pp, sign, t, w;
-323:               long double g, h, l, ou, u;
-324:           
-325:               /* Record sign, get absolute value */
-326:               sign = 0;
-327:               g = f;
-328:               if (g < 0.0) {
-329:                   sign = 1;
-330:                   g = -g;
-331:               }
-332:           
-333:               /* Print sign */
-334:               n = 0;
-335:               w = width;
-336:               if (sign || (flags & PLUS_FLAG)) {
-337:                   dbuf[n] = sign ? '-' : '+';
-338:                   ++n;
-339:                   --w;
-340:               }
-341:           
-342:               /* Catch infinities, NaNs here */
-343:               if (isinf(g)) {
-344:                   if (isupper((int)c)) {
-345:                       strcpy(&dbuf[n], "INF");
-346:                   } else {
-347:                       strcpy(&dbuf[n], "inf");
-348:                   }
-349:                   w -= CSTRLEN("inf");
-350:                   return pad(fp, &dbuf[0], w);
-351:               }
-352:               if (isnan(g)) {
-353:                   if (isupper((int)c)) {
-354:                       strcpy(&dbuf[n], "NAN");
-355:                   } else {
-356:                       strcpy(&dbuf[n], "nan");
-357:                   }
-358:                   w -= CSTRLEN("inf");
-359:                   return pad(fp, &dbuf[0], w);
-360:               }
-361:           
-362:               /* First find the largest power of 10 not larger than number to print */
-363:               u = 1.0;
-364:               e = 0;
-365:               if (!(g == 0.0)) {
-366:                   while (!(g < (u*10.0))) {
-367:                       u = u*10.0;
-368:                       ++e;
-369:                   }
-370:                   while (g < u) {
-371:                       u = u/10.0;
-372:                       --e;
-373:                   }
-374:               }
-375:           
-376:               /* Get mode, precision */
-377:               mode = tolower((int)c);
-378:               nmode = mode;
-379:               if (mode == 'g') {
-380:           		if (prec == 0) {
-381:           			prec = 1;
-382:           		}
-383:                   p = (0 < prec) ? prec : 6;
-384:               } else {
-385:                   p = (prec < 0) ? 6 : prec;
-386:               }
-387:           
-388:               /* Choose e or f mode from g mode */
-389:               if (mode == 'g') {
-390:                   if (!(e < -4) && !((p - 1) < e)) {
-391:                       nmode = 'f';
-392:                   } else {
-393:                       nmode = 'e';
-394:                   }
-395:               }
-396:           
-397:               /* Decimal places or significant digits */
-398:               m = p;
-399:               if (!(mode == 'g') || ((nmode == 'f') && (e < 0))) {
-400:                   ++m;
-401:               }
-402:           
-403:               /* Adjust starting exponent, string length for 'f' conversions */
-404:               if (nmode == 'f') {
-405:                   if (e < 0) {
-406:                       u = 1.0;
-407:                       e = 0;
-408:                   }
-409:                   if (!(mode == 'g')) {
-410:                       m += e;
-411:                   }
-412:               }
-413:           
-414:               /* Go through the conversion once to get to the rounding step */
-415:               i = 0;
-416:               h = g;
-417:               ou = u;
-418:               while (i < m) {
-419:                   l = floor(h/u);
-420:                   d = (int)l;
-421:                   h -= l*u;
-422:                   u = u/10.0;
-423:                   ++i;
+176:                   // PB5DIV
+177:                   PB5DIVbits.ON = 1;      // Peripheral Bus 5 Output Clock Enable (Output clock is enabled)
+178:                   PB5DIVbits.PBDIV = 0;   // Peripheral Bus 5 Clock Divisor Control (PBCLK5 is SYSCLK divided by 1)
+179:               
+180:                   // PB7DIV
+181:                   PB7DIVbits.ON = 1;      // Peripheral Bus 7 Output Clock Enable (Output clock is enabled)
+182:                   PB7DIVbits.PBDIV = 0;   // Peripheral Bus 7 Clock Divisor Control (PBCLK7 is SYSCLK divided by 1)
+183:               
+184:                   // PB8DIV
+185:                   PB8DIVbits.ON = 1;      // Peripheral Bus 8 Output Clock Enable (Output clock is enabled)
+186:                   PB8DIVbits.PBDIV = 0;   // Peripheral Bus 8 Clock Divisor Control (PBCLK8 is SYSCLK divided by 1)
+187:               
+188:                   // PRECON - Set up prefetch (60 MHz operation))
+189:                   //PRECONbits.PFMSECEN = 0; // Flash SEC Interrupt Enable (Do not generate an interrupt when the PFMSEC bit is set)
+190:                   PRECONbits.PREFEN = 0b11; // Predictive Prefetch Enable (Enable predictive prefetch for any address)
+191:                   PRECONbits.PFMWS = 0b000; // PFM Access Time Defined in Terms of SYSCLK Wait States (Zero wait states @ 8 MHz)
+192:               
+193:                   // Set up caching
+194:                   // See  https://microchipdeveloper.com/32bit:mz-cache-disable
+195:                   // Added "pic32_init_cache.S" to project from XC32 tool chain, and set __PIC32_CACHE_MODE to _CACHE_WRITEBACK_WRITEALLOCATE
+196:               
+197:                   // Lock Sequence
+198:                   SYSKEY = 0x33333333;
+199:                   asm volatile("ei");     // Enable all interrupts    
+200:                   
+201:               #elif defined(PIC24FJ1024GA606_BH)
+202:                   
+203:                   // At this point, the Hardware Clock Initialization is Complete
+204:                   // Primary OSC with 4X PLL provides 32 MHz Fosc (16 MIPs)
+205:                   
+206:                   // Need to set Fosc to 16 MHz (8 MIPs)
+207:                   
+208:                   CLKDIVbits.CPDIV = 0x01;    // Select DIV2 clock scaling (16 MHz, 8 MIPs)    
+000E92  800811     MOV CLKDIV, W1
+000E94  2FF3F0     MOV #0xFF3F, W0
+000E96  608000     AND W1, W0, W0
+000E98  A06000     BSET W0, #6
+000E9A  880810     MOV W0, CLKDIV
+209:                   
+210:               #endif
+211:                   
+212:               }
+000E9C  FA8000     ULNK
+000E9E  060000     RETURN
+213:               
+214:               void PinConfig(void){
+000EA0  FA0000     LNK #0x0
+215:                       
+216:               #if defined(PIC16F19197_BH)
+217:                   
+218:                   // Configure digital pins for UART function
+219:                   TRISCbits.TRISC7 = 0;       // TX1 --> RC7
+220:                   TRISCbits.TRISC6 = 1;       // RX1 <-- RC6
+221:                   
+222:                   // RE6 used as CCP1 PWM output signal
+223:                   // Make pin digital
+224:                   ANSELEbits.ANSE6 = 0;
+225:                   // Make pin digital output and initialize level
+226:                   TRISEbits.TRISE6 = 0;
+227:                   LATEbits.LATE6 = 0;
+228:                   
+229:                   // Initiallize PPS Pin Mapping for this Application
+230:                   // TX1 --> RC7 
+231:                   // RX1 <-- RC6
+232:                   // CCP1 --> RE6
+233:                   // 1. Unlock PPS registers
+234:                   //bit oldGIE = INTCONbits.GIE;
+235:                   //INTCONbits.GIE = 0;
+236:                   PPSLOCK = 0x55;
+237:                   PPSLOCK = 0xAA;
+238:                   PPSLOCKbits.PPSLOCKED = 0;
+239:                   //INTCONbits.GIE = oldGIE;
+240:                   // 2. Configure Output Functions
+241:                   // Assign TX1 output function to pin RC7
+242:                   RC7PPS = 0x0D;
+243:                   // Assign CCP1 output function to pin RE6
+244:                   RE6PPS = 0x09;
+245:                   // 3. Configure Input Functions
+246:                   // Assign RC6 pin to RX1 input function
+247:                   RX1PPS = 0x16;
+248:                   // 4 Lock the PPS registers
+249:                   //oldGIE = INTCONbits.GIE;
+250:                   //INTCONbits.GIE = 0;
+251:                   PPSLOCK = 0x55;
+252:                   PPSLOCK = 0xAA;
+253:                   PPSLOCKbits.PPSLOCKED = 1;
+254:                   //INTCONbits.GIE = oldGIE;
+255:                   
+256:               #elif defined(PIC24FJ1024GA606_BH)
+257:                   
+258:                   // RD0 used as OC1 PWM output signal
+259:                   // Make pin digital
+260:                   // ANSELEbits.ANSE6 = 0;
+261:                   // Make pin digital output and initialize level
+262:                   TRISDbits.TRISD0 = 0;
+000EA2  A9069E     BCLR TRISD, #0
+263:                   LATDbits.LATD0 = 0;
+000EA4  A906A2     BCLR LATD, #0
+264:                   
+265:                   // Set up PPS (I/O Pin-Mapping) for all I/O in this application
+266:                   // U2RX <-- RP10/RF4   (DEBUG PORT PC-TX pin)
+267:                   // U2TX --> RP17/RF5   (DEBUG PORT PC-RX pin)
+268:                   // OC1 --> RP11/RD0     1 kHz PWM output
+269:                   // 1. Unlock PPS registers
+270:                   __builtin_write_OSCCONL(OSCCON & 0xBF);
+000EA6  800801     MOV OSCCON, W1
+000EA8  200BF0     MOV #0xBF, W0
+000EAA  608100     AND W1, W0, W2
+000EAC  200460     MOV #0x46, W0
+000EAE  200571     MOV #0x57, W1
+000EB0  201003     MOV #0x100, W3
+000EB2  784980     MOV.B W0, [W3]
+000EB4  784981     MOV.B W1, [W3]
+000EB6  784982     MOV.B W2, [W3]
+271:                   // 2. Configure Output Functions
+272:                   // Assign U2TX output function to pin RP17
+273:                   RPOR8bits.RP17R = 5;
+000EB8  803F21     MOV RPOR8, W1
+000EBA  280FF0     MOV #0x80FF, W0
+000EBC  608080     AND W1, W0, W1
+000EBE  205000     MOV #0x500, W0
+000EC0  700001     IOR W0, W1, W0
+000EC2  883F20     MOV W0, RPOR8
+274:                   // Assign OC1 output function to pin RP11
+275:                   RPOR5bits.RP11R = 13;
+000EC4  803EF1     MOV RPOR5, W1
+000EC6  280FF0     MOV #0x80FF, W0
+000EC8  608080     AND W1, W0, W1
+000ECA  20D000     MOV #0xD00, W0
+000ECC  700001     IOR W0, W1, W0
+000ECE  883EF0     MOV W0, RPOR5
+276:                   // 3. Configure Input Functions
+277:                   // Assign pin RP10 to U2RX input function
+278:                   RPINR19bits.U2RXR = 10;
+000ED0  803DB1     MOV RPINR19, W1
+000ED2  2FFC00     MOV #0xFFC0, W0
+000ED4  608000     AND W1, W0, W0
+000ED6  B300A0     IOR #0xA, W0
+000ED8  883DB0     MOV W0, RPINR19
+279:                   // 4 Lock the PPS registers
+280:                   __builtin_write_OSCCONL(OSCCON | 0x40);    
+000EDA  800800     MOV OSCCON, W0
+000EDC  780100     MOV W0, W2
+000EDE  A06002     BSET W2, #6
+000EE0  200460     MOV #0x46, W0
+000EE2  200571     MOV #0x57, W1
+000EE4  201003     MOV #0x100, W3
+000EE6  784980     MOV.B W0, [W3]
+000EE8  784981     MOV.B W1, [W3]
+000EEA  784982     MOV.B W2, [W3]
+281:                   
+282:               #elif defined(PIC32MZ1024EFH064_BH)
+283:                   
+284:                   // Set up PPS (I/O Pin-Mapping) for all I/O in this application
+285:                   // U2RX <-- RPB15   (DEBUG PORT PC-TX pin)
+286:                   // U2TX --> RPB14   (DEBUG PORT PC-RX pin)
+287:                   
+288:                   // U2RX pin (RPB15) is an ADC input, so need to configure ANSEL register to
+289:                   // disable analog pin function
+290:                   ANSELBbits.ANSB15 = 0;
+291:                   
+292:                   // PPS unlock sequence
+293:                   SYSKEY = 0x0;         
+294:                   SYSKEY = 0xAA996655;         
+295:                   SYSKEY = 0x556699AA; 
+296:                   CFGCONbits.IOLOCK = 0;  // unlock PPS registers for writing
+297:                   
+298:                   // modify the PPS registers for the application (per table 11-2 in data sheet)
+299:                   U2RXRbits.U2RXR = 3;        // Map RPB15 to U2RX
+300:                   RPB14Rbits.RPB14R = 2;      // Map U2TX to RPB14
+301:                   
+302:                   // PPS re-lock sequence
+303:                   CFGCONbits.IOLOCK = 1;         
+304:                   SYSKEY = 0x0;    
+305:                   
+306:               #endif
+307:               }
+000EEC  FA8000     ULNK
+000EEE  060000     RETURN
+308:               
+309:               void UartConfig(void){
+000EF0  FA0000     LNK #0x0
+310:               
+311:               #if defined(PIC16F19197_BH)
+312:                   
+313:                   // Initialize UART1 for use as the DEBUG PORT for printf() messages
+314:                   
+315:                   // Turn the UART off
+316:                   RC1STAbits.SPEN = 0;
+317:                   TX1STAbits.TXEN = 0;
+318:               
+319:                   // Disable U1 Interrupts
+320:                   PIR3bits.TX1IF = 0;                                                         // Clear the Transmit Interrupt Flag
+321:                   PIE3bits.TX1IE = 0;                                                         // Disable Transmit Interrupts
+322:                   PIR3bits.RC1IF = 0;                                                         // Clear the Receive Interrupt Flag
+323:                   PIE3bits.RC1IE = 0;                                                         // Disable Receive Interrupts
+324:                   
+325:                   // Configure TX Channel
+326:                   TX1STAbits.SYNC = 0;                                                        // Async mode
+327:                   TX1STAbits.BRGH = 1;                                                        // High speed BRG
+328:                   
+329:                   // Configure RX Channel
+330:                   RC1STAbits.CREN = 1;                                                        // Enable continuous RX
+331:                   
+332:                   // Configure BRG (BRGH = 1, BRG = 1)
+333:                   BAUD1CONbits.BRG16 = 1;
+334:                   SP1BRGH = 0x00;
+335:                   SP1BRGL = 0x44;               // decimal 68 (115200 baud)
+336:                   
+337:                   // ...And turn the UART on
+338:                   RC1STAbits.SPEN = 1;
+339:                   TX1STAbits.TXEN = 1;    
+340:                   
+341:               #elif defined(PIC24FJ1024GA606_BH)
+342:                   
+343:                   // Initialize UART2 for use as the DEBUG PORT for printf() messages
+344:                   
+345:                   __C30_UART = 2;         // MACRO: Divert printf() output to UART 2 - see XC16 manual
+000EF2  200020     MOV #0x2, W0
+000EF4  884530     MOV W0, 0x8A6
+346:                   
+347:                   U2MODEbits.UARTEN = 0;  // Disable UART  
+000EF6  A9E3AF     BCLR 0x3AF, #7
+348:                   U2STAbits.UTXEN = 0;
+000EF8  A943B1     BCLR 0x3B1, #2
+349:                   U2MODEbits.BRGH = 1;    // Enable high rate baud clock
+000EFA  A863AE     BSET U2MODE, #3
+350:                   U2BRG = 16;             // Baud Rate generator set to 115200 baud
+000EFC  200100     MOV #0x10, W0
+000EFE  881DB0     MOV W0, U2BRG
+351:                   U2MODEbits.UARTEN = 1;
+000F00  A8E3AF     BSET 0x3AF, #7
+352:                   U2STAbits.UTXEN = 1;    // Enable UART    
+000F02  A843B1     BSET 0x3B1, #2
+353:                   
+354:               #elif defined(PIC32MZ1024EFH064_BH)
+355:                   
+356:                   // Initialize UART2 for use as the DEBUG PORT for printf() messages
+357:                   
+358:                   // Note: No special initialization is required for printf()
+359:                   // printf() uses UART 2 for output by default as long as UART 2 is initialized before use
+360:                   
+361:                   U2MODEbits.UARTEN = 0;  // Disable UART  
+362:                   U2STAbits.UTXEN = 0;
+363:                   U2MODEbits.BRGH = 1;    // Enable high rate baud clock
+364:                   U2BRG = 16;             // Baud Rate generator set to 115200 baud
+365:                   U2MODEbits.UARTEN = 1;
+366:                   U2STAbits.UTXEN = 1;    // Enable UART    
+367:                   
+368:               #endif
+369:                   
+370:               }
+000F04  FA8000     ULNK
+000F06  060000     RETURN
+371:               
+372:               #if defined(PIC16F19197_BH)
+373:                   
+374:               // XC8 Stub required to redirect printf() statements to UART 1
+375:               
+376:               void putch(char c) {
+377:                   while(!TX1STAbits.TRMT);   // wait while Tx buffer full
+378:                   TX1REG = c;
+379:               }
+380:               
+381:               #endif
+382:               
+383:               void PWMConfig(void){
+000F08  FA0000     LNK #0x0
+384:                   
+385:               #if defined(PIC16F19197_BH)
+386:                   
+387:                   T2CONbits.T2ON = 0;         // turn Timer2 off
+388:                   T2TMR = 0;                  // reset the count   
+389:                   T2CLKCONbits.CS = 1;        // Select Fcyc (8 MHz) as clock source
+390:                   T2CONbits.T2CKPS = 5;       // 1:32 prescale (250 kHz)
+391:                   T2PR = 250;                 // set the PWM period value for 1000 uS (1mS)
+392:                   
+393:                   CCP1CONbits.EN = 0;         // turn CCP1 off
+394:                   CCP1CONbits.MODE = 15;      // set CCP1 mode to PWM
+395:                   CCPR1H = 0x01;
+396:                   CCPR1L = 0xF4;              // set up 50% duty cycle on output (count = 500)
+397:                   CCP1CONbits.EN = 1;         // turn CCP1 on
+398:                   
+399:                   PIR4bits.TMR2IF = 0;
+400:                   PIE4bits.TMR2IE = 1;        // enable Timer2 interrupt on start of PWM cycle
+401:                   T2CONbits.T2ON = 1;         // turn Timer2 on
+402:               
+403:               #elif defined(PIC24FJ1024GA606_BH)
+404:                
+405:                   T2CONbits.TON = 0;          // turn Timer2 off
+000F0A  A9E1A1     BCLR 0x1A1, #7
+406:                   TMR2 = 0x00;                // reset the count
+000F0C  EF2196     CLR TMR2
+407:                   T2CONbits.TCS = 0;          // Select Fcyc (8 MHz) as clock source
+000F0E  A921A0     BCLR T2CON, #1
+408:                   T2CONbits.TCKPS = 1;        // 1:8 prescale (1 MHz)
+000F10  800D01     MOV T2CON, W1
+000F12  2FFCF0     MOV #0xFFCF, W0
+000F14  608000     AND W1, W0, W0
+000F16  A04000     BSET W0, #4
+000F18  880D00     MOV W0, T2CON
+409:                   PR2 = 1000;                 // set the PWM period value for 1000 uS (1mS)
+000F1A  203E80     MOV #0x3E8, W0
+000F1C  880CE0     MOV W0, PR2
+410:                   
+411:                   OC1CON1bits.OCM = 0;        // turn OC1 off
+000F1E  801181     MOV OC1CON1, W1
+000F20  2FFF80     MOV #0xFFF8, W0
+000F22  608000     AND W1, W0, W0
+000F24  881180     MOV W0, OC1CON1
+412:                   OC1R = 500;                 // set up 50% duty cycle on output (count = 500)
+000F26  201F40     MOV #0x1F4, W0
+000F28  8811B0     MOV W0, OC1R
+413:                   OC1CON1bits.OCTSEL = 0;     // select Timer 2 as the OC time base
+000F2A  801181     MOV OC1CON1, W1
+000F2C  2E3FF0     MOV #0xE3FF, W0
+000F2E  608000     AND W1, W0, W0
+000F30  881180     MOV W0, OC1CON1
+414:                   OC1CON1bits.OCM = 0b110;    // set OC1 mode to PWM (Edge PWM)
+000F32  801181     MOV OC1CON1, W1
+000F34  2FFF80     MOV #0xFFF8, W0
+000F36  608000     AND W1, W0, W0
+000F38  B30060     IOR #0x6, W0
+000F3A  881180     MOV W0, OC1CON1
+415:                   
+416:                   IFS0bits.T2IF = 0;          // clear Timer 2 interrupt flag
+000F3C  A9E088     BCLR IFS0, #7
+417:                   //IEC0bits.T2IE = 1;          // enable Timer 2 interrupts
+418:                   IFS0bits.OC1IF = 0;
+000F3E  A94088     BCLR IFS0, #2
+419:                   IEC0bits.OC1IE = 1;
+000F40  A84098     BSET IEC0, #2
+420:                   T2CONbits.TON = 1;          // start timer (starts PWMs)
+000F42  A8E1A1     BSET 0x1A1, #7
+421:                   
+422:               #endif    
+423:                   
 424:               }
+000F44  FA8000     ULNK
+000F46  060000     RETURN
 425:               
-426:               /* Remainder >= halfway ? */
-427:               l = u*5.0;
-428:               if (h < l) {
-429:                   l = 0.0;
-430:               } else {
-431:                   /* On tie choose even number */
-432:                   if ((h == l) && !(d % 2)) {
-433:                       l = 0.0;
-434:                   }
-435:               }
-436:           
-437:               /* Round */
-438:               h = g + l;
-439:               
-440:               /* Convert again, after rounding */
-441:               u = ou;
-442:               ne = (nmode == 'e') ? 0 : e;
-443:               pp = 0;
-444:               t = 0;
-445:               i = 0;
-446:               while ((i < m) && (n < (DBLEN - EXPLEN))) {
-447:                   l = floor(h/u);
-448:                   d = (int)l;
-449:                   if (!(flags & POUND_FLAG) && !d && (mode == 'g') && (ne < 0)) {
-450:                       ++t;
-451:                   } else {
-452:                       if (!pp && (ne < 0)) {
-453:                           dbuf[n++] = '.';
-454:                           --w;
-455:                           pp = 1;
-456:                       }
-457:                       while (t) {
-458:                           dbuf[n++] = '0';
-459:                           --w;
-460:                           --t;
-461:                       }
-462:                       dbuf[n++] = '0' + d;
-463:                       --w;
-464:                   }
-465:                   h -= l*u;
-466:                   u = u/10.0;
-467:                   --ne;
-468:                   ++i;
-469:               }
-470:               if (!pp && (flags & POUND_FLAG)) {
-471:                   dbuf[n++] = '.';
-472:               }
-473:               dbuf[n] = '\0';
-474:           
-475:               /* Convert exponent */
-476:               if (nmode == 'e') {
-477:                   i = sizeof(dbuf) - 1;
-478:                   dbuf[i] = '\0';
-479:                   sign = 0;
-480:                   if (e < 0) {
-481:                       sign = 1;
-482:                       e = -e;
-483:                   }
-484:                   p = 2;
-485:                   while (e || (0 < p)) {
-486:                       --i;
-487:                       dbuf[i] = '0' + (e % 10);
-488:                       e = e / 10;
-489:                       --p;
-490:                       --w;
-491:                   }
-492:                   --i;
-493:                   dbuf[i] = sign ? '-' : '+';
-494:                   --w;
-495:                   --i;
-496:                   dbuf[i] = isupper((int)c) ? 'E' : 'e';
-497:                   --w;
-498:                   strcpy(&dbuf[n], &dbuf[i]);
-499:               }
-500:           
-501:               /* Put out padded string */
-502:               return pad(fp, &dbuf[0], w);
-503:           }
-504:           #endif
-505:           
-506:           #ifdef _VFPF_O
-507:           static _INLINE int otoa(FILE *fp, unsigned long long d)
-508:           {
-509:               int i, p, t, w;
-510:               unsigned long long n;
-511:           
-512:               /* Adjust flags, precision, width */
-513:               if (!(prec < 0)) {
-514:                   flags &= ~ZERO_FLAG;
-515:               }
-516:               p = (0 < prec) ? prec : 1;
-517:               w = width;
-518:           
-519:               /* Convert to octal, possibly filling on the left with zeroes */
-520:               n = d;
-521:               i = sizeof(dbuf) - 1;
-522:               dbuf[i] = '\0';
-523:               t = 0;
-524:               while (!(i < 1) && (n || (0 < p) || ((0 < w) && (flags & ZERO_FLAG)))) {
-525:                   --i;
-526:                   t = n & 07;
-527:                   dbuf[i] = '0' + t;
-528:                   --p;
-529:                   --w;
-530:                   n = n >> 3;
-531:               }
-532:           
-533:               /* Display prefix if required */
-534:               if ((flags & POUND_FLAG) && t) {
-535:                   --i;
-536:                   dbuf[i] = '0';
-537:                   --w;
-538:               }
-539:           
-540:               /* Put out padded string */
-541:               return pad(fp, &dbuf[i], w);
-542:           }
-543:           #endif
-544:           
-545:           #ifdef _VFPF_S
-546:           static _INLINE int stoa(FILE *fp, char *s)
-003B  0140     MOVLB 0x0
-547:           {
-548:               char *cp, nuls[] = "(null)";
-003D  3056     MOVLW 0x56
-003E  0086     MOVWF FSR1
-003F  3000     MOVLW 0x0
-0040  0087     MOVWF FSR1H
-0041  3023     MOVLW 0x23
-0042  0084     MOVWF FSR0
-0043  3000     MOVLW 0x0
-0044  0085     MOVWF FSR0H
-0045  3007     MOVLW 0x7
-0046  00A0     MOVWF __pcstackBANK0
-0047  0016     MOVIW FSR1++
-0048  001A     MOVWI FSR0++
-0049  0BA0     DECFSZ __pcstackBANK0, F
-004A  2847     GOTO 0x47
-549:               int i, l, p, w;
-550:           
-551:               /* Check for null string */
-552:               cp = s;
-004B  087B     MOVF 0x7B, W
-004C  00AF     MOVWF 0x2F
-004D  087A     MOVF s, W
-004E  00AE     MOVWF cp
-553:               if (!cp) {
-004F  082E     MOVF cp, W
-0050  042F     IORWF 0x2F, W
-0051  1D03     BTFSS STATUS, 0x2
-0052  2854     GOTO 0x54
-0053  2855     GOTO 0x55
-0054  2859     GOTO 0x59
-554:                   cp = nuls;
-0055  3023     MOVLW 0x23
-0056  00AE     MOVWF cp
-0057  3000     MOVLW 0x0
-0058  00AF     MOVWF 0x2F
-555:               }
-556:           
-557:               /* Get length, precision, width */
-558:               l = strlen(cp);
-0059  082F     MOVF 0x2F, W
-005A  00F2     MOVWF c
-005B  082E     MOVF cp, W
-005C  00F1     MOVWF c
-005D  3182     MOVLP 0x2
-005E  22BA     CALL 0x2BA
-005F  3180     MOVLP 0x0
-0060  0872     MOVF c, W
-0061  0140     MOVLB 0x0
-0062  00B4     MOVWF 0x34
-0063  0871     MOVF c, W
-0064  00B3     MOVWF l
-559:               p = prec;
-0065  0853     MOVF 0x53, W
-0066  00B2     MOVWF 0x32
-0067  0852     MOVF prec, W
-0068  00B1     MOVWF p
-560:               l = (!(p < 0) && (p < l)) ? p : l;
-0069  1BB2     BTFSC 0x32, 0x7
-006A  286C     GOTO 0x6C
-006B  286D     GOTO 0x6D
-006C  2881     GOTO 0x81
-006D  0832     MOVF 0x32, W
-006E  3A80     XORLW 0x80
-006F  00A0     MOVWF __pcstackBANK0
-0070  0834     MOVF 0x34, W
-0071  3A80     XORLW 0x80
-0072  0220     SUBWF __pcstackBANK0, W
-0073  1D03     BTFSS STATUS, 0x2
-0074  2877     GOTO 0x77
-0075  0833     MOVF l, W
-0076  0231     SUBWF p, W
-0077  1C03     BTFSS STATUS, 0x0
-0078  287A     GOTO 0x7A
-0079  287B     GOTO 0x7B
-007A  287C     GOTO 0x7C
-007B  2881     GOTO 0x81
-007C  0140     MOVLB 0x0
-007D  0832     MOVF 0x32, W
-007E  00B4     MOVWF 0x34
-007F  0831     MOVF p, W
-0080  00B3     MOVWF l
-561:               p = l;
-0081  0140     MOVLB 0x0
-0082  0834     MOVF 0x34, W
-0083  00B2     MOVWF 0x32
-0084  0833     MOVF l, W
-0085  00B1     MOVWF p
-562:               w = width;
-0086  0851     MOVF 0x51, W
-0087  00AD     MOVWF 0x2D
-0088  0850     MOVF width, W
-0089  00AC     MOVWF w
-563:           
-564:               /* Right justify, pad on left ? */
-565:               if (!(flags & MINUS_FLAG)) {
-008A  1854     BTFSC flags, 0x0
-008B  288D     GOTO 0x8D
-008C  288E     GOTO 0x8E
-008D  28AE     GOTO 0xAE
-008E  28A0     GOTO 0xA0
-566:                   while (l < w) {
-00A0  0834     MOVF 0x34, W
-00A1  3A80     XORLW 0x80
-00A2  00A0     MOVWF __pcstackBANK0
-00A3  082D     MOVF 0x2D, W
-00A4  3A80     XORLW 0x80
-00A5  0220     SUBWF __pcstackBANK0, W
-00A6  1D03     BTFSS STATUS, 0x2
-00A7  28AA     GOTO 0xAA
-00A8  082C     MOVF w, W
-00A9  0233     SUBWF l, W
-00AA  1C03     BTFSS STATUS, 0x0
-00AB  28AD     GOTO 0xAD
-00AC  28AE     GOTO 0xAE
-00AD  288F     GOTO 0x8F
-567:                       fputc(' ', fp);
-008F  3020     MOVLW 0x20
-0090  00F2     MOVWF c
-0091  3000     MOVLW 0x0
-0092  00F3     MOVWF 0x73
-0093  0140     MOVLB 0x0
-0094  0830     MOVF fp, W
-0095  00A0     MOVWF __pcstackBANK0
-0096  0820     MOVF __pcstackBANK0, W
-0097  00F4     MOVWF fp
-0098  3182     MOVLP 0x2
-0099  2202     CALL 0x202
-009A  3180     MOVLP 0x0
-568:                       ++l;
-009B  3001     MOVLW 0x1
-009C  0140     MOVLB 0x0
-009D  07B3     ADDWF l, F
-009E  3000     MOVLW 0x0
-009F  3DB4     ADDWFC 0x34, F
-569:                   }
-570:               }
-571:           
-572:               /* Put out string */
-573:               i = 0;
-00AE  0140     MOVLB 0x0
-00AF  01AA     CLRF i
-00B0  01AB     CLRF 0x2B
-574:               while (i < p) {
-00B1  28CE     GOTO 0xCE
-00CE  082B     MOVF 0x2B, W
-00CF  3A80     XORLW 0x80
-00D0  00A0     MOVWF __pcstackBANK0
-00D1  0832     MOVF 0x32, W
-00D2  3A80     XORLW 0x80
-00D3  0220     SUBWF __pcstackBANK0, W
-00D4  1D03     BTFSS STATUS, 0x2
-00D5  28D8     GOTO 0xD8
-00D6  0831     MOVF p, W
-00D7  022A     SUBWF i, W
-00D8  1C03     BTFSS STATUS, 0x0
-00D9  28DB     GOTO 0xDB
-00DA  28DC     GOTO 0xDC
-00DB  28B2     GOTO 0xB2
-575:                   fputc(*cp, fp);
-00B2  0140     MOVLB 0x0
-00B3  082E     MOVF cp, W
-00B4  0084     MOVWF FSR0
-00B5  082F     MOVF 0x2F, W
-00B6  0085     MOVWF FSR0H
-00B7  0800     MOVF INDF0, W
-00B8  00A0     MOVWF __pcstackBANK0
-00B9  01A1     CLRF 0x21
-00BA  0820     MOVF __pcstackBANK0, W
-00BB  00F2     MOVWF c
-00BC  0821     MOVF 0x21, W
-00BD  00F3     MOVWF 0x73
-00BE  0830     MOVF fp, W
-00BF  00A2     MOVWF 0x22
-00C0  0822     MOVF 0x22, W
-00C1  00F4     MOVWF fp
-00C2  3182     MOVLP 0x2
-00C3  2202     CALL 0x202
-00C4  3180     MOVLP 0x0
-576:                   ++cp;
-00C5  3001     MOVLW 0x1
-00C6  0140     MOVLB 0x0
-00C7  07AE     ADDWF cp, F
-00C8  3000     MOVLW 0x0
-00C9  3DAF     ADDWFC 0x2F, F
-577:                   ++i;
-00CA  3001     MOVLW 0x1
-00CB  07AA     ADDWF i, F
-00CC  3000     MOVLW 0x0
-00CD  3DAB     ADDWFC 0x2B, F
-578:               }
-579:           
-580:               /* Left justify, pad on right ? */
-581:               if (flags & MINUS_FLAG) {
-00DC  0140     MOVLB 0x0
-00DD  1C54     BTFSS flags, 0x0
-00DE  28E0     GOTO 0xE0
-00DF  28E1     GOTO 0xE1
-00E0  2901     GOTO 0x101
-00E1  28F3     GOTO 0xF3
-582:                   while (l < w) {
-00F3  0834     MOVF 0x34, W
-00F4  3A80     XORLW 0x80
-00F5  00A0     MOVWF __pcstackBANK0
-00F6  082D     MOVF 0x2D, W
-00F7  3A80     XORLW 0x80
-00F8  0220     SUBWF __pcstackBANK0, W
-00F9  1D03     BTFSS STATUS, 0x2
-00FA  28FD     GOTO 0xFD
-00FB  082C     MOVF w, W
-00FC  0233     SUBWF l, W
-00FD  1C03     BTFSS STATUS, 0x0
-00FE  2900     GOTO 0x100
-00FF  2901     GOTO 0x101
-0100  28E2     GOTO 0xE2
-583:                       fputc(' ', fp);
-00E2  3020     MOVLW 0x20
-00E3  00F2     MOVWF c
-00E4  3000     MOVLW 0x0
-00E5  00F3     MOVWF 0x73
-00E6  0140     MOVLB 0x0
-00E7  0830     MOVF fp, W
-00E8  00A0     MOVWF __pcstackBANK0
-00E9  0820     MOVF __pcstackBANK0, W
-00EA  00F4     MOVWF fp
-00EB  3182     MOVLP 0x2
-00EC  2202     CALL 0x202
-00ED  3180     MOVLP 0x0
-584:                       ++l;
-00EE  3001     MOVLW 0x1
-00EF  0140     MOVLB 0x0
-00F0  07B3     ADDWF l, F
-00F1  3000     MOVLW 0x0
-00F2  3DB4     ADDWFC 0x34, F
-585:                   }
-586:               }
-587:           
-588:               return l;
-0101  0140     MOVLB 0x0
-0102  0834     MOVF 0x34, W
-0103  00FB     MOVWF 0x7B
-0104  0833     MOVF l, W
-0105  00FA     MOVWF s
-589:           }
-0106  0008     RETURN
-590:           #endif
-591:           
-592:           #ifdef _VFPF_U
-593:           static _INLINE int utoa(FILE *fp, unsigned long long d)
-594:           {
-595:               int i, p, w;
-596:               unsigned long long n;
-597:           
-598:               /* Adjust flags, precision, width */
-599:               if (!(prec < 0)) {
-600:                   flags &= ~ZERO_FLAG;
-601:               }
-602:               p = (0 < prec) ? prec : 1;
-603:               w = width;
-604:           
-605:               /* Convert to decimal, possibly filling on the left with zeroes */
-606:               n = d;
-607:               i = sizeof(dbuf) - 1;
-608:               dbuf[i] = '\0';
-609:               while (i && (n || (0 < p) || ((0 < w) && (flags & ZERO_FLAG)))) {
-610:                   --i;
-611:                   dbuf[i] = '0' + (n % 10);
-612:                   --p;
-613:                   --w;
-614:                   n = n / 10;
-615:               }
-616:           
-617:               /* Put out padded string */
-618:               return pad(fp, &dbuf[i], w);
-619:           }
-620:           #endif
-621:           
-622:           #if defined(_VFPF_X) || defined(_VFPF_P)
-623:           static _INLINE int xtoa(FILE *fp, unsigned long long d, char x)
-624:           {
-625:               int c, i, p, w;
-626:               unsigned long long n;
-627:           
-628:               /* Adjust, flags, precision, width */
-629:               if (!(prec < 0)) {
-630:                   flags &= ~ZERO_FLAG;
-631:               }
-632:               p = (0 < prec) ? prec : 1;
-633:               w = width;
-634:               if (flags & POUND_FLAG) {
-635:                   w -= 2;
-636:               }
-637:           
-638:               /* Convert to hexadecimal, possibly filling on the left with zeroes */
-639:               n = d;
-640:               i = sizeof(dbuf) - 1;
-641:               dbuf[i] = '\0';
-642:               while (!(i < 2) && (n || (0 < p) || ((0 < w) && (flags & ZERO_FLAG)))) {
-643:                   --i;
-644:                   c = n & 0x0f;
-645:                   c = (c < 10) ? '0' + c : 'a' + (c - 10);
-646:                   if (isupper((int)x) && isalpha(c)) {
-647:                       c = toupper(c);
-648:                   }
-649:                   dbuf[i] = (char)c;
-650:                   --p;
-651:                   --w;
-652:                   n = n >> 4;
-653:               }
-654:           
-655:               /* Display prefix if required */
-656:               if (flags & POUND_FLAG) {
-657:                   --i;
-658:                   dbuf[i] = x;
-659:                   --i;
-660:                   dbuf[i] = '0';
-661:               }
-662:           
-663:               /* Put out padded string */
-664:               return pad(fp, &dbuf[i], w);
-665:           }
-666:           #endif
-667:           
-668:           /* Consume and convert the next part of the format string */
-669:           #ifdef _VFPF_CONVERT
-670:           static _INLINE int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
-0107  0140     MOVLB 0x0
-671:           {
-672:               char c, *cp, ct[3];
-673:               int done, i;
-674:               long long ll;
-675:               unsigned long long llu;
-676:               long double f;
-677:               void *vp;
-678:           
-679:               /* Conversion ? */
-680:               if ((*fmt)[0] == '%') {
-0109  0835     MOVF fmt, W
-010A  0086     MOVWF FSR1
-010B  0187     CLRF FSR1H
-010C  3F40     MOVIW [0]FSR1
-010D  00B7     MOVWF 0x37
-010E  3F41     MOVIW [1]FSR1
-010F  00B8     MOVWF 0x38
-0110  0837     MOVF 0x37, W
-0111  0084     MOVWF FSR0
-0112  0838     MOVF 0x38, W
-0113  0085     MOVWF FSR0H
-0114  0012     MOVIW FSR0++
-0115  3A25     XORLW 0x25
-0116  1D03     BTFSS STATUS, 0x2
-0117  2919     GOTO 0x119
-0118  291A     GOTO 0x11A
-0119  2992     GOTO 0x192
-681:                   ++*fmt;
-011A  0835     MOVF fmt, W
-011B  0086     MOVWF FSR1
-011C  0187     CLRF FSR1H
-011D  3001     MOVLW 0x1
-011E  0781     ADDWF INDF1, F
-011F  3141     ADDFSR 1, 1
-0120  1803     BTFSC STATUS, 0x0
-0121  0A81     INCF INDF1, F
-682:           
-683:                   flags = width = 0;
-0122  01D0     CLRF width
-0123  01D1     CLRF 0x51
-0124  01D4     CLRF flags
-0125  01D5     CLRF 0x55
-684:                   prec = -1;
-0126  30FF     MOVLW 0xFF
-0127  00D2     MOVWF prec
-0128  30FF     MOVLW 0xFF
-0129  00D3     MOVWF 0x53
-685:           
-686:           #ifdef _VFPF_FLAGS
-687:                   /* Get flags */
-688:                   done = 0;
-689:                   while (!done) {
-690:                       switch ((*fmt)[0]) {
-691:                           case '-' :
-692:                               flags |= MINUS_FLAG;
-693:                               ++*fmt;
-694:                               break;
-695:                           case '0' :
-696:                               flags |= ZERO_FLAG;
-697:                               ++*fmt;
-698:                               break;
-699:                           case '+' :
-700:                               flags |= PLUS_FLAG;
-701:                               ++*fmt;
-702:                               break;
-703:                           case ' ' :
-704:                               flags |= SPACE_FLAG;
-705:                               ++*fmt;
-706:                               break;
-707:                           case '#' :
-708:                               flags |= POUND_FLAG;
-709:                               ++*fmt;
-710:                               break;
-711:                           default:
-712:                               done = 1;
-713:                               break;
-714:                       }
-715:                   }
-716:                   if (flags & MINUS_FLAG) {
-717:                       flags &= ~ZERO_FLAG;
-718:                   }
-719:           #endif
-720:           
-721:           #ifdef _VFPF_WIDTH
-722:                   /* Get field width */
-723:                   if ((*fmt)[0] == '*') {
-724:                       ++*fmt;
-725:                       width = va_arg(ap, int);
-726:                       if (width < 0) {
-727:                           flags |= MINUS_FLAG;
-728:                           width = -width;
-729:                       }
-730:                   } else {
-731:                       width = atoi(*fmt);
-732:                       while (isdigit((*fmt)[0])) {
-733:                           ++*fmt;
-734:                       }
-735:                   }
-736:           #endif
-737:           
-738:           #ifdef _VFPF_PRECISION
-739:                   /* Get precision */
-740:                   if ((*fmt)[0] == '.') {
-741:                       prec = 0;
-742:                       ++*fmt;
-743:                       if ((*fmt)[0] == '*') {
-744:                           ++*fmt;
-745:                           prec = va_arg(ap, int);
-746:                       } else {
-747:                           prec = atoi(*fmt);
-748:                           while (isdigit((*fmt)[0])) {
-749:                               ++*fmt;
-750:                           }
-751:                       }
-752:                   }
-753:           #endif
-754:           
-755:           #if defined(_VFPF_A) || defined(_VFPF_E) || defined(_VFPF_F) || defined(_VFPF_G)
-756:                   /* Case-folded conversion types */
-757:                   ct[0] = tolower((int)(*fmt)[0]);
-758:                   if (ct[0]) {
-759:                       ct[1] = tolower((int)(*fmt)[1]);
-760:                       if (ct[1]) {
-761:                           ct[2] = tolower((int)(*fmt)[2]);
-762:                       }
-763:                   }
-764:           #endif
-765:           
-766:           #ifdef _VFPF_A
-767:                   /* 'a' style (hex) floating point */
-768:                   if (ct[0] == 'a') {
-769:           
-770:                       c = (*fmt)[0];
-771:                       ++*fmt;
-772:                       f = (long double)va_arg(ap, double);
-773:                                   
-774:                       return atoa(fp, f, c);
-775:                   }
-776:                   if (!strncmp(ct, "la", CSTRLEN("la"))) {
-777:           
-778:                       c = (*fmt)[1];
-779:                       if (isupper((int)(*fmt)[0])) {
-780:                           f = va_arg(ap, long double);
-781:                       } else {
-782:                           f = (long double)va_arg(ap, double);
-783:                       }
-784:                       *fmt += CSTRLEN("la");
-785:                                   
-786:                       return atoa(fp, f, c);
-787:                   }
-788:           #endif
-789:           
-790:           #ifdef _VFPF_C
-791:                   /* Character */
-792:                   if (*fmt[0] == 'c') {
-793:                       ++*fmt;
-794:                       c = (unsigned char)va_arg(ap, int);
-795:                       return ctoa(fp, c);
-796:                   }
-797:           #endif
-798:           
-799:           #ifdef _VFPF_D
-800:           #ifdef _VFPF_HH
-801:                   /* Character decimal integer */
-802:                   if (!strncmp(*fmt, "hhd", CSTRLEN("hhd")) || \
-803:                       !strncmp(*fmt, "hhi", CSTRLEN("hhi"))) {
-804:           
-805:                       *fmt += CSTRLEN("hhd");
-806:                       ll = (long long)(signed char)va_arg(ap, int);
-807:                                   
-808:                       return dtoa(fp, ll);
-809:                   }
-810:           #endif
-811:           
-812:           #ifdef _VFPF_H
-813:                   /* Short decimal integer */
-814:                   if (!strncmp(*fmt, "hd", CSTRLEN("hd")) || \
-815:                       !strncmp(*fmt, "hi", CSTRLEN("hi"))) {
-816:           
-817:                       *fmt += CSTRLEN("hd");
-818:                       ll = (long long)(short)va_arg(ap, int);
-819:                                   
-820:                       return dtoa(fp, ll);
-821:                   }
-822:           #endif
-823:           
-824:                   /* Decimal integer */
-825:                   if ((*fmt[0] == 'd') || (*fmt[0] == 'i')) {
-826:           
-827:                       ++*fmt;
-828:                       ll = (long long)va_arg(ap, int);
-829:                                   
-830:                       return dtoa(fp, ll);
-831:                   }
-832:           
-833:           #ifdef _VFPF_L
-834:                   /* Long decimal integer */
-835:                   if (!strncmp(*fmt, "ld", CSTRLEN("ld")) || \
-836:                       !strncmp(*fmt, "li", CSTRLEN("li"))) {
-837:           
-838:                       *fmt += CSTRLEN("ld");
-839:                       ll = (long long)va_arg(ap, long);
-840:                                   
-841:                       return dtoa(fp, ll);
-842:                   }
-843:           #endif
-844:           
-845:           #ifdef _VFPF_LL
-846:                   /* Long long decimal integer */
-847:                   if (!strncmp(*fmt, "lld", CSTRLEN("lld")) || \
-848:                       !strncmp(*fmt, "lli", CSTRLEN("lli"))) {
-849:           
-850:                       *fmt += CSTRLEN("lld");
-851:                       ll = va_arg(ap, long long);
-852:                                   
-853:                       return dtoa(fp, ll);
-854:                   }
-855:           #endif
-856:           
-857:           #ifdef _VFPF_J
-858:                   /* intmax_t decimal integer */
-859:                   if (!strncmp(*fmt, "jd", CSTRLEN("jd")) || \
-860:                       !strncmp(*fmt, "ji", CSTRLEN("ji"))) {
-861:           
-862:                       *fmt += CSTRLEN("jd");
-863:                       ll = (long long)va_arg(ap, intmax_t);
-864:                                   
-865:                       return dtoa(fp, ll);
-866:                   }
-867:           #endif
-868:           
-869:           #ifdef _VFPF_T
-870:                   /* ptrdiff_t decimal integer */
-871:                   if (!strncmp(*fmt, "td", CSTRLEN("td")) || \
-872:                       !strncmp(*fmt, "ti", CSTRLEN("ti"))) {
-873:           
-874:                       *fmt += CSTRLEN("td");
-875:                       ll = (long long)va_arg(ap, ptrdiff_t);
-876:                                   
-877:                       return dtoa(fp, ll);
-878:                   }
-879:           #endif
-880:           
-881:           #ifdef _VFPF_Z
-882:                   /* size_t decimal integer */
-883:                   if (!strncmp(*fmt, "zd", CSTRLEN("zd")) || \
-884:                       !strncmp(*fmt, "zi", CSTRLEN("zi"))) {
-885:           
-886:                       *fmt += CSTRLEN("zd");
-887:                       ll = (long long)va_arg(ap, size_t);
-888:                                   
-889:                       return dtoa(fp, ll);
-890:                   }
-891:           #endif
-892:           #endif
-893:           
-894:           #ifdef _VFPF_E
-895:                   /* 'e' style floating point */
-896:                   if (ct[0] == 'e') {
-897:           
-898:                       c = (*fmt)[0];
-899:                       ++*fmt;
-900:                       f = (long double)va_arg(ap, double);
-901:                                   
-902:                       return efgtoa(fp, f, c);
-903:                   }
-904:                   if (!strncmp(ct, "le", CSTRLEN("le"))) {
-905:           
-906:                       c = (*fmt)[1];
-907:                       if (isupper((int)(*fmt)[0])) {
-908:                           f = va_arg(ap, long double);
-909:                       } else {
-910:                           f = (long double)va_arg(ap, double);
-911:                       }
-912:                       *fmt += CSTRLEN("lf");
-913:                                   
-914:                       return efgtoa(fp, f, c);
-915:                   }
-916:           #endif
-917:           
-918:           #ifdef _VFPF_F
-919:                   /* 'f' style floating point */
-920:                   if (ct[0] == 'f') {
-921:           
-922:                       c = (*fmt)[0];
-923:                       ++*fmt;
-924:                       f = (long double)va_arg(ap, double);
-925:                                   
-926:                       return efgtoa(fp, f, c);
-927:                   }
-928:                   if (!strncmp(ct, "lf", CSTRLEN("lf"))) {
-929:           
-930:                       c = (*fmt)[1];
-931:                       if (isupper((int)(*fmt)[0])) {
-932:                           f = va_arg(ap, long double);
-933:                       } else {
-934:                           f = (long double)va_arg(ap, double);
-935:                       }
-936:                       *fmt += CSTRLEN("lf");
-937:                                   
-938:                       return efgtoa(fp, f, c);
-939:                   }
-940:           #endif
-941:           
-942:           #ifdef _VFPF_G
-943:                   /* 'g' style floating point */
-944:                   if (ct[0] == 'g') {
-945:           
-946:                       c = (*fmt)[0];
-947:                       ++*fmt;
-948:                       f = (long double)va_arg(ap, double);
-949:                                   
-950:                       return efgtoa(fp, f, c);
-951:                   }
-952:                   if (!strncmp(ct, "lg", CSTRLEN("lg"))) {
-953:           
-954:                       c = (*fmt)[1];
-955:                       if (isupper((int)(*fmt)[0])) {
-956:                           f = va_arg(ap, long double);
-957:                       } else {
-958:                           f = (long double)va_arg(ap, double);
-959:                       }
-960:                       *fmt += CSTRLEN("lg");
-961:                                   
-962:                       return efgtoa(fp, f, c);
-963:                   }
-964:           #endif
-965:           
-966:           #ifdef _VFPF_O
-967:           #ifdef _VFPF_HH
-968:                   /* Character octal integer */
-969:                   if (!strncmp(*fmt, "hho", CSTRLEN("hho"))) {
-970:           
-971:                       *fmt += CSTRLEN("hho");
-972:                       llu = (unsigned long long)(unsigned char)va_arg(ap, int);
-973:                                   
-974:                       return otoa(fp, llu);
-975:                   }
-976:           #endif
-977:           
-978:           #ifdef _VFPF_H
-979:                   /* Short octal integer */
-980:                   if (!strncmp(*fmt, "ho", CSTRLEN("ho"))) {
-981:           
-982:                       *fmt += CSTRLEN("ho");
-983:                       llu = (unsigned long long)(unsigned short)va_arg(ap, int);
-984:                                   
-985:                       return otoa(fp, llu);
-986:                   }
-987:           #endif
-988:           
-989:                   /* Octal integer */
-990:                   if (*fmt[0] == 'o') {
-991:           
-992:                       ++*fmt;
-993:                       llu = (unsigned long long)va_arg(ap, unsigned int);
-994:                                   
-995:                       return otoa(fp, llu);
-996:                   }
-997:           
-998:           #ifdef _VFPF_L
-999:                   /* Long octal integer */
-1000:                  if (!strncmp(*fmt, "lo", CSTRLEN("lo"))) {
-1001:          
-1002:                      *fmt += CSTRLEN("lo");
-1003:                      llu = (unsigned long long)va_arg(ap, unsigned long);
-1004:                                  
-1005:                      return otoa(fp, llu);
-1006:                  }
-1007:          #endif
-1008:          
-1009:          #ifdef _VFPF_LL
-1010:                  /* Long long octal integer */
-1011:                  if (!strncmp(*fmt, "llo", CSTRLEN("llo"))) {
-1012:          
-1013:                      *fmt += CSTRLEN("llo");
-1014:                      llu = va_arg(ap, unsigned long long);
-1015:                                  
-1016:                      return otoa(fp, llu);
-1017:                  }
-1018:          #endif
-1019:          
-1020:          #ifdef _VFPF_J
-1021:                  /* uintmax_t octal integer */
-1022:                  if (!strncmp(*fmt, "jo", CSTRLEN("jo"))) {
-1023:          
-1024:                      *fmt += CSTRLEN("jo");
-1025:                      llu = (unsigned long long)va_arg(ap, uintmax_t);
-1026:                                  
-1027:                      return otoa(fp, llu);
-1028:                  }
-1029:          #endif
-1030:          
-1031:          #ifdef _VFPF_T
-1032:                  /* ptrdiff_t octal integer */
-1033:                  if (!strncmp(*fmt, "to", CSTRLEN("to"))) {
-1034:          
-1035:                      *fmt += CSTRLEN("to");
-1036:                      llu = (unsigned long long)va_arg(ap, ptrdiff_t);
-1037:                                  
-1038:                      return otoa(fp, llu);
-1039:                  }
-1040:          #endif
-1041:          
-1042:          #ifdef _VFPF_Z
-1043:                  /* size_t octal integer */
-1044:                  if (!strncmp(*fmt, "zo", CSTRLEN("zo"))) {
-1045:          
-1046:                      *fmt += CSTRLEN("zo");
-1047:                      llu = (unsigned long long)va_arg(ap, size_t);
-1048:                                  
-1049:                      return otoa(fp, llu);
-1050:                  }
-1051:          #endif
-1052:          #endif
-1053:          
-1054:                  /* Character count */
-1055:          #ifdef _VFPF_N
-1056:          
-1057:          #ifdef _VFPF_HH
-1058:                  if (!strncmp(*fmt, "hhn", CSTRLEN("hhn"))) {
-1059:          
-1060:                      *fmt += CSTRLEN("hhn");
-1061:                      vp = (void *)va_arg(ap, char *);
-1062:                      *(char *)vp = (char)nout;
-1063:                      return 0;
-1064:                  }
-1065:          #endif
-1066:          
-1067:          #ifdef _VFPF_H
-1068:                  if (!strncmp(*fmt, "hn", CSTRLEN("hn"))) {
-1069:          
-1070:                      *fmt += CSTRLEN("hn");
-1071:                      vp = (void *)va_arg(ap, short *);
-1072:                      *(short *)vp = (short)nout;
-1073:                      return 0;
-1074:                  }
-1075:          #endif
-1076:          
-1077:                  if (*fmt[0] == 'n') {
-1078:                      ++*fmt;
-1079:                      vp = (void *)va_arg(ap, int *);
-1080:                      *(int *)vp = nout;
-1081:                      return 0;
-1082:                  }
-1083:          
-1084:          #ifdef _VFPF_L
-1085:                  if (!strncmp(*fmt, "ln", CSTRLEN("ln"))) {
-1086:          
-1087:                      *fmt += CSTRLEN("ln");
-1088:                      vp = (void *)va_arg(ap, long *);
-1089:                      *(long *)vp = (long)nout;
-1090:                      return 0;
-1091:                  }
-1092:          #endif
-1093:          
-1094:          #ifdef _VFPF_LL
-1095:                  if (!strncmp(*fmt, "lln", CSTRLEN("lln"))) {
-1096:          
-1097:                      *fmt += CSTRLEN("lln");
-1098:                      vp = (void *)va_arg(ap, long long *);
-1099:                      *(long long *)vp = (long long)nout;
-1100:                      return 0;
-1101:                  }
-1102:          #endif
-1103:          
-1104:          #ifdef _VFPF_J
-1105:                  if (!strncmp(*fmt, "jn", CSTRLEN("jn"))) {
-1106:          
-1107:                      *fmt += CSTRLEN("jn");
-1108:                      vp = (void *)va_arg(ap, uintmax_t *);
-1109:                      *(uintmax_t *)vp = (uintmax_t)nout;
-1110:                      return 0;
-1111:                  }
-1112:          #endif
-1113:          
-1114:          #ifdef _VFPF_T
-1115:                  if (!strncmp(*fmt, "tn", CSTRLEN("tn"))) {
-1116:          
-1117:                      *fmt += CSTRLEN("tn");
-1118:                      vp = (void *)va_arg(ap, ptrdiff_t *);
-1119:                      *(ptrdiff_t *)vp = (ptrdiff_t)nout;
-1120:                      return 0;
-1121:                  }
-1122:          #endif
-1123:          
-1124:          #ifdef _VFPF_Z
-1125:                  if (!strncmp(*fmt, "zn", CSTRLEN("zn"))) {
-1126:          
-1127:                      *fmt += CSTRLEN("zn");
-1128:                      vp = (void *)va_arg(ap, size_t *);
-1129:                      *(size_t *)vp = (size_t)nout;
-1130:                      return 0;
-1131:                  }
-1132:          #endif
-1133:          
-1134:          #endif
-1135:          
-1136:          #ifdef _VFPF_P
-1137:                  /* Pointer */
-1138:                  if (*fmt[0] == 'p') {
-1139:          
-1140:                      ++*fmt;
-1141:                      llu = (unsigned long long)(size_t)va_arg(ap, void *);
-1142:                                  
-1143:                      return xtoa(fp, llu, 'x');
-1144:                  }
-1145:          #endif
-1146:          
-1147:          #ifdef _VFPF_S
-1148:                  /* String */
-1149:                  if (*fmt[0] == 's') {
-012A  0835     MOVF fmt, W
-012B  0086     MOVWF FSR1
-012C  0187     CLRF FSR1H
-012D  3F40     MOVIW [0]FSR1
-012E  00B7     MOVWF 0x37
-012F  3F41     MOVIW [1]FSR1
-0130  00B8     MOVWF 0x38
-0131  0837     MOVF 0x37, W
-0132  0084     MOVWF FSR0
-0133  0838     MOVF 0x38, W
-0134  0085     MOVWF FSR0H
-0135  0012     MOVIW FSR0++
-0136  3A73     XORLW 0x73
-0137  1D03     BTFSS STATUS, 0x2
-0138  293A     GOTO 0x13A
-0139  293B     GOTO 0x13B
-013A  295D     GOTO 0x15D
-1150:          
-1151:                      ++*fmt;
-013B  0835     MOVF fmt, W
-013C  0086     MOVWF FSR1
-013D  0187     CLRF FSR1H
-013E  3001     MOVLW 0x1
-013F  0781     ADDWF INDF1, F
-0140  3141     ADDFSR 1, 1
-0141  1803     BTFSC STATUS, 0x0
-0142  0A81     INCF INDF1, F
-1152:                      cp = va_arg(ap, char *);
-0143  0836     MOVF ap, W
-0144  0086     MOVWF FSR1
-0145  0187     CLRF FSR1H
-0146  0801     MOVF INDF1, W
-0147  0084     MOVWF FSR0
-0148  0185     CLRF FSR0H
-0149  3002     MOVLW 0x2
-014A  0781     ADDWF INDF1, F
-014B  3F00     MOVIW [0]FSR0
-014C  00BC     MOVWF cp
-014D  3F01     MOVIW [1]FSR0
-014E  00BD     MOVWF 0x3D
-1153:          
-1154:                      return stoa(fp, cp);
-014F  083D     MOVF 0x3D, W
-0150  00FB     MOVWF 0x7B
-0151  083C     MOVF cp, W
-0152  00FA     MOVWF s
-0153  083E     MOVF fp, W
-0154  3180     MOVLP 0x0
-0155  203B     CALL 0x3B
-0156  3181     MOVLP 0x1
-0157  087B     MOVF 0x7B, W
-0158  0140     MOVLB 0x0
-0159  00B6     MOVWF ap
-015A  087A     MOVF s, W
-015B  00B5     MOVWF fmt
-015C  29B5     GOTO 0x1B5
-1155:                  }
-1156:          #endif
-1157:          
-1158:          #ifdef _VFPF_U
-1159:          #ifdef _VFPF_HH
-1160:                  /* Unsigned character decimal integer */
-1161:                  if (!strncmp(*fmt, "hhu", CSTRLEN("hhu"))) {
-1162:          
-1163:                      *fmt += CSTRLEN("hhu");
-1164:                      llu = (unsigned long long)(unsigned char)va_arg(ap, int);
-1165:                                  
-1166:                      return utoa(fp, llu);
-1167:                  }
-1168:          #endif
-1169:          
-1170:          #ifdef _VFPF_H
-1171:                  /* Unsigned short decimal integer */
-1172:                  if (!strncmp(*fmt, "hu", CSTRLEN("hu"))) {
-1173:          
-1174:                      *fmt += CSTRLEN("hu");
-1175:                      llu = (unsigned long long)(unsigned short)va_arg(ap, int);
-1176:                                  
-1177:                      return utoa(fp, llu);
-1178:                  }
-1179:          #endif
-1180:          
-1181:                  /* Unsigned decimal integer */
-1182:                  if (*fmt[0] == 'u') {
-1183:          
-1184:                      ++*fmt;
-1185:                      llu = (unsigned long long)va_arg(ap, unsigned int);
-1186:                                  
-1187:                      return utoa(fp, llu);
-1188:                  }
-1189:          
-1190:          #ifdef _VFPF_L
-1191:                  /* Unsigned long decimal integer */
-1192:                  if (!strncmp(*fmt, "lu", CSTRLEN("lu"))) {
-1193:          
-1194:                      *fmt += CSTRLEN("lu");
-1195:                      llu = (unsigned long long)va_arg(ap, unsigned long);
-1196:                                  
-1197:                      return utoa(fp, llu);
-1198:                  }
-1199:          #endif
-1200:          
-1201:          #ifdef _VFPF_LL
-1202:                  /* Unsigned long long decimal integer */
-1203:                  if (!strncmp(*fmt, "llu", CSTRLEN("llu"))) {
-1204:          
-1205:                      *fmt += CSTRLEN("llu");
-1206:                      llu = va_arg(ap, unsigned long long);
-1207:                                  
-1208:                      return utoa(fp, llu);
-1209:                  }
-1210:          #endif
-1211:          
-1212:          #ifdef _VFPF_J
-1213:                  /* uintmax_t decimal integer */
-1214:                  if (!strncmp(*fmt, "ju", CSTRLEN("ju"))) {
-1215:          
-1216:                      *fmt += CSTRLEN("ju");
-1217:                      llu = (unsigned long long)va_arg(ap, uintmax_t);
-1218:                                  
-1219:                      return utoa(fp, llu);
-1220:                  }
-1221:          #endif
-1222:          
-1223:          #ifdef _VFPF_T
-1224:                  /* ptrdiff_t decimal integer */
-1225:                  if (!strncmp(*fmt, "tu", CSTRLEN("tu"))) {
-1226:          
-1227:                      *fmt += CSTRLEN("tu");
-1228:                      llu = (unsigned long long)va_arg(ap, ptrdiff_t);
-1229:                                  
-1230:                      return utoa(fp, llu);
-1231:                  }
-1232:          #endif
-1233:          
-1234:          #ifdef _VFPF_Z
-1235:                  /* size_t decimal integer */
-1236:                  if (!strncmp(*fmt, "zu", CSTRLEN("zu"))) {
-1237:          
-1238:                      *fmt += CSTRLEN("zu");
-1239:                      llu = (unsigned long long)va_arg(ap, size_t);
-1240:                                  
-1241:                      return utoa(fp, llu);
-1242:                  }
-1243:          #endif
-1244:          #endif
-1245:          
-1246:          #ifdef _VFPF_X
-1247:          #ifdef _VFPF_HH
-1248:                  /* Character hexadecimal integer */
-1249:                  if (!strncmp(*fmt, "hhx", CSTRLEN("hhx")) || \
-1250:                      !strncmp(*fmt, "hhX", CSTRLEN("hhX"))) {
-1251:          
-1252:                      c = (*fmt)[2];
-1253:                      *fmt += CSTRLEN("hhx");
-1254:                      llu = (unsigned long long)(unsigned char)va_arg(ap, int);
-1255:                                  
-1256:                      return xtoa(fp, llu, c);
-1257:                  }
-1258:          #endif
-1259:          
-1260:          #ifdef _VFPF_H
-1261:                  /* Short hexadecimal integer */
-1262:                  if (!strncmp(*fmt, "hx", CSTRLEN("hx")) || \
-1263:                      !strncmp(*fmt, "hX", CSTRLEN("hX"))) {
-1264:          
-1265:                      c = (*fmt)[1];
-1266:                      *fmt += CSTRLEN("hx");
-1267:                      llu = (unsigned long long)(unsigned short)va_arg(ap, int);
-1268:                                  
-1269:                      return xtoa(fp, llu, c);
-1270:                  }
-1271:          #endif
-1272:          
-1273:                  /* Hexadecimal integer */
-1274:                  if ((*fmt[0] == 'x') || (*fmt[0] == 'X')) {
-1275:          
-1276:                      c = (*fmt)[0];
-1277:                      ++*fmt;
-1278:                      llu = (unsigned long long)va_arg(ap, unsigned int);
-1279:                                  
-1280:                      return xtoa(fp, llu, c);
-1281:                  }
-1282:          
-1283:          #ifdef _VFPF_L
-1284:                  /* Long hexadecimal integer */
-1285:                  if (!strncmp(*fmt, "lx", CSTRLEN("lx")) || \
-1286:                      !strncmp(*fmt, "lX", CSTRLEN("lX"))) {
-1287:          
-1288:                      c = (*fmt)[1];
-1289:                      *fmt += CSTRLEN("lx");
-1290:                      llu = (unsigned long long)va_arg(ap, unsigned long);
-1291:                                  
-1292:                      return xtoa(fp, llu, c);
-1293:                  }
-1294:          #endif
-1295:          
-1296:          #ifdef _VFPF_LL
-1297:                  /* Long long hexadecimal integer */
-1298:                  if (!strncmp(*fmt, "llx", CSTRLEN("llx")) || \
-1299:                      !strncmp(*fmt, "llX", CSTRLEN("llX"))) {
-1300:          
-1301:                      c = (*fmt)[2];
-1302:                      *fmt += CSTRLEN("llx");
-1303:                      llu = va_arg(ap, unsigned long long);
-1304:                                  
-1305:                      return xtoa(fp, llu, c);
-1306:                  }
-1307:          #endif
-1308:          
-1309:          #ifdef _VFPF_J
-1310:                  /* uintmax_t hexadecimal integer */
-1311:                  if (!strncmp(*fmt, "jx", CSTRLEN("jx")) || \
-1312:                      !strncmp(*fmt, "jX", CSTRLEN("jX"))) {
-1313:          
-1314:                      c = (*fmt)[1];
-1315:                      *fmt += CSTRLEN("jx");
-1316:                      llu = (unsigned long long)va_arg(ap, uintmax_t);
-1317:                                  
-1318:                      return xtoa(fp, llu, c);
-1319:                  }
-1320:          #endif
-1321:          
-1322:          #ifdef _VFPF_T
-1323:                  /* ptrdiff_t hexadecimal integer */
-1324:                  if (!strncmp(*fmt, "tx", CSTRLEN("tx")) || \
-1325:                      !strncmp(*fmt, "tX", CSTRLEN("tX"))) {
-1326:          
-1327:                      c = (*fmt)[1];
-1328:                      *fmt += CSTRLEN("tx");
-1329:                      llu = (unsigned long long)va_arg(ap, ptrdiff_t);
-1330:                                  
-1331:                      return xtoa(fp, llu, c);
-1332:                  }
-1333:          #endif
-1334:          
-1335:          #ifdef _VFPF_Z
-1336:                  /* size_t hexadecimal integer */
-1337:                  if (!strncmp(*fmt, "zx", CSTRLEN("zx")) || \
-1338:                      !strncmp(*fmt, "zX", CSTRLEN("zX"))) {
-1339:          
-1340:                      c = (*fmt)[1];
-1341:                      *fmt += CSTRLEN("zx");
-1342:                      llu = (unsigned long long)va_arg(ap, size_t);
-1343:                                  
-1344:                      return xtoa(fp, llu, c);
-1345:                  }
-1346:          #endif
-1347:          #endif
-1348:          
-1349:                  /* 'Escaped' '%' character */
-1350:                  if ((*fmt)[0] == '%') {
-015D  0835     MOVF fmt, W
-015E  0086     MOVWF FSR1
-015F  0187     CLRF FSR1H
-0160  3F40     MOVIW [0]FSR1
-0161  00B7     MOVWF 0x37
-0162  3F41     MOVIW [1]FSR1
-0163  00B8     MOVWF 0x38
-0164  0837     MOVF 0x37, W
-0165  0084     MOVWF FSR0
-0166  0838     MOVF 0x38, W
-0167  0085     MOVWF FSR0H
-0168  0012     MOVIW FSR0++
-0169  3A25     XORLW 0x25
-016A  1D03     BTFSS STATUS, 0x2
-016B  296D     GOTO 0x16D
-016C  296E     GOTO 0x16E
-016D  2987     GOTO 0x187
-1351:                      ++*fmt;
-016E  0835     MOVF fmt, W
-016F  0086     MOVWF FSR1
-0170  0187     CLRF FSR1H
-0171  3001     MOVLW 0x1
-0172  0781     ADDWF INDF1, F
-0173  3141     ADDFSR 1, 1
-0174  1803     BTFSC STATUS, 0x0
-0175  0A81     INCF INDF1, F
-1352:                      fputc((int)'%', fp);
-0176  3025     MOVLW 0x25
-0177  00F2     MOVWF c
-0178  3000     MOVLW 0x0
-0179  00F3     MOVWF 0x73
-017A  083E     MOVF fp, W
-017B  00B7     MOVWF 0x37
-017C  0837     MOVF 0x37, W
-017D  00F4     MOVWF fp
-017E  3182     MOVLP 0x2
-017F  2202     CALL 0x202
-0180  3181     MOVLP 0x1
-1353:                      return 1;
-0181  3001     MOVLW 0x1
-0182  0140     MOVLB 0x0
-0183  00B5     MOVWF fmt
-0184  3000     MOVLW 0x0
-0185  00B6     MOVWF ap
-0186  29B5     GOTO 0x1B5
-1354:                  }
-1355:          
-1356:                  /* Unrecognized conversion */
-1357:                  ++*fmt;
-0187  0835     MOVF fmt, W
-0188  0086     MOVWF FSR1
-0189  0187     CLRF FSR1H
-018A  3001     MOVLW 0x1
-018B  0781     ADDWF INDF1, F
-018C  3141     ADDFSR 1, 1
-018D  1803     BTFSC STATUS, 0x0
-018E  0A81     INCF INDF1, F
-1358:                  return 0;
-018F  01B5     CLRF fmt
-0190  01B6     CLRF ap
-0191  29B5     GOTO 0x1B5
-1359:              }
-1360:          
-1361:              /* No conversion, just intervening text */
-1362:              fputc((int)(*fmt)[0], fp);
-0192  0835     MOVF fmt, W
-0193  0086     MOVWF FSR1
-0194  0187     CLRF FSR1H
-0195  3F40     MOVIW [0]FSR1
-0196  00B7     MOVWF 0x37
-0197  3F41     MOVIW [1]FSR1
-0198  00B8     MOVWF 0x38
-0199  0837     MOVF 0x37, W
-019A  0084     MOVWF FSR0
-019B  0838     MOVF 0x38, W
-019C  0085     MOVWF FSR0H
-019D  0800     MOVF INDF0, W
-019E  00B9     MOVWF 0x39
-019F  01BA     CLRF 0x3A
-01A0  0839     MOVF 0x39, W
-01A1  00F2     MOVWF c
-01A2  083A     MOVF 0x3A, W
-01A3  00F3     MOVWF 0x73
-01A4  083E     MOVF fp, W
-01A5  00BB     MOVWF 0x3B
-01A6  083B     MOVF 0x3B, W
-01A7  00F4     MOVWF fp
-01A8  3182     MOVLP 0x2
-01A9  2202     CALL 0x202
-01AA  3181     MOVLP 0x1
-1363:              ++*fmt;
-01AB  0140     MOVLB 0x0
-01AC  0835     MOVF fmt, W
-01AD  0086     MOVWF FSR1
-01AE  0187     CLRF FSR1H
-01AF  3001     MOVLW 0x1
-01B0  0781     ADDWF INDF1, F
-01B1  3141     ADDFSR 1, 1
-01B2  1803     BTFSC STATUS, 0x0
-01B3  0A81     INCF INDF1, F
-01B4  2981     GOTO 0x181
-1364:              return 1;
-1365:          }
-01B5  0008     RETURN
-1366:          #endif
-1367:          
-1368:          int vfprintf(FILE *fp, const char *fmt, va_list ap)
-0241  0140     MOVLB 0x0
-0242  00C4     MOVWF fp
-1369:          {
-1370:          #ifdef _VFPF_CONVERT
-1371:              char *cfmt;
-1372:          
-1373:              cfmt = (char *)fmt;
-0243  0840     MOVF 0x40, W
-0244  00C6     MOVWF 0x46
-0245  083F     MOVF fmt, W
-0246  00C5     MOVWF cfmt
-1374:              nout = 0;
-0247  01CE     CLRF nout
-0248  01CF     CLRF 0x4F
-1375:              while (*cfmt) {
-0249  2A5B     GOTO 0x25B
-025B  0845     MOVF cfmt, W
-025C  0084     MOVWF FSR0
-025D  0846     MOVF 0x46, W
-025E  0085     MOVWF FSR0H
-025F  0012     MOVIW FSR0++
-0260  1D03     BTFSS STATUS, 0x2
-0261  2A63     GOTO 0x263
-0262  2A64     GOTO 0x264
-0263  2A4A     GOTO 0x24A
-1376:                  nout += vfpfcnvrt(fp, &cfmt, ap);
-024A  3045     MOVLW 0x45
-024B  00C2     MOVWF 0x42
-024C  0842     MOVF 0x42, W
-024D  00B5     MOVWF fmt
-024E  0841     MOVF ap, W
-024F  00C3     MOVWF 0x43
-0250  0843     MOVF 0x43, W
-0251  00B6     MOVWF ap
-0252  0844     MOVF fp, W
-0253  3181     MOVLP 0x1
-0254  2107     CALL 0x107
-0255  3182     MOVLP 0x2
-0256  0140     MOVLB 0x0
-0257  0835     MOVF fmt, W
-0258  07CE     ADDWF nout, F
-0259  0836     MOVF ap, W
-025A  3DCF     ADDWFC 0x4F, F
-1377:              }
-1378:              return nout;
-0264  084F     MOVF 0x4F, W
-0265  00C0     MOVWF 0x40
-0266  084E     MOVF nout, W
-0267  00BF     MOVWF fmt
-1379:          #else
-1380:              return fputs(fmt, fp);
-1381:          #endif
-1382:          }
-0268  0008     RETURN
+426:               // 1 kHz ISR (generated on rising edge of PWM signal) to toggle USER LED
+427:               
+428:               #if defined(PIC16F19197_BH)
+429:               
+430:               void __interrupt() interruptHandler(void)
+431:               {
+432:                   LATEbits.LATE5 ^= 1;
+433:                   PIR4bits.TMR2IF = 0;
+434:               }
+435:               
+436:               #elif defined(PIC24FJ1024GA606_BH)
+437:               
+438:               void __attribute__((interrupt, no_auto_psv)) _OC1Interrupt(void)
+439:               {
+000214  BE9F80     MOV.D W0, [W15++]
+000216  FA0000     LNK #0x0
+440:                   LATEbits.LATE2 ^= 1;
+000218  8035B0     MOV LATE, W0
+00021A  DE0042     LSR W0, #2, W0
+00021C  604061     AND.B W0, #0x1, W0
+00021E  A20400     BTG.B W0, #0
+000220  604061     AND.B W0, #0x1, W0
+000222  FB8000     ZE W0, W0
+000224  600061     AND W0, #0x1, W0
+000226  DD0042     SL W0, #2, W0
+000228  8035B1     MOV LATE, W1
+00022A  A12001     BCLR W1, #2
+00022C  700001     IOR W0, W1, W0
+00022E  8835B0     MOV W0, LATE
+441:                   IFS0bits.OC1IF = 0;
+000230  A94088     BCLR IFS0, #2
+442:               }
+000232  FA8000     ULNK
+000234  BE004F     MOV.D [--W15], W0
+000236  064000     RETFIE
+443:               
+444:               #endif
+445:               
+446:               
+447:               
+448:               

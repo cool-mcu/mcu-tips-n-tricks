@@ -10,9 +10,9 @@ CND_CONF=PIC24FJ1024GA606_BH
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${IMAGE_TYPE}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/cpu-arith-benchmark.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-OUTPUT_BASENAME=cpu-arith-benchmark.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
-PACKAGE_TOP_DIR=cpu-arith-benchmark.x/
+OUTPUT_PATH=dist/${CND_CONF}/${IMAGE_TYPE}/mcu-irq-benchmark.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+OUTPUT_BASENAME=mcu-irq-benchmark.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+PACKAGE_TOP_DIR=mcu-irq-benchmark.x/
 
 # Functions
 function checkReturnCode
@@ -57,15 +57,15 @@ mkdir -p ${TMPDIR}
 
 # Copy files and create directories and links
 cd "${TOP}"
-makeDirectory ${TMPDIR}/cpu-arith-benchmark.x/bin
+makeDirectory ${TMPDIR}/mcu-irq-benchmark.x/bin
 copyFileToTmpDir "${OUTPUT_PATH}" "${TMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
 
 # Generate tar file
 cd "${TOP}"
-rm -f ${CND_DISTDIR}/${CND_CONF}/package/cpu-arith-benchmark.x.tar
+rm -f ${CND_DISTDIR}/${CND_CONF}/package/mcu-irq-benchmark.x.tar
 cd ${TMPDIR}
-tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/cpu-arith-benchmark.x.tar *
+tar -vcf ../../../../${CND_DISTDIR}/${CND_CONF}/package/mcu-irq-benchmark.x.tar *
 checkReturnCode
 
 # Cleanup
