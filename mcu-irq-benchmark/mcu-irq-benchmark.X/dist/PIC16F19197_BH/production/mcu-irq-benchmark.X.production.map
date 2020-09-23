@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=/Applications/microchip/xc8/v2.20/pic/dat/en_msgs.txt -cn \
   -h+dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.sym \
   --cmf=dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.cmf \
-  -z -Q16F19197 -o/tmp/xcAY89Zdv --defsym=__MPLAB_BUILD=1 \
+  -z -Q16F19197 -o/tmp/xcMXYdiBe --defsym=__MPLAB_BUILD=1 \
   -Mdist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.map -E1 \
   -ver=XC8 Compiler --acfsm=1493 -ASTACK=02070h-02FEFh -pstack=STACK \
   -ACODE=00h-07FFhx16 -ASTRCODE=00h-07FFFh -ASTRING=00h-0FFhx128 \
@@ -54,7 +54,7 @@ Linker command line:
   -ACONFIG=08007h-0800Bh -DCONFIG=2 -AIDLOC=08000h-08003h -DIDLOC=2 \
   -preset_vec=00h,intentry=04h,init,end_init -ppowerup=CODE -pcinit=CODE \
   -pfunctab=ENTRY -AEEDATA=00h-0FFh/0F000h -peeprom_data=EEDATA -DEEDATA=2 \
-  -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k /tmp/xcJZduGnH.o \
+  -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 -k /tmp/xcb0AFj40.o \
   dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o 
 
 Object code version is 3.11
@@ -64,7 +64,7 @@ Machine type is 16F19197
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-/tmp/xcJZduGnH.o
+/tmp/xcb0AFj40.o
                 end_init                             19       19        2        8       0
                 reset_vec                             0        0        2        0       0
                 config                             8007     8007        5        0       4
@@ -1131,7 +1131,7 @@ FUNCTION INFORMATION:
 
  *************** function _main *****************
  Defined at:
-		line 69 in file "main.c"
+		line 64 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1160,7 +1160,7 @@ Total ram usage:        0 bytes
 
  *************** function _Initiallize *****************
  Defined at:
-		line 77 in file "main.c"
+		line 72 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1427,7 +1427,7 @@ Total ram usage:        8 bytes
 
  *************** function _putch *****************
  Defined at:
-		line 357 in file "main.c"
+		line 391 in file "main.c"
  Parameters:    Size  Location     Type
   c               1    wreg     unsigned char 
  Auto vars:     Size  Location     Type
@@ -1457,7 +1457,7 @@ Total ram usage:        1 bytes
 
  *************** function _UartConfig *****************
  Defined at:
-		line 290 in file "main.c"
+		line 324 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1487,7 +1487,7 @@ Total ram usage:        0 bytes
 
  *************** function _SetPerformanceMode *****************
  Defined at:
-		line 119 in file "main.c"
+		line 132 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1517,7 +1517,7 @@ Total ram usage:        0 bytes
 
  *************** function _PinConfig *****************
  Defined at:
-		line 205 in file "main.c"
+		line 221 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1547,7 +1547,7 @@ Total ram usage:        0 bytes
 
  *************** function _PWMConfig *****************
  Defined at:
-		line 364 in file "main.c"
+		line 398 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -1577,7 +1577,7 @@ Total ram usage:        0 bytes
 
  *************** function _interruptHandler *****************
  Defined at:
-		line 390 in file "main.c"
+		line 465 in file "main.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type

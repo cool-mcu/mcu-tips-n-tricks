@@ -1,21 +1,21 @@
 Version 4.0 HI-TECH Software Intermediate Code
 [p mainexit ]
-"63 main.c
-[; ;main.c: 63: void Initiallize(void);
+"58 main.c
+[; ;main.c: 58: void Initiallize(void);
 [v _Initiallize `(v ~T0 @X0 0 ef ]
-"64
-[; ;main.c: 64: void SetPerformanceMode(void);
+"59
+[; ;main.c: 59: void SetPerformanceMode(void);
 [v _SetPerformanceMode `(v ~T0 @X0 0 ef ]
-"65
-[; ;main.c: 65: void PinConfig(void);
+"60
+[; ;main.c: 60: void PinConfig(void);
 [v _PinConfig `(v ~T0 @X0 0 ef ]
-"66
-[; ;main.c: 66: void UartConfig(void);
+"61
+[; ;main.c: 61: void UartConfig(void);
 [v _UartConfig `(v ~T0 @X0 0 ef ]
 "111 /Applications/microchip/xc8/v2.20/pic/include/c99/stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
-"67 main.c
-[; ;main.c: 67: void PWMConfig(void);
+"62 main.c
+[; ;main.c: 62: void PWMConfig(void);
 [v _PWMConfig `(v ~T0 @X0 0 ef ]
 "33879 /Applications/microchip/mplabx/v5.40/packs/Microchip/PIC16F1xxxx_DFP/1.4.119/xc8/pic/include/proc/pic16f19197.h
 [; ;/Applications/microchip/mplabx/v5.40/packs/Microchip/PIC16F1xxxx_DFP/1.4.119/xc8/pic/include/proc/pic16f19197.h: 33879:     struct {
@@ -1949,8 +1949,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [p x LVP = ON ]
 "72
 [p x CP = OFF ]
-"56 main.c
-[; ;main.c: 56: const char Project[] = "mcu-irq-benchmark";
+"51 main.c
+[; ;main.c: 51: const char Project[] = "mcu-irq-benchmark";
 [v _Project `Cuc ~T0 @X0 -> 18 `i e ]
 [i _Project
 :U ..
@@ -1974,8 +1974,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"57
-[; ;main.c: 57: const char Version[] = "00.01";
+"52
+[; ;main.c: 52: const char Version[] = "00.01";
 [v _Version `Cuc ~T0 @X0 -> 6 `i e ]
 [i _Version
 :U ..
@@ -1987,8 +1987,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"58
-[; ;main.c: 58: const char CompileDate[] = "Sep 18 2020";
+"53
+[; ;main.c: 53: const char CompileDate[] = "Sep 23 2020";
 [v _CompileDate `Cuc ~T0 @X0 -> 12 `i e ]
 [i _CompileDate
 :U ..
@@ -1996,8 +1996,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 101 `c
 -> 112 `c
 -> 32 `c
--> 49 `c
--> 56 `c
+-> 50 `c
+-> 51 `c
 -> 32 `c
 -> 50 `c
 -> 48 `c
@@ -2006,295 +2006,295 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"59
-[; ;main.c: 59: const char CompileTime[] = "14:18:13";
+"54
+[; ;main.c: 54: const char CompileTime[] = "13:11:45";
 [v _CompileTime `Cuc ~T0 @X0 -> 9 `i e ]
 [i _CompileTime
 :U ..
 -> 49 `c
--> 52 `c
+-> 51 `c
 -> 58 `c
 -> 49 `c
--> 56 `c
--> 58 `c
 -> 49 `c
+-> 58 `c
 -> 52 `c
+-> 54 `c
 -> 0 `c
 ..
 ]
 [v $root$_main `(v ~T0 @X0 0 e ]
-"69
-[; ;main.c: 69: int main(void) {
+"64
+[; ;main.c: 64: int main(void) {
 [v _main `(i ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"71
-[; ;main.c: 71:     Initiallize();
+"66
+[; ;main.c: 66:     Initiallize();
 [e ( _Initiallize ..  ]
-"73
-[; ;main.c: 73:     while(1);
+"68
+[; ;main.c: 68:     while(1);
 [e :U 1479 ]
 [e :U 1478 ]
 [e $U 1479  ]
 [e :U 1480 ]
-"75
-[; ;main.c: 75: }
+"70
+[; ;main.c: 70: }
 [e :UE 1477 ]
 }
-"77
-[; ;main.c: 77: void Initiallize(void){
+"72
+[; ;main.c: 72: void Initiallize(void){
 [v _Initiallize `(v ~T0 @X0 1 ef ]
 {
 [e :U _Initiallize ]
 [f ]
-"80
-[; ;main.c: 80:     SetPerformanceMode();
+"75
+[; ;main.c: 75:     SetPerformanceMode();
 [e ( _SetPerformanceMode ..  ]
-"83
-[; ;main.c: 83:     PinConfig();
+"78
+[; ;main.c: 78:     PinConfig();
 [e ( _PinConfig ..  ]
-"86
-[; ;main.c: 86:     UartConfig();
+"81
+[; ;main.c: 81:     UartConfig();
 [e ( _UartConfig ..  ]
-"88
-[; ;main.c: 88:     printf("Cool-MCU.com\r\n");
+"83
+[; ;main.c: 83:     printf("Cool-MCU.com\r\n");
 [e ( _printf :s 1C ]
-"89
-[; ;main.c: 89:     printf("Project: %s\r\n", Project);
+"84
+[; ;main.c: 84:     printf("Project: %s\r\n", Project);
 [e ( _printf , (. :s 2C &U _Project ]
-"90
-[; ;main.c: 90:     printf("Version: %s\r\n", Version);
+"85
+[; ;main.c: 85:     printf("Version: %s\r\n", Version);
 [e ( _printf , (. :s 3C &U _Version ]
-"91
-[; ;main.c: 91:     printf("Build date: %s\r\n", CompileDate);
+"86
+[; ;main.c: 86:     printf("Build date: %s\r\n", CompileDate);
 [e ( _printf , (. :s 4C &U _CompileDate ]
-"92
-[; ;main.c: 92:     printf("Build time: %s\r\n\r\n", CompileTime);
+"87
+[; ;main.c: 87:     printf("Build time: %s\r\n\r\n", CompileTime);
 [e ( _printf , (. :s 5C &U _CompileTime ]
-"95
-[; ;main.c: 95:     PWMConfig();
+"90
+[; ;main.c: 90:     PWMConfig();
 [e ( _PWMConfig ..  ]
-"101
-[; ;main.c: 101:     ANSELEbits.ANSE5 = 0;
+"96
+[; ;main.c: 96:     ANSELEbits.ANSE5 = 0;
 [e = . . _ANSELEbits 0 5 -> -> 0 `i `uc ]
-"102
-[; ;main.c: 102:     TRISEbits.TRISE5 = 0;
+"97
+[; ;main.c: 97:     TRISEbits.TRISE5 = 0;
 [e = . . _TRISEbits 0 5 -> -> 0 `i `uc ]
-"103
-[; ;main.c: 103:     LATEbits.LATE5 = 0;
+"98
+[; ;main.c: 98:     LATEbits.LATE5 = 0;
 [e = . . _LATEbits 0 5 -> -> 0 `i `uc ]
-"111
-[; ;main.c: 111:     INTCONbits.PEIE = 1;
+"116
+[; ;main.c: 116:     INTCONbits.PEIE = 1;
 [e = . . _INTCONbits 0 2 -> -> 1 `i `uc ]
-"112
-[; ;main.c: 112:     INTCONbits.GIE = 1;
-[e = . . _INTCONbits 0 3 -> -> 1 `i `uc ]
 "117
-[; ;main.c: 117: }
+[; ;main.c: 117:     INTCONbits.GIE = 1;
+[e = . . _INTCONbits 0 3 -> -> 1 `i `uc ]
+"130
+[; ;main.c: 130: }
 [e :UE 1481 ]
 }
-"119
-[; ;main.c: 119: void SetPerformanceMode(void) {
+"132
+[; ;main.c: 132: void SetPerformanceMode(void) {
 [v _SetPerformanceMode `(v ~T0 @X0 1 ef ]
 {
 [e :U _SetPerformanceMode ]
 [f ]
-"203
-[; ;main.c: 203: }
+"219
+[; ;main.c: 219: }
 [e :UE 1482 ]
 }
-"205
-[; ;main.c: 205: void PinConfig(void){
+"221
+[; ;main.c: 221: void PinConfig(void){
 [v _PinConfig `(v ~T0 @X0 1 ef ]
 {
 [e :U _PinConfig ]
 [f ]
-"210
-[; ;main.c: 210:     TRISCbits.TRISC7 = 0;
+"226
+[; ;main.c: 226:     TRISCbits.TRISC7 = 0;
 [e = . . _TRISCbits 0 7 -> -> 0 `i `uc ]
-"211
-[; ;main.c: 211:     TRISCbits.TRISC6 = 1;
-[e = . . _TRISCbits 0 6 -> -> 1 `i `uc ]
-"215
-[; ;main.c: 215:     ANSELEbits.ANSE6 = 0;
-[e = . . _ANSELEbits 0 6 -> -> 0 `i `uc ]
-"217
-[; ;main.c: 217:     TRISEbits.TRISE6 = 0;
-[e = . . _TRISEbits 0 6 -> -> 0 `i `uc ]
-"218
-[; ;main.c: 218:     LATEbits.LATE6 = 0;
-[e = . . _LATEbits 0 6 -> -> 0 `i `uc ]
 "227
-[; ;main.c: 227:     PPSLOCK = 0x55;
-[e = _PPSLOCK -> -> 85 `i `uc ]
-"228
-[; ;main.c: 228:     PPSLOCK = 0xAA;
-[e = _PPSLOCK -> -> 170 `i `uc ]
-"229
-[; ;main.c: 229:     PPSLOCKbits.PPSLOCKED = 0;
-[e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
+[; ;main.c: 227:     TRISCbits.TRISC6 = 1;
+[e = . . _TRISCbits 0 6 -> -> 1 `i `uc ]
+"231
+[; ;main.c: 231:     ANSELEbits.ANSE6 = 0;
+[e = . . _ANSELEbits 0 6 -> -> 0 `i `uc ]
 "233
-[; ;main.c: 233:     RC7PPS = 0x0D;
-[e = _RC7PPS -> -> 13 `i `uc ]
-"235
-[; ;main.c: 235:     RE6PPS = 0x09;
-[e = _RE6PPS -> -> 9 `i `uc ]
-"238
-[; ;main.c: 238:     RX1PPS = 0x16;
-[e = _RX1PPS -> -> 22 `i `uc ]
-"242
-[; ;main.c: 242:     PPSLOCK = 0x55;
-[e = _PPSLOCK -> -> 85 `i `uc ]
+[; ;main.c: 233:     TRISEbits.TRISE6 = 0;
+[e = . . _TRISEbits 0 6 -> -> 0 `i `uc ]
+"234
+[; ;main.c: 234:     LATEbits.LATE6 = 0;
+[e = . . _LATEbits 0 6 -> -> 0 `i `uc ]
 "243
-[; ;main.c: 243:     PPSLOCK = 0xAA;
-[e = _PPSLOCK -> -> 170 `i `uc ]
+[; ;main.c: 243:     PPSLOCK = 0x55;
+[e = _PPSLOCK -> -> 85 `i `uc ]
 "244
-[; ;main.c: 244:     PPSLOCKbits.PPSLOCKED = 1;
+[; ;main.c: 244:     PPSLOCK = 0xAA;
+[e = _PPSLOCK -> -> 170 `i `uc ]
+"245
+[; ;main.c: 245:     PPSLOCKbits.PPSLOCKED = 0;
+[e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
+"249
+[; ;main.c: 249:     RC7PPS = 0x0D;
+[e = _RC7PPS -> -> 13 `i `uc ]
+"251
+[; ;main.c: 251:     RE6PPS = 0x09;
+[e = _RE6PPS -> -> 9 `i `uc ]
+"254
+[; ;main.c: 254:     RX1PPS = 0x16;
+[e = _RX1PPS -> -> 22 `i `uc ]
+"258
+[; ;main.c: 258:     PPSLOCK = 0x55;
+[e = _PPSLOCK -> -> 85 `i `uc ]
+"259
+[; ;main.c: 259:     PPSLOCK = 0xAA;
+[e = _PPSLOCK -> -> 170 `i `uc ]
+"260
+[; ;main.c: 260:     PPSLOCKbits.PPSLOCKED = 1;
 [e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
-"288
-[; ;main.c: 288: }
+"322
+[; ;main.c: 322: }
 [e :UE 1483 ]
 }
-"290
-[; ;main.c: 290: void UartConfig(void){
+"324
+[; ;main.c: 324: void UartConfig(void){
 [v _UartConfig `(v ~T0 @X0 1 ef ]
 {
 [e :U _UartConfig ]
 [f ]
-"297
-[; ;main.c: 297:     RC1STAbits.SPEN = 0;
+"331
+[; ;main.c: 331:     RC1STAbits.SPEN = 0;
 [e = . . _RC1STAbits 0 7 -> -> 0 `i `uc ]
-"298
-[; ;main.c: 298:     TX1STAbits.TXEN = 0;
+"332
+[; ;main.c: 332:     TX1STAbits.TXEN = 0;
 [e = . . _TX1STAbits 0 5 -> -> 0 `i `uc ]
-"301
-[; ;main.c: 301:     PIR3bits.TX1IF = 0;
+"335
+[; ;main.c: 335:     PIR3bits.TX1IF = 0;
 [e = . . _PIR3bits 0 3 -> -> 0 `i `uc ]
-"302
-[; ;main.c: 302:     PIE3bits.TX1IE = 0;
+"336
+[; ;main.c: 336:     PIE3bits.TX1IE = 0;
 [e = . . _PIE3bits 0 3 -> -> 0 `i `uc ]
-"303
-[; ;main.c: 303:     PIR3bits.RC1IF = 0;
+"337
+[; ;main.c: 337:     PIR3bits.RC1IF = 0;
 [e = . . _PIR3bits 0 4 -> -> 0 `i `uc ]
-"304
-[; ;main.c: 304:     PIE3bits.RC1IE = 0;
+"338
+[; ;main.c: 338:     PIE3bits.RC1IE = 0;
 [e = . . _PIE3bits 0 4 -> -> 0 `i `uc ]
-"307
-[; ;main.c: 307:     TX1STAbits.SYNC = 0;
+"341
+[; ;main.c: 341:     TX1STAbits.SYNC = 0;
 [e = . . _TX1STAbits 0 4 -> -> 0 `i `uc ]
-"308
-[; ;main.c: 308:     TX1STAbits.BRGH = 1;
+"342
+[; ;main.c: 342:     TX1STAbits.BRGH = 1;
 [e = . . _TX1STAbits 0 2 -> -> 1 `i `uc ]
-"311
-[; ;main.c: 311:     RC1STAbits.CREN = 1;
+"345
+[; ;main.c: 345:     RC1STAbits.CREN = 1;
 [e = . . _RC1STAbits 0 4 -> -> 1 `i `uc ]
-"314
-[; ;main.c: 314:     BAUD1CONbits.BRG16 = 1;
+"348
+[; ;main.c: 348:     BAUD1CONbits.BRG16 = 1;
 [e = . . _BAUD1CONbits 0 3 -> -> 1 `i `uc ]
-"315
-[; ;main.c: 315:     SP1BRGH = 0x00;
+"349
+[; ;main.c: 349:     SP1BRGH = 0x00;
 [e = _SP1BRGH -> -> 0 `i `uc ]
-"316
-[; ;main.c: 316:     SP1BRGL = 0x44;
+"350
+[; ;main.c: 350:     SP1BRGL = 0x44;
 [e = _SP1BRGL -> -> 68 `i `uc ]
-"319
-[; ;main.c: 319:     RC1STAbits.SPEN = 1;
+"353
+[; ;main.c: 353:     RC1STAbits.SPEN = 1;
 [e = . . _RC1STAbits 0 7 -> -> 1 `i `uc ]
-"320
-[; ;main.c: 320:     TX1STAbits.TXEN = 1;
+"354
+[; ;main.c: 354:     TX1STAbits.TXEN = 1;
 [e = . . _TX1STAbits 0 5 -> -> 1 `i `uc ]
-"351
-[; ;main.c: 351: }
+"385
+[; ;main.c: 385: }
 [e :UE 1484 ]
 }
-"357
-[; ;main.c: 357: void putch(char c) {
+"391
+[; ;main.c: 391: void putch(char c) {
 [v _putch `(v ~T0 @X0 1 ef1`uc ]
 {
 [e :U _putch ]
 [v _c `uc ~T0 @X0 1 r1 ]
 [f ]
-"358
-[; ;main.c: 358:     while(!TX1STAbits.TRMT);
+"392
+[; ;main.c: 392:     while(!TX1STAbits.TRMT);
 [e $U 1486  ]
 [e :U 1487 ]
 [e :U 1486 ]
 [e $ ! != -> . . _TX1STAbits 0 1 `i -> 0 `i 1487  ]
 [e :U 1488 ]
-"359
-[; ;main.c: 359:     TX1REG = c;
+"393
+[; ;main.c: 393:     TX1REG = c;
 [e = _TX1REG -> _c `uc ]
-"360
-[; ;main.c: 360: }
+"394
+[; ;main.c: 394: }
 [e :UE 1485 ]
 }
-"364
-[; ;main.c: 364: void PWMConfig(void){
+"398
+[; ;main.c: 398: void PWMConfig(void){
 [v _PWMConfig `(v ~T0 @X0 1 ef ]
 {
 [e :U _PWMConfig ]
 [f ]
-"368
-[; ;main.c: 368:     T2CONbits.T2ON = 0;
+"402
+[; ;main.c: 402:     T2CONbits.T2ON = 0;
 [e = . . _T2CONbits 1 2 -> -> 0 `i `uc ]
-"369
-[; ;main.c: 369:     T2TMR = 0;
+"403
+[; ;main.c: 403:     T2TMR = 0;
 [e = _T2TMR -> -> 0 `i `uc ]
-"370
-[; ;main.c: 370:     T2CLKCONbits.CS = 1;
+"404
+[; ;main.c: 404:     T2CLKCONbits.CS = 1;
 [e = . . _T2CLKCONbits 0 0 -> -> 1 `i `uc ]
-"371
-[; ;main.c: 371:     T2CONbits.T2CKPS = 5;
+"405
+[; ;main.c: 405:     T2CONbits.T2CKPS = 5;
 [e = . . _T2CONbits 1 1 -> -> 5 `i `uc ]
-"372
-[; ;main.c: 372:     T2PR = 250;
+"406
+[; ;main.c: 406:     T2PR = 250;
 [e = _T2PR -> -> 250 `i `uc ]
-"373
-[; ;main.c: 373:     CCP1CONbits.EN = 0;
+"408
+[; ;main.c: 408:     CCP1CONbits.EN = 0;
 [e = . . _CCP1CONbits 0 4 -> -> 0 `i `uc ]
-"374
-[; ;main.c: 374:     CCP1CONbits.MODE = 15;
+"409
+[; ;main.c: 409:     CCP1CONbits.MODE = 15;
 [e = . . _CCP1CONbits 0 0 -> -> 15 `i `uc ]
-"375
-[; ;main.c: 375:     CCPR1H = 0x01;
+"410
+[; ;main.c: 410:     CCPR1H = 0x01;
 [e = _CCPR1H -> -> 1 `i `uc ]
-"376
-[; ;main.c: 376:     CCPR1L = 0xF4;
+"411
+[; ;main.c: 411:     CCPR1L = 0xF4;
 [e = _CCPR1L -> -> 244 `i `uc ]
-"377
-[; ;main.c: 377:     CCP1CONbits.EN = 1;
+"412
+[; ;main.c: 412:     CCP1CONbits.EN = 1;
 [e = . . _CCP1CONbits 0 4 -> -> 1 `i `uc ]
-"378
-[; ;main.c: 378:     PIR4bits.TMR2IF = 0;
+"414
+[; ;main.c: 414:     PIR4bits.TMR2IF = 0;
 [e = . . _PIR4bits 0 1 -> -> 0 `i `uc ]
-"379
-[; ;main.c: 379:     PIE4bits.TMR2IE = 1;
+"415
+[; ;main.c: 415:     PIE4bits.TMR2IE = 1;
 [e = . . _PIE4bits 0 1 -> -> 1 `i `uc ]
-"380
-[; ;main.c: 380:     T2CONbits.T2ON = 1;
+"416
+[; ;main.c: 416:     T2CONbits.T2ON = 1;
 [e = . . _T2CONbits 1 2 -> -> 1 `i `uc ]
-"384
-[; ;main.c: 384: }
+"459
+[; ;main.c: 459: }
 [e :UE 1489 ]
 }
 [v $root$_interruptHandler `(v ~T0 @X0 0 e ]
-"390
-[; ;main.c: 390: void __attribute__((picinterrupt(("")))) interruptHandler(void)
+"465
+[; ;main.c: 465: void __attribute__((picinterrupt(("")))) interruptHandler(void)
 [v _interruptHandler `(v ~T1 @X0 1 ef ]
-"391
-[; ;main.c: 391: {
+"466
+[; ;main.c: 466: {
 {
 [e :U _interruptHandler ]
 [f ]
-"392
-[; ;main.c: 392:     LATEbits.LATE5 ^= 1;
+"467
+[; ;main.c: 467:     LATEbits.LATE5 ^= 1;
 [e =^ . . _LATEbits 0 5 -> -> 1 `i `Vuc ]
-"393
-[; ;main.c: 393:     PIR4bits.TMR2IF = 0;
+"468
+[; ;main.c: 468:     PIR4bits.TMR2IF = 0;
 [e = . . _PIR4bits 0 1 -> -> 0 `i `uc ]
-"394
-[; ;main.c: 394: }
+"469
+[; ;main.c: 469: }
 [e :UE 1490 ]
 }
 [p f _printf 8650752 ]

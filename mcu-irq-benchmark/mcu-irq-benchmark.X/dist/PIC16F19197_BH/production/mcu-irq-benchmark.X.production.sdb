@@ -25,21 +25,21 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"69 /Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+"64 /Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
 [v _main main `(i  1 e 2 0 ]
-"77
+"72
 [v _Initiallize Initiallize `(v  1 e 1 0 ]
-"119
+"132
 [v _SetPerformanceMode SetPerformanceMode `(v  1 e 1 0 ]
-"205
+"221
 [v _PinConfig PinConfig `(v  1 e 1 0 ]
-"290
+"324
 [v _UartConfig UartConfig `(v  1 e 1 0 ]
-"357
+"391
 [v _putch putch `(v  1 e 1 0 ]
-"364
+"398
 [v _PWMConfig PWMConfig `(v  1 e 1 0 ]
-"390
+"465
 [v _interruptHandler interruptHandler `II(v  1 e 1 0 ]
 [s S110 . 1 `uc 1 INTEDG 1 0 :1:0 
 `uc 1 . 1 0 :5:1 
@@ -280,23 +280,23 @@
 [v _width width `i  1 s 2 width ]
 "69
 [v _nout nout `i  1 s 2 nout ]
-"56 /Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+"51 /Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
 [v _Project Project `DC[18]uc  1 e 18 0 ]
-"57
+"52
 [v _Version Version `DC[6]uc  1 e 6 0 ]
-"58
+"53
 [v _CompileDate CompileDate `DC[12]uc  1 e 12 0 ]
-"59
+"54
 [v _CompileTime CompileTime `DC[9]uc  1 e 9 0 ]
-"69
+"64
 [v _main main `(i  1 e 2 0 ]
 {
-"75
+"70
 } 0
-"77
+"72
 [v _Initiallize Initiallize `(v  1 e 1 0 ]
 {
-"117
+"130
 } 0
 "5 /Applications/microchip/xc8/v2.20/pic/sources/c99/common/printf.c
 [v _printf printf `(i  1 e 2 0 ]
@@ -380,36 +380,36 @@
 [v fputc@fp fp `*.1S992  1 p 1 4 ]
 "21
 } 0
-"357 /Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+"391 /Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
 [v _putch putch `(v  1 e 1 0 ]
 {
 [v putch@c c `uc  1 a 1 wreg ]
 [v putch@c c `uc  1 a 1 wreg ]
 [v putch@c c `uc  1 a 1 1 ]
-"360
+"394
 } 0
-"290
+"324
 [v _UartConfig UartConfig `(v  1 e 1 0 ]
 {
-"351
+"385
 } 0
-"119
+"132
 [v _SetPerformanceMode SetPerformanceMode `(v  1 e 1 0 ]
 {
-"203
+"219
 } 0
-"205
+"221
 [v _PinConfig PinConfig `(v  1 e 1 0 ]
 {
-"288
+"322
 } 0
-"364
+"398
 [v _PWMConfig PWMConfig `(v  1 e 1 0 ]
 {
-"384
+"459
 } 0
-"390
+"465
 [v _interruptHandler interruptHandler `II(v  1 e 1 0 ]
 {
-"394
+"469
 } 0

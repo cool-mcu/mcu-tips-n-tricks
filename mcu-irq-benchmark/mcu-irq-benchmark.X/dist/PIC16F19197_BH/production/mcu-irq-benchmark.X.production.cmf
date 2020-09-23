@@ -11,6 +11,10 @@
 # All addresses and the length are given in unqualified hexadecimal
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
+$/tmp/xcb0AFj40.o
+reset_vec CODE 0 0 0 2 2
+end_init CODE 0 19 19 2 2
+config CONFIG 4 8007 8007 5 2
 $dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 cinit CODE 0 1B 1B 20 2
 text1 CODE 0 1B6 1B6 4C 2
@@ -43,10 +47,6 @@ bssBANK1 BANK1 1 A0 A0 20 1
 idataBANK0 CODE 0 364 364 7 2
 dataBANK0 BANK0 1 56 56 7 1
 clrtext CODE 0 371 371 6 2
-config CONFIG 4 8007 8007 5 2
-$/tmp/xcJZduGnH.o
-reset_vec CODE 0 0 0 2 2
-end_init CODE 0 19 19 2 2
 config CONFIG 4 8007 8007 5 2
 # %UNUSED Section
 # This section enumerates the unused ranges of each CLASS. Each entry
@@ -249,91 +249,91 @@ STRING 37E-7FFF 2
 # All other numeric values are in decimal.
 %LINETAB
 $dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
-1B cinit CODE >2576:/tmp/xcOGAp1E7.s
-1B cinit CODE >2579:/tmp/xcOGAp1E7.s
-1B cinit CODE >2624:/tmp/xcOGAp1E7.s
-1C cinit CODE >2625:/tmp/xcOGAp1E7.s
-1D cinit CODE >2626:/tmp/xcOGAp1E7.s
-1E cinit CODE >2627:/tmp/xcOGAp1E7.s
-1F cinit CODE >2628:/tmp/xcOGAp1E7.s
-20 cinit CODE >2629:/tmp/xcOGAp1E7.s
-21 cinit CODE >2630:/tmp/xcOGAp1E7.s
-22 cinit CODE >2631:/tmp/xcOGAp1E7.s
-23 cinit CODE >2632:/tmp/xcOGAp1E7.s
-24 cinit CODE >2633:/tmp/xcOGAp1E7.s
-27 cinit CODE >2650:/tmp/xcOGAp1E7.s
-28 cinit CODE >2651:/tmp/xcOGAp1E7.s
-29 cinit CODE >2652:/tmp/xcOGAp1E7.s
-2A cinit CODE >2653:/tmp/xcOGAp1E7.s
-2B cinit CODE >2654:/tmp/xcOGAp1E7.s
-2C cinit CODE >2655:/tmp/xcOGAp1E7.s
-2F cinit CODE >2659:/tmp/xcOGAp1E7.s
-30 cinit CODE >2660:/tmp/xcOGAp1E7.s
-31 cinit CODE >2661:/tmp/xcOGAp1E7.s
-32 cinit CODE >2662:/tmp/xcOGAp1E7.s
-33 cinit CODE >2663:/tmp/xcOGAp1E7.s
-34 cinit CODE >2664:/tmp/xcOGAp1E7.s
-37 cinit CODE >2670:/tmp/xcOGAp1E7.s
-37 cinit CODE >2672:/tmp/xcOGAp1E7.s
-38 cinit CODE >2673:/tmp/xcOGAp1E7.s
-39 cinit CODE >2674:/tmp/xcOGAp1E7.s
-4 intentry CODE >390:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-6 intentry CODE >392:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-15 intentry CODE >393:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-17 intentry CODE >394:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-285 text12 CODE >364:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-285 text12 CODE >368:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-287 text12 CODE >369:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-288 text12 CODE >370:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-28C text12 CODE >371:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-290 text12 CODE >372:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-292 text12 CODE >373:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-294 text12 CODE >374:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-296 text12 CODE >375:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-298 text12 CODE >376:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-29A text12 CODE >377:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-29B text12 CODE >378:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-29D text12 CODE >379:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-29E text12 CODE >380:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2A0 text12 CODE >384:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-269 text11 CODE >205:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-269 text11 CODE >210:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-26B text11 CODE >211:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-26C text11 CODE >215:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-26E text11 CODE >217:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-270 text11 CODE >218:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-271 text11 CODE >227:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-274 text11 CODE >228:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-276 text11 CODE >229:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-277 text11 CODE >233:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-27A text11 CODE >235:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-27C text11 CODE >238:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-27F text11 CODE >242:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-281 text11 CODE >243:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-283 text11 CODE >244:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-284 text11 CODE >288:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-37D text10 CODE >119:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-37D text10 CODE >203:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2D3 text9 CODE >290:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2D3 text9 CODE >297:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2D5 text9 CODE >298:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2D6 text9 CODE >301:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2D8 text9 CODE >302:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2D9 text9 CODE >303:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2DA text9 CODE >304:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2DB text9 CODE >307:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2DD text9 CODE >308:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2DE text9 CODE >311:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2DF text9 CODE >314:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2E0 text9 CODE >315:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2E1 text9 CODE >316:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2E3 text9 CODE >319:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2E4 text9 CODE >320:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-2E5 text9 CODE >351:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-35B text8 CODE >357:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-35C text8 CODE >358:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-361 text8 CODE >359:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-363 text8 CODE >360:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1B cinit CODE >2576:/tmp/xcVDSYaQi.s
+1B cinit CODE >2579:/tmp/xcVDSYaQi.s
+1B cinit CODE >2624:/tmp/xcVDSYaQi.s
+1C cinit CODE >2625:/tmp/xcVDSYaQi.s
+1D cinit CODE >2626:/tmp/xcVDSYaQi.s
+1E cinit CODE >2627:/tmp/xcVDSYaQi.s
+1F cinit CODE >2628:/tmp/xcVDSYaQi.s
+20 cinit CODE >2629:/tmp/xcVDSYaQi.s
+21 cinit CODE >2630:/tmp/xcVDSYaQi.s
+22 cinit CODE >2631:/tmp/xcVDSYaQi.s
+23 cinit CODE >2632:/tmp/xcVDSYaQi.s
+24 cinit CODE >2633:/tmp/xcVDSYaQi.s
+27 cinit CODE >2650:/tmp/xcVDSYaQi.s
+28 cinit CODE >2651:/tmp/xcVDSYaQi.s
+29 cinit CODE >2652:/tmp/xcVDSYaQi.s
+2A cinit CODE >2653:/tmp/xcVDSYaQi.s
+2B cinit CODE >2654:/tmp/xcVDSYaQi.s
+2C cinit CODE >2655:/tmp/xcVDSYaQi.s
+2F cinit CODE >2659:/tmp/xcVDSYaQi.s
+30 cinit CODE >2660:/tmp/xcVDSYaQi.s
+31 cinit CODE >2661:/tmp/xcVDSYaQi.s
+32 cinit CODE >2662:/tmp/xcVDSYaQi.s
+33 cinit CODE >2663:/tmp/xcVDSYaQi.s
+34 cinit CODE >2664:/tmp/xcVDSYaQi.s
+37 cinit CODE >2670:/tmp/xcVDSYaQi.s
+37 cinit CODE >2672:/tmp/xcVDSYaQi.s
+38 cinit CODE >2673:/tmp/xcVDSYaQi.s
+39 cinit CODE >2674:/tmp/xcVDSYaQi.s
+4 intentry CODE >465:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+6 intentry CODE >467:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+15 intentry CODE >468:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+17 intentry CODE >469:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+285 text12 CODE >398:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+285 text12 CODE >402:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+287 text12 CODE >403:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+288 text12 CODE >404:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+28C text12 CODE >405:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+290 text12 CODE >406:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+292 text12 CODE >408:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+294 text12 CODE >409:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+296 text12 CODE >410:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+298 text12 CODE >411:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+29A text12 CODE >412:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+29B text12 CODE >414:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+29D text12 CODE >415:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+29E text12 CODE >416:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2A0 text12 CODE >459:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+269 text11 CODE >221:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+269 text11 CODE >226:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+26B text11 CODE >227:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+26C text11 CODE >231:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+26E text11 CODE >233:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+270 text11 CODE >234:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+271 text11 CODE >243:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+274 text11 CODE >244:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+276 text11 CODE >245:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+277 text11 CODE >249:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+27A text11 CODE >251:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+27C text11 CODE >254:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+27F text11 CODE >258:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+281 text11 CODE >259:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+283 text11 CODE >260:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+284 text11 CODE >322:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+37D text10 CODE >132:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+37D text10 CODE >219:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2D3 text9 CODE >324:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2D3 text9 CODE >331:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2D5 text9 CODE >332:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2D6 text9 CODE >335:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2D8 text9 CODE >336:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2D9 text9 CODE >337:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2DA text9 CODE >338:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2DB text9 CODE >341:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2DD text9 CODE >342:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2DE text9 CODE >345:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2DF text9 CODE >348:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2E0 text9 CODE >349:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2E1 text9 CODE >350:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2E3 text9 CODE >353:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2E4 text9 CODE >354:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+2E5 text9 CODE >385:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+35B text8 CODE >391:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+35C text8 CODE >392:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+361 text8 CODE >393:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+363 text8 CODE >394:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
 202 text7 CODE >8:/Applications/microchip/xc8/v2.20/pic/sources/c99/common/nf_fputc.c
 202 text7 CODE >12:/Applications/microchip/xc8/v2.20/pic/sources/c99/common/nf_fputc.c
 20C text7 CODE >13:/Applications/microchip/xc8/v2.20/pic/sources/c99/common/nf_fputc.c
@@ -404,41 +404,41 @@ F3 text5 CODE >582:/Applications/microchip/xc8/v2.20/pic/sources/c99/common/dopr
 2F8 text2 CODE >9:/Applications/microchip/xc8/v2.20/pic/sources/c99/common/printf.c
 2FD text2 CODE >10:/Applications/microchip/xc8/v2.20/pic/sources/c99/common/printf.c
 309 text2 CODE >13:/Applications/microchip/xc8/v2.20/pic/sources/c99/common/printf.c
-1B6 text1 CODE >77:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1B6 text1 CODE >80:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1B9 text1 CODE >83:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1BC text1 CODE >86:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1BF text1 CODE >88:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1C7 text1 CODE >89:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1D3 text1 CODE >90:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1DF text1 CODE >91:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1EB text1 CODE >92:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1F7 text1 CODE >95:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1FA text1 CODE >101:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1FC text1 CODE >102:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1FE text1 CODE >103:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1FF text1 CODE >111:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-200 text1 CODE >112:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-201 text1 CODE >117:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-377 maintext CODE >69:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-377 maintext CODE >71:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-37A maintext CODE >73:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-371 clrtext CODE >2639:/tmp/xcOGAp1E7.s
-371 clrtext CODE >2640:/tmp/xcOGAp1E7.s
-372 clrtext CODE >2641:/tmp/xcOGAp1E7.s
-372 clrtext CODE >2642:/tmp/xcOGAp1E7.s
-373 clrtext CODE >2643:/tmp/xcOGAp1E7.s
-374 clrtext CODE >2644:/tmp/xcOGAp1E7.s
-375 clrtext CODE >2645:/tmp/xcOGAp1E7.s
-376 clrtext CODE >2646:/tmp/xcOGAp1E7.s
-36B inittext CODE >2613:/tmp/xcOGAp1E7.s
-36B inittext CODE >2614:/tmp/xcOGAp1E7.s
-36C inittext CODE >2615:/tmp/xcOGAp1E7.s
-36C inittext CODE >2616:/tmp/xcOGAp1E7.s
-36D inittext CODE >2617:/tmp/xcOGAp1E7.s
-36E inittext CODE >2618:/tmp/xcOGAp1E7.s
-36F inittext CODE >2619:/tmp/xcOGAp1E7.s
-370 inittext CODE >2620:/tmp/xcOGAp1E7.s
+1B6 text1 CODE >72:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1B6 text1 CODE >75:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1B9 text1 CODE >78:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1BC text1 CODE >81:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1BF text1 CODE >83:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1C7 text1 CODE >84:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1D3 text1 CODE >85:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1DF text1 CODE >86:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1EB text1 CODE >87:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1F7 text1 CODE >90:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1FA text1 CODE >96:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1FC text1 CODE >97:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1FE text1 CODE >98:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+1FF text1 CODE >116:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+200 text1 CODE >117:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+201 text1 CODE >130:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+377 maintext CODE >64:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+377 maintext CODE >66:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+37A maintext CODE >68:/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
+371 clrtext CODE >2639:/tmp/xcVDSYaQi.s
+371 clrtext CODE >2640:/tmp/xcVDSYaQi.s
+372 clrtext CODE >2641:/tmp/xcVDSYaQi.s
+372 clrtext CODE >2642:/tmp/xcVDSYaQi.s
+373 clrtext CODE >2643:/tmp/xcVDSYaQi.s
+374 clrtext CODE >2644:/tmp/xcVDSYaQi.s
+375 clrtext CODE >2645:/tmp/xcVDSYaQi.s
+376 clrtext CODE >2646:/tmp/xcVDSYaQi.s
+36B inittext CODE >2613:/tmp/xcVDSYaQi.s
+36B inittext CODE >2614:/tmp/xcVDSYaQi.s
+36C inittext CODE >2615:/tmp/xcVDSYaQi.s
+36C inittext CODE >2616:/tmp/xcVDSYaQi.s
+36D inittext CODE >2617:/tmp/xcVDSYaQi.s
+36E inittext CODE >2618:/tmp/xcVDSYaQi.s
+36F inittext CODE >2619:/tmp/xcVDSYaQi.s
+370 inittext CODE >2620:/tmp/xcVDSYaQi.s
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -464,14 +464,14 @@ __Heeprom_data 0 0 EEDATA 3 eeprom_data -
 __Hstrings 0 0 ABS 0 strings -
 ?_vfprintf 3F 0 BANK0 1 cstackBANK0 dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 _T2PR 28D 0 ABS 0 - dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
-___sp 0 0 STACK 2 stack /tmp/xcJZduGnH.o
+___sp 0 0 STACK 2 stack /tmp/xcb0AFj40.o
 _main 6EE 0 CODE 0 maintext dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 _nout 4E 0 BANK0 1 bssBANK0 dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 _prec 52 0 BANK0 1 bssBANK0 dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 _stoa 76 0 CODE 0 text5 dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 btemp 7E 0 ABS 0 - dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 __size_of_UartConfig 0 0 ABS 0 - dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
-start 32 0 CODE 0 init /tmp/xcJZduGnH.o
+start 32 0 CODE 0 init /tmp/xcb0AFj40.o
 __size_of_main 0 0 ABS 0 - dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 __size_of_stoa 0 0 ABS 0 - dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 __end_of_interruptHandler 32 0 CODE 0 intentry dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
@@ -487,12 +487,12 @@ stoa@s 7A 0 COMMON 1 cstackCOMMON dist/PIC16F19197_BH/production/mcu-irq-benchma
 stoa@w 2C 0 BANK0 1 cstackBANK0 dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 __end_of_vfpfcnvrt 36C 0 CODE 0 text4 dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 __size_of_vfpfcnvrt 0 0 ABS 0 - dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
-intlevel0 0 0 ENTRY 0 functab /tmp/xcJZduGnH.o
-intlevel1 0 0 ENTRY 0 functab /tmp/xcJZduGnH.o
-intlevel2 0 0 ENTRY 0 functab /tmp/xcJZduGnH.o
-intlevel3 0 0 ENTRY 0 functab /tmp/xcJZduGnH.o
-intlevel4 0 0 ENTRY 0 functab /tmp/xcJZduGnH.o
-intlevel5 0 0 ENTRY 0 functab /tmp/xcJZduGnH.o
+intlevel0 0 0 ENTRY 0 functab /tmp/xcb0AFj40.o
+intlevel1 0 0 ENTRY 0 functab /tmp/xcb0AFj40.o
+intlevel2 0 0 ENTRY 0 functab /tmp/xcb0AFj40.o
+intlevel3 0 0 ENTRY 0 functab /tmp/xcb0AFj40.o
+intlevel4 0 0 ENTRY 0 functab /tmp/xcb0AFj40.o
+intlevel5 0 0 ENTRY 0 functab /tmp/xcb0AFj40.o
 __end_of_PWMConfig 542 0 CODE 0 text12 dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 wtemp0 7E 0 ABS 0 - dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 __size_of_PWMConfig 0 0 ABS 0 - dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
@@ -507,8 +507,8 @@ __Lmaintext 0 0 ABS 0 maintext -
 ?_printf 47 0 BANK0 1 cstackBANK0 dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 __size_of_Initiallize 0 0 ABS 0 - dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 ?_strlen 71 0 COMMON 1 cstackCOMMON dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
-___stackhi 2FEF 0 ABS 0 - /tmp/xcJZduGnH.o
-___stacklo 2070 0 ABS 0 - /tmp/xcJZduGnH.o
+___stackhi 2FEF 0 ABS 0 - /tmp/xcb0AFj40.o
+___stacklo 2070 0 ABS 0 - /tmp/xcb0AFj40.o
 _Project 5CC 0 STRCODE 0 stringtext1 dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 __size_of_fputc 0 0 ABS 0 - dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 __size_of_putch 0 0 ABS 0 - dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
@@ -523,7 +523,7 @@ __pcstackBANK0 20 0 BANK0 1 cstackBANK0 dist/PIC16F19197_BH/production/mcu-irq-b
 _TX1REG 11A 0 ABS 0 - dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 __end_of_printf 614 0 CODE 0 text2 dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 fputc@fp 74 0 COMMON 1 cstackCOMMON dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
-___int_sp 0 0 STACK 2 stack /tmp/xcJZduGnH.o
+___int_sp 0 0 STACK 2 stack /tmp/xcb0AFj40.o
 __end_of_SetPerformanceMode 6FC 0 CODE 0 text10 dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 __Hbank0 0 0 ABS 0 bank0 -
 __Hbank1 0 0 ABS 0 bank1 -
@@ -765,7 +765,7 @@ __S2 0 0 ABS 0 - -
 __S3 0 0 ABS 0 - -
 _SetPerformanceMode 6FA 0 CODE 0 text10 dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 __Lintentry 8 0 CODE 0 intentry -
-reset_vec 0 0 CODE 0 reset_vec /tmp/xcJZduGnH.o
+reset_vec 0 0 CODE 0 reset_vec /tmp/xcb0AFj40.o
 strlen@a 74 0 COMMON 1 cstackCOMMON dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 strlen@s 71 0 COMMON 1 cstackCOMMON dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o
 __pdataBANK0 56 0 BANK0 1 dataBANK0 dist/PIC16F19197_BH/production/mcu-irq-benchmark.X.production.o

@@ -21664,11 +21664,11 @@ char *tempnam(const char *, const char *);
 
 #pragma config CP = OFF
 # 36 "main.c" 2
-# 56 "main.c"
+# 51 "main.c"
 const char Project[] = "mcu-irq-benchmark";
 const char Version[] = "00.01";
-const char CompileDate[] = "Sep 18 2020";
-const char CompileTime[] = "14:18:13";
+const char CompileDate[] = "Sep 23 2020";
+const char CompileTime[] = "13:11:45";
 
 
 
@@ -21713,23 +21713,14 @@ void Initiallize(void){
     ANSELEbits.ANSE5 = 0;
     TRISEbits.TRISE5 = 0;
     LATEbits.LATE5 = 0;
-
-
-
-
-
-
-
+# 116 "main.c"
     INTCONbits.PEIE = 1;
     INTCONbits.GIE = 1;
-
-
-
-
+# 130 "main.c"
 }
 
 void SetPerformanceMode(void) {
-# 203 "main.c"
+# 219 "main.c"
 }
 
 void PinConfig(void){
@@ -21746,7 +21737,7 @@ void PinConfig(void){
 
     TRISEbits.TRISE6 = 0;
     LATEbits.LATE6 = 0;
-# 227 "main.c"
+# 243 "main.c"
     PPSLOCK = 0x55;
     PPSLOCK = 0xAA;
     PPSLOCKbits.PPSLOCKED = 0;
@@ -21765,7 +21756,7 @@ void PinConfig(void){
     PPSLOCK = 0x55;
     PPSLOCK = 0xAA;
     PPSLOCKbits.PPSLOCKED = 1;
-# 288 "main.c"
+# 322 "main.c"
 }
 
 void UartConfig(void){
@@ -21799,7 +21790,7 @@ void UartConfig(void){
 
     RC1STAbits.SPEN = 1;
     TX1STAbits.TXEN = 1;
-# 351 "main.c"
+# 385 "main.c"
 }
 
 
@@ -21822,17 +21813,17 @@ void PWMConfig(void){
     T2CLKCONbits.CS = 1;
     T2CONbits.T2CKPS = 5;
     T2PR = 250;
+
     CCP1CONbits.EN = 0;
     CCP1CONbits.MODE = 15;
     CCPR1H = 0x01;
     CCPR1L = 0xF4;
     CCP1CONbits.EN = 1;
+
     PIR4bits.TMR2IF = 0;
     PIE4bits.TMR2IE = 1;
     T2CONbits.T2ON = 1;
-
-
-
+# 459 "main.c"
 }
 
 

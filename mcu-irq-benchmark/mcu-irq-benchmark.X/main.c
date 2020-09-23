@@ -17,7 +17,7 @@
  * An Oscilloscope is used to measure IRQ latency (PWM 0-->1 to LED toggle).
  * 
  * The Disassembly listing must be consulted to subtract the #instruction cycles
- * used to toggle the USER LED. 
+ * used for context save and to toggle the USER LED. 
  * 
  * SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
  * EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
@@ -36,19 +36,14 @@
 #include "configBits.h"     // Hardware Configuration bit settings
 
 #if defined(PIC16F19197_BH)
-#define ELAPSED_TICKS_ADJUSTMENT 9
 #define NoOP() NOP()                        // Define macro for NOP assembly instruction
-#define MAX_LOOP_COUNT  1
 #elif defined(PIC24FJ1024GA606_BH)
 #include <libpic30.h>                       // Added for printf() --> UART2 redirect support
-#define ELAPSED_TICKS_ADJUSTMENT 10         // Timer Tick Adjustment for reading the timer register
 #define NoOP() Nop()                        // Define macro for NOP assembly instruction
-#define MAX_LOOP_COUNT  1
 #elif defined(PIC32MZ1024EFH064_BH)
-#include <cp0defs.h>                        // CP0 access macros for PIC32M devices
-#define ELAPSED_TICKS_ADJUSTMENT 12         // Timer Tick Adjustment for reading the timer register
+#include <cp0defs.h>                        // CP0 access macros for PIC32M (MIPs CPU) devices
+#include <sys/attribs.h>                    // Provides "_ISR()" macros for PIC32M devices
 #define NoOP() Nop()                        // Define macro for NOP assembly instruction
-#define MAX_LOOP_COUNT  4
 #endif
 
 // Global Variables
@@ -107,18 +102,27 @@ void Initiallize(void){
     TRISEbits.TRISE2 = 0;
     LATEbits.LATE2 = 0;
     
+#elif defined(PIC32MZ1024EFH064_BH)
+
+    TRISEbits.TRISE2 = 0;
+    LATEbits.LATE2 = 0;
+
 #endif      
     
     // Enable Interrupts Globally
 
 #if defined(PIC16F19197_BH)
     
-    INTCONbits.PEIE = 1;    // Enable all peripheral interrupt sources
-    INTCONbits.GIE = 1;     // Enable interrupts globally    
+    INTCONbits.PEIE = 1;            // Enable all peripheral interrupt sources
+    INTCONbits.GIE = 1;             // Enable interrupts globally    
 
 #elif defined(PIC24FJ1024GA606_BH)
     
-    INTCON2bits.GIE = 1;    // Enable interrupts globally
+    INTCON2bits.GIE = 1;            // Enable interrupts globally
+    
+#elif defined(PIC32MZ1024EFH064_BH)
+    
+    __builtin_enable_interrupts();  // Sets the IE bit in the CP0 Status register to globally enable interrupts
     
 #endif    
     
@@ -152,7 +156,6 @@ void SetPerformanceMode(void) {
     unsigned int cp0;
 	
     // Unlock Sequence
-    asm volatile("di");     // disable all interrupts
     SYSKEY = 0xAA996655;
     SYSKEY = 0x556699AA;  
 
@@ -190,13 +193,17 @@ void SetPerformanceMode(void) {
     PRECONbits.PREFEN = 0b11; // Predictive Prefetch Enable (Enable predictive prefetch for any address)
     PRECONbits.PFMWS = 0b000; // PFM Access Time Defined in Terms of SYSCLK Wait States (Zero wait states @ 8 MHz)
 
-    // Set up caching
+    // Set up cache using settings in start-up code.
     // See  https://microchipdeveloper.com/32bit:mz-cache-disable
-    // Added "pic32_init_cache.S" to project from XC32 tool chain, and set __PIC32_CACHE_MODE to _CACHE_WRITEBACK_WRITEALLOCATE
+    // Add "pic32_init_cache.S" to this project from XC32 tool chain, and set __PIC32_CACHE_MODE to _CACHE_WRITEBACK_WRITEALLOCATE
 
     // Lock Sequence
     SYSKEY = 0x33333333;
-    asm volatile("ei");     // Enable all interrupts    
+
+    // Configure interrupt controller, and use of shadow register sets
+    PRISS = 0x76543210;                 // Assign shadow register set #7 to #1 to priority level #7 to #1 ISRs
+    INTCONSET = _INTCON_MVEC_MASK;      // Configure interrupt controller for multi-vector mode
+    
     
 #elif defined(PIC24FJ1024GA606_BH)
     
@@ -255,7 +262,7 @@ void PinConfig(void){
     
 #elif defined(PIC24FJ1024GA606_BH)
     
-    // RD0 used as OC1 PWM output signal
+    // RD0/RP11 used as OC1 PWM output signal
     // Make pin digital
     // ANSELEbits.ANSE6 = 0;
     // Make pin digital output and initialize level
@@ -281,6 +288,13 @@ void PinConfig(void){
     
 #elif defined(PIC32MZ1024EFH064_BH)
     
+    // RD0/RPD0 used as OC1 PWM output signal
+    // Make pin digital
+    // ANSELEbits.ANSE6 = 0;
+    // Make pin digital output and initialize level
+    TRISDbits.TRISD0 = 0;
+    LATDbits.LATD0 = 0;
+    
     // Set up PPS (I/O Pin-Mapping) for all I/O in this application
     // U2RX <-- RPB15   (DEBUG PORT PC-TX pin)
     // U2TX --> RPB14   (DEBUG PORT PC-RX pin)
@@ -298,6 +312,7 @@ void PinConfig(void){
     // modify the PPS registers for the application (per table 11-2 in data sheet)
     U2RXRbits.U2RXR = 3;        // Map RPB15 to U2RX
     RPB14Rbits.RPB14R = 2;      // Map U2TX to RPB14
+    RPD0Rbits.RPD0R = 12;       // Map OC1 to RPD0
     
     // PPS re-lock sequence
     CFGCONbits.IOLOCK = 1;         
@@ -414,10 +429,30 @@ void PWMConfig(void){
     OC1CON1bits.OCM = 0b110;    // set OC1 mode to PWM (Edge PWM)
     
     IFS0bits.T2IF = 0;          // clear Timer 2 interrupt flag
-    //IEC0bits.T2IE = 1;          // enable Timer 2 interrupts
     IFS0bits.OC1IF = 0;
-    IEC0bits.OC1IE = 1;
+    IEC0bits.OC1IE = 1;         // enable OC1 interrupts
     T2CONbits.TON = 1;          // start timer (starts PWMs)
+    
+#elif defined(PIC32MZ1024EFH064_BH)
+    
+    T2CONbits.TON = 0;          // turn Timer2 off
+    TMR2 = 0x00;                // reset the count
+    T2CONbits.TCS = 0;          // Select internal PBCLK3 (8 MHz) as clock source
+    T2CONbits.TCKPS = 3;        // 1:8 prescale (1 MHz)
+    PR2 = 1000;                 // set the PWM period value for 1000 uS (1mS)
+    
+    OC1CONbits.ON = 0;          // turn OC1 off
+    OC1R = 500;                 // set up 50% duty cycle on output (count = 500)
+    OC1RS = 500;
+    CFGCONbits.OCACLK = 0;      // set OC1 Timerx CLK source to be Timer 2
+    OC1CONbits.OCTSEL = 0;      // select Timer 2 as the OC time base
+    OC1CONbits.OCM = 0b110;     // set OC1 mode to PWM (Edge PWM)
+    
+    IFS0bits.T2IF = 0;          // clear Timer 2 interrupt flag
+    IPC2bits.T2IP = 4;          // set interrupt priority level (IPL) to 4
+    IEC0bits.T2IE = 1;          // enable Timer 2 interrupts
+    T2CONbits.TON = 1;          // start timer
+    OC1CONbits.ON = 1;          // turn OC1 on
     
 #endif    
     
@@ -429,17 +464,31 @@ void PWMConfig(void){
 
 void __interrupt() interruptHandler(void)
 {
-    LATEbits.LATE5 ^= 1;
-    PIR4bits.TMR2IF = 0;
+    LATEbits.LATE5 ^= 1;        // toggle USER LED
+    PIR4bits.TMR2IF = 0;        // acknowledge interrupt
 }
 
 #elif defined(PIC24FJ1024GA606_BH)
 
-void __attribute__((interrupt, no_auto_psv)) _OC1Interrupt(void)
+void __attribute__((interrupt, no_auto_psv, shadow)) _OC1Interrupt(void)
 {
-    LATEbits.LATE2 ^= 1;
-    IFS0bits.OC1IF = 0;
+    LATEbits.LATE2 ^= 1;        // toggle USER LED
+    IFS0bits.OC1IF = 0;         // acknowledge interrupt
 }
+
+#elif defined(PIC32MZ1024EFH064_BH)
+
+void __ISR_AT_VECTOR (_TIMER_2_VECTOR, IPL4SRS) _T2Interrupt(void)
+{
+    LATEbits.LATE2 ^= 1;        // toggle USER LED
+    IFS0bits.T2IF = 0;          // acknowledge interrupt
+}
+
+//void __ISR_AT_VECTOR (_TIMER_2_VECTOR, IPL4SOFT) _T2Interrupt(void)
+//{
+//    LATEbits.LATE2 ^= 1;        // toggle USER LED
+//    IFS0bits.T2IF = 0;          // acknowledge interrupt
+//}
 
 #endif
 

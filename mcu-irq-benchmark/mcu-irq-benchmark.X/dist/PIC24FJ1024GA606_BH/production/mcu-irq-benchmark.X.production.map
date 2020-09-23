@@ -525,13 +525,13 @@ __FDEVOPT1
  *(.debug_abbrev)
  .debug_abbrev    0x000000        0x172 build/PIC24FJ1024GA606_BH/production/main.o
 
-.debug_line       0x000000        0x1ad
+.debug_line       0x000000        0x1b0
  *(.debug_line)
- .debug_line      0x000000        0x1ad build/PIC24FJ1024GA606_BH/production/main.o
+ .debug_line      0x000000        0x1b0 build/PIC24FJ1024GA606_BH/production/main.o
 
-.debug_frame      0x000000         0xe2
+.debug_frame      0x000000         0xd8
  *(.debug_frame)
- .debug_frame     0x000000         0xe2 build/PIC24FJ1024GA606_BH/production/main.o
+ .debug_frame     0x000000         0xd8 build/PIC24FJ1024GA606_BH/production/main.o
 
 .debug_str        0x000000         0xbd
  *(.debug_str)

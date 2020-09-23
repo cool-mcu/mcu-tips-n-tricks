@@ -1,603 +1,1802 @@
 Disassembly Listing for mcu-irq-benchmark
 Generated From:
-/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/dist/PIC24FJ1024GA606_BH/production/mcu-irq-benchmark.X.production.elf
-Sep 20, 2020 10:09:29 AM
+/Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/dist/PIC32MZ1024EFH064_BH/production/mcu-irq-benchmark.X.production.elf
+Sep 22, 2020 10:45:01 AM
 
+---  /data01/build/bamboo/xml-data/build-dir/M32DEV-PT33-JOB1/src/pic32m-gcc/gcc/libgcc/libgcc2.c  ------
+9D0014DC  00C04021   ADDU T0, A2, ZERO
+9D001940  00C04021   ADDU T0, A2, ZERO
+9D0014E0  00804821   ADDU T1, A0, ZERO
+9D001944  00801021   ADDU V0, A0, ZERO
+9D0014E4  14E0003B   BNE A3, ZERO, 0x9D0015D4
+9D0014E8  00A01821   ADDU V1, A1, ZERO
+9D001948  14E0003F   BNE A3, ZERO, 0x9D001A48
+9D00194C  00A04821   ADDU T1, A1, ZERO
+9D0014EC  00A6102B   SLTU V0, A1, A2
+9D0014F0  10400048   BEQ V0, ZERO, 0x9D001614
+9D0014F4  70C21020   CLZ V0, A2
+9D001950  00A6182B   SLTU V1, A1, A2
+9D001954  10600047   BEQ V1, ZERO, 0x9D001A74
+9D001958  70C31820   CLZ V1, A2
+9D0014F8  50400008   BEQL V0, ZERO, 0x9D00151C
+9D0014FC  00083402   SRL A2, T0, 16
+9D00195C  50600008   BEQL V1, ZERO, 0x9D001980
+9D001960  00081C02   SRL V1, T0, 16
+9D00150C  00464004   SLLV T0, A2, V0
+9D001970  00664004   SLLV T0, A2, V1
+9D001500  00021823   SUBU V1, ZERO, V0
+9D001504  00452804   SLLV A1, A1, V0
+9D001508  00641806   SRLV V1, A0, V1
+9D001510  00651825   OR V1, V1, A1
+9D001964  00034823   SUBU T1, ZERO, V1
+9D001968  00652804   SLLV A1, A1, V1
+9D00196C  01244806   SRLV T1, A0, T1
+9D001974  01254825   OR T1, T1, A1
+9D001514  00444804   SLLV T1, A0, V0
+9D001978  00641004   SLLV V0, A0, V1
+9D001518  00083402   SRL A2, T0, 16
+9D00151C  0066001B   DIVU V1, A2
+9D001520  00C001F4   TEQ A2, ZERO
+9D001524  00002010   MFHI A0
+9D001528  00005812   MFLO T3
+9D00152C  310CFFFF   ANDI T4, T0, -1
+9D001530  00095402   SRL T2, T1, 16
+9D001534  716C5802   MUL T3, T3, T4
+9D001538  00042400   SLL A0, A0, 16
+9D00153C  008A5025   OR T2, A0, T2
+9D001540  014B682B   SLTU T5, T2, T3
+9D001544  0066001B   DIVU V1, A2
+9D001548  00C001F4   TEQ A2, ZERO
+9D00154C  51A00009   BEQL T5, ZERO, 0x9D001574
+9D001550  014B5023   SUBU T2, T2, T3
+9D001554  01485021   ADDU T2, T2, T0
+9D001558  0148182B   SLTU V1, T2, T0
+9D00155C  54600005   BNEL V1, ZERO, 0x9D001574
+9D001560  014B5023   SUBU T2, T2, T3
+9D001564  014B202B   SLTU A0, T2, T3
+9D001568  01481821   ADDU V1, T2, T0
+9D00156C  0064500B   MOVN T2, V1, A0
+9D001570  014B5023   SUBU T2, T2, T3
+9D001574  3123FFFF   ANDI V1, T1, -1
+9D001578  0146001B   DIVU T2, A2
+9D00157C  00C001F4   TEQ A2, ZERO
+9D001580  00004810   MFHI T1
+9D001584  00002012   MFLO A0
+9D001588  708C2002   MUL A0, A0, T4
+9D00158C  00094C00   SLL T1, T1, 16
+9D001590  01234825   OR T1, T1, V1
+9D001594  0124182B   SLTU V1, T1, A0
+9D001598  0146001B   DIVU T2, A2
+9D00159C  00C001F4   TEQ A2, ZERO
+9D0015A0  50600009   BEQL V1, ZERO, .LBE15
+9D0015A4  01244823   SUBU T1, T1, A0
+9D0015A8  01284821   ADDU T1, T1, T0
+9D0015AC  0128182B   SLTU V1, T1, T0
+9D0015B0  54600005   BNEL V1, ZERO, .LBE15
+9D0015B4  01244823   SUBU T1, T1, A0
+9D0015B8  0124182B   SLTU V1, T1, A0
+9D0015BC  01284021   ADDU T0, T1, T0
+9D0015C0  0103480B   MOVN T1, T0, V1
+9D0015C4  01244823   SUBU T1, T1, A0
+9D00197C  00081C02   SRL V1, T0, 16
+9D001980  0123001B   DIVU T1, V1
+9D001984  006001F4   TEQ V1, ZERO
+9D001988  00006010   MFHI T4
+9D00198C  00005812   MFLO T3
+9D001990  310AFFFF   ANDI T2, T0, -1
+9D001994  00022402   SRL A0, V0, 16
+9D001998  00003012   MFLO A2
+9D00199C  716A3802   MUL A3, T3, T2
+9D0019A0  000C6400   SLL T4, T4, 16
+9D0019A4  01842025   OR A0, T4, A0
+9D0019A8  0087602B   SLTU T4, A0, A3
+9D0019AC  0123001B   DIVU T1, V1
+9D0019B0  006001F4   TEQ V1, ZERO
+9D0019B4  1180000B   BEQ T4, ZERO, 0x9D0019E4
+9D0019B8  00872823   SUBU A1, A0, A3
+9D0019BC  00882021   ADDU A0, A0, T0
+9D0019C0  0088282B   SLTU A1, A0, T0
+9D0019C4  14A00006   BNE A1, ZERO, 0x9D0019E0
+9D0019C8  2566FFFF   ADDIU A2, T3, -1
+9D0019CC  0087282B   SLTU A1, A0, A3
+9D0019D0  10A00004   BEQ A1, ZERO, 0x9D0019E4
+9D0019D4  00872823   SUBU A1, A0, A3
+9D0019D8  2566FFFE   ADDIU A2, T3, -2
+9D0019DC  00882021   ADDU A0, A0, T0
+9D0019E0  00872823   SUBU A1, A0, A3
+9D0019E4  3042FFFF   ANDI V0, V0, -1
+9D0019E8  00A3001B   DIVU A1, V1
+9D0019EC  006001F4   TEQ V1, ZERO
+9D0019F0  00004810   MFHI T1
+9D0019F4  00003812   MFLO A3
+9D0019F8  00002012   MFLO A0
+9D0019FC  70EA5002   MUL T2, A3, T2
+9D001A00  00094C00   SLL T1, T1, 16
+9D001A04  01221025   OR V0, T1, V0
+9D001A08  004A482B   SLTU T1, V0, T2
+9D001A0C  00A3001B   DIVU A1, V1
+9D001A10  006001F4   TEQ V1, ZERO
+9D001A14  51200009   BEQL T1, ZERO, 0x9D001A3C
+9D001A18  00061400   SLL V0, A2, 16
+9D001A1C  00481021   ADDU V0, V0, T0
+9D001A20  0048402B   SLTU T0, V0, T0
+9D001A24  15000004   BNE T0, ZERO, 0x9D001A38
+9D001A28  24E4FFFF   ADDIU A0, A3, -1
+9D001A2C  004A502B   SLTU T2, V0, T2
+9D001A30  24E7FFFE   ADDIU A3, A3, -2
+9D001A34  00EA200B   MOVN A0, A3, T2
+9D001A38  00061400   SLL V0, A2, 16
+9D001A3C  00821025   OR V0, A0, V0
+9D001A40  03E00008   JR RA
+9D001A44  00001821   ADDU V1, ZERO, ZERO
+9D001614  14C00006   BNE A2, ZERO, 0x9D001630
+9D001618  71021020   CLZ V0, T0
+9D001A74  14C00006   BNE A2, ZERO, 0x9D001A90
+9D001A78  71031820   CLZ V1, T0
+9D00161C  24020001   ADDIU V0, ZERO, 1
+9D001620  0046001B   DIVU V0, A2
+9D001624  00C001F4   TEQ A2, ZERO
+9D001628  00004012   MFLO T0
+9D001A7C  24030001   ADDIU V1, ZERO, 1
+9D001A80  0066001B   DIVU V1, A2
+9D001A84  00C001F4   TEQ A2, ZERO
+9D001A88  00004012   MFLO T0
+9D00162C  71021020   CLZ V0, T0
+9D001A8C  71031820   CLZ V1, T0
+9D001630  5440007D   BNEL V0, ZERO, 0x9D001828
+9D001634  00484004   SLLV T0, T0, V0
+9D001A90  5460007B   BNEL V1, ZERO, 0x9D001C80
+9D001A94  00684004   SLLV T0, T0, V1
+9D001638  00A82823   SUBU A1, A1, T0
+9D00163C  00081C02   SRL V1, T0, 16
+9D001640  3107FFFF   ANDI A3, T0, -1
+9D001A98  00A82023   SUBU A0, A1, T0
+9D001A9C  00083C02   SRL A3, T0, 16
+9D001AA0  310BFFFF   ANDI T3, T0, -1
+9D001AA4  24030001   ADDIU V1, ZERO, 1
+9D001828  24090020   ADDIU T1, ZERO, 32
+9D00182C  01224823   SUBU T1, T1, V0
+9D001C80  24020020   ADDIU V0, ZERO, 32
+9D001C84  00431023   SUBU V0, V0, V1
+9D001830  01255006   SRLV T2, A1, T1
+9D001C88  00454806   SRLV T1, A1, V0
+9D00184C  00452804   SLLV A1, A1, V0
+9D001850  01244806   SRLV T1, A0, T1
+9D001854  01252825   OR A1, T1, A1
+9D001CA4  00652804   SLLV A1, A1, V1
+9D001CA8  00441006   SRLV V0, A0, V0
+9D001CAC  00452825   OR A1, V0, A1
+9D00185C  00444804   SLLV T1, A0, V0
+9D001CB4  00641004   SLLV V0, A0, V1
+9D001834  00081C02   SRL V1, T0, 16
+9D001838  0143001B   DIVU T2, V1
+9D00183C  006001F4   TEQ V1, ZERO
+9D001840  00003010   MFHI A2
+9D001844  00005812   MFLO T3
+9D001848  3107FFFF   ANDI A3, T0, -1
+9D001858  00056402   SRL T4, A1, 16
+9D001860  71675802   MUL T3, T3, A3
+9D001864  00063400   SLL A2, A2, 16
+9D001868  01863025   OR A2, T4, A2
+9D00186C  00CB202B   SLTU A0, A2, T3
+9D001870  0143001B   DIVU T2, V1
+9D001874  006001F4   TEQ V1, ZERO
+9D001878  50800006   BEQL A0, ZERO, 0x9D001894
+9D00187C  00CB3023   SUBU A2, A2, T3
+9D001880  00C83021   ADDU A2, A2, T0
+9D001884  00C8202B   SLTU A0, A2, T0
+9D001888  10800024   BEQ A0, ZERO, 0x9D00191C
+9D00188C  00CB502B   SLTU T2, A2, T3
+9D001890  00CB3023   SUBU A2, A2, T3
+9D001894  30AAFFFF   ANDI T2, A1, -1
+9D001898  00C3001B   DIVU A2, V1
+9D00189C  006001F4   TEQ V1, ZERO
+9D0018A0  00002010   MFHI A0
+9D0018A4  00002812   MFLO A1
+9D0018A8  70A72802   MUL A1, A1, A3
+9D0018AC  00042400   SLL A0, A0, 16
+9D0018B0  008A2025   OR A0, A0, T2
+9D0018B4  0085502B   SLTU T2, A0, A1
+9D0018B8  00C3001B   DIVU A2, V1
+9D0018BC  006001F4   TEQ V1, ZERO
+9D0018C0  5140FF60   BEQL T2, ZERO, .LBB17
+9D0018C4  00852823   SUBU A1, A0, A1
+9D0018C8  00882021   ADDU A0, A0, T0
+9D0018CC  0088302B   SLTU A2, A0, T0
+9D0018D0  54C0FF5C   BNEL A2, ZERO, .LBB17
+9D0018D4  00852823   SUBU A1, A0, A1
+9D0018D8  0085502B   SLTU T2, A0, A1
+9D0018DC  00883021   ADDU A2, A0, T0
+9D0018E0  00CA200B   MOVN A0, A2, T2
+9D0018E4  0B400591   J .LBB17
+9D0018E8  00852823   SUBU A1, A0, A1
+9D00191C  00C82021   ADDU A0, A2, T0
+9D001920  0B400624   J 0x9D001890
+9D001924  008A300B   MOVN A2, A0, T2
+9D001C8C  00083C02   SRL A3, T0, 16
+9D001C90  0127001B   DIVU T1, A3
+9D001C94  00E001F4   TEQ A3, ZERO
+9D001C98  00003010   MFHI A2
+9D001C9C  00006012   MFLO T4
+9D001CA0  310BFFFF   ANDI T3, T0, -1
+9D001CB0  00056C02   SRL T5, A1, 16
+9D001CB8  00001812   MFLO V1
+9D001CBC  718B5002   MUL T2, T4, T3
+9D001CC0  00063400   SLL A2, A2, 16
+9D001CC4  01A63025   OR A2, T5, A2
+9D001CC8  00CA202B   SLTU A0, A2, T2
+9D001CCC  0127001B   DIVU T1, A3
+9D001CD0  00E001F4   TEQ A3, ZERO
+9D001CD4  5080000B   BEQL A0, ZERO, 0x9D001D04
+9D001CD8  00CA3023   SUBU A2, A2, T2
+9D001CDC  00C83021   ADDU A2, A2, T0
+9D001CE0  00C8202B   SLTU A0, A2, T0
+9D001CE4  14800006   BNE A0, ZERO, 0x9D001D00
+9D001CE8  2583FFFF   ADDIU V1, T4, -1
+9D001CEC  00CA202B   SLTU A0, A2, T2
+9D001CF0  50800004   BEQL A0, ZERO, 0x9D001D04
+9D001CF4  00CA3023   SUBU A2, A2, T2
+9D001CF8  2583FFFE   ADDIU V1, T4, -2
+9D001CFC  00C83021   ADDU A2, A2, T0
+9D001D00  00CA3023   SUBU A2, A2, T2
+9D001D04  30ACFFFF   ANDI T4, A1, -1
+9D001D08  00C7001B   DIVU A2, A3
+9D001D0C  00E001F4   TEQ A3, ZERO
+9D001D10  00002010   MFHI A0
+9D001D14  00005012   MFLO T2
+9D001D18  00004812   MFLO T1
+9D001D1C  714B2802   MUL A1, T2, T3
+9D001D20  00042400   SLL A0, A0, 16
+9D001D24  008C2025   OR A0, A0, T4
+9D001D28  0085602B   SLTU T4, A0, A1
+9D001D2C  00C7001B   DIVU A2, A3
+9D001D30  00E001F4   TEQ A3, ZERO
+9D001D34  5180000B   BEQL T4, ZERO, 0x9D001D64
+9D001D38  00031C00   SLL V1, V1, 16
+9D001D3C  00882021   ADDU A0, A0, T0
+9D001D40  0088302B   SLTU A2, A0, T0
+9D001D44  14C00006   BNE A2, ZERO, 0x9D001D60
+9D001D48  2549FFFF   ADDIU T1, T2, -1
+9D001D4C  0085302B   SLTU A2, A0, A1
+9D001D50  50C00004   BEQL A2, ZERO, 0x9D001D64
+9D001D54  00031C00   SLL V1, V1, 16
+9D001D58  2549FFFE   ADDIU T1, T2, -2
+9D001D5C  00882021   ADDU A0, A0, T0
+9D001D60  00031C00   SLL V1, V1, 16
+9D001D64  00852023   SUBU A0, A0, A1
+9D001D68  0B4006AA   J .LBB16
+9D001D6C  01231825   OR V1, T1, V1
+9D001644  00092402   SRL A0, T1, 16
+9D001648  00A3001B   DIVU A1, V1
+9D00164C  006001F4   TEQ V1, ZERO
+9D001650  00005010   MFHI T2
+9D001654  00003012   MFLO A2
+9D001658  70C73002   MUL A2, A2, A3
+9D00165C  000A5400   SLL T2, T2, 16
+9D001660  01442025   OR A0, T2, A0
+9D001664  0086502B   SLTU T2, A0, A2
+9D001668  00A3001B   DIVU A1, V1
+9D00166C  006001F4   TEQ V1, ZERO
+9D001670  51400009   BEQL T2, ZERO, 0x9D001698
+9D001674  00862023   SUBU A0, A0, A2
+9D001678  00882021   ADDU A0, A0, T0
+9D00167C  0088282B   SLTU A1, A0, T0
+9D001680  54A00005   BNEL A1, ZERO, 0x9D001698
+9D001684  00862023   SUBU A0, A0, A2
+9D001688  0086502B   SLTU T2, A0, A2
+9D00168C  00882821   ADDU A1, A0, T0
+9D001690  00AA200B   MOVN A0, A1, T2
+9D001694  00862023   SUBU A0, A0, A2
+9D001698  3126FFFF   ANDI A2, T1, -1
+9D00169C  0083001B   DIVU A0, V1
+9D0016A0  006001F4   TEQ V1, ZERO
+9D0016A4  00004810   MFHI T1
+9D0016A8  00002812   MFLO A1
+9D0016AC  70A72802   MUL A1, A1, A3
+9D0016B0  00094C00   SLL T1, T1, 16
+9D0016B4  01264825   OR T1, T1, A2
+9D0016B8  0125302B   SLTU A2, T1, A1
+9D0016BC  0083001B   DIVU A0, V1
+9D0016C0  006001F4   TEQ V1, ZERO
+9D0016C4  50C00009   BEQL A2, ZERO, .LBE17
+9D0016C8  01254823   SUBU T1, T1, A1
+9D0016CC  01284821   ADDU T1, T1, T0
+9D0016D0  0128182B   SLTU V1, T1, T0
+9D0016D4  54600005   BNEL V1, ZERO, .LBE17
+9D0016D8  01254823   SUBU T1, T1, A1
+9D0016DC  0125182B   SLTU V1, T1, A1
+9D0016E0  01284021   ADDU T0, T1, T0
+9D0016E4  0103480B   MOVN T1, T0, V1
+9D0016E8  01254823   SUBU T1, T1, A1
+9D001AA8  00023402   SRL A2, V0, 16
+9D001AAC  0087001B   DIVU A0, A3
+9D001AB0  00E001F4   TEQ A3, ZERO
+9D001AB4  00006810   MFHI T5
+9D001AB8  00006012   MFLO T4
+9D001ABC  00004812   MFLO T1
+9D001AC0  718B5002   MUL T2, T4, T3
+9D001AC4  000D6C00   SLL T5, T5, 16
+9D001AC8  01A63025   OR A2, T5, A2
+9D001ACC  00CA682B   SLTU T5, A2, T2
+9D001AD0  0087001B   DIVU A0, A3
+9D001AD4  00E001F4   TEQ A3, ZERO
+9D001AD8  11A00009   BEQ T5, ZERO, 0x9D001B00
+9D001ADC  00CA2823   SUBU A1, A2, T2
+9D001AE0  00C83021   ADDU A2, A2, T0
+9D001AE4  00C8202B   SLTU A0, A2, T0
+9D001AE8  14800004   BNE A0, ZERO, 0x9D001AFC
+9D001AEC  2589FFFF   ADDIU T1, T4, -1
+9D001AF0  00CA202B   SLTU A0, A2, T2
+9D001AF4  548000A6   BNEL A0, ZERO, 0x9D001D90
+9D001AF8  2589FFFE   ADDIU T1, T4, -2
+9D001AFC  00CA2823   SUBU A1, A2, T2
+9D001B00  3042FFFF   ANDI V0, V0, -1
+9D001B04  00A7001B   DIVU A1, A3
+9D001B08  00E001F4   TEQ A3, ZERO
+9D001B0C  00005010   MFHI T2
+9D001B10  00003012   MFLO A2
+9D001B14  00002012   MFLO A0
+9D001B18  70CB5802   MUL T3, A2, T3
+9D001B1C  000A5400   SLL T2, T2, 16
+9D001B20  01421025   OR V0, T2, V0
+9D001B24  004B502B   SLTU T2, V0, T3
+9D001B28  00A7001B   DIVU A1, A3
+9D001B2C  00E001F4   TEQ A3, ZERO
+9D001B30  51400009   BEQL T2, ZERO, .LBE16
+9D001B34  00091400   SLL V0, T1, 16
+9D001B38  00481021   ADDU V0, V0, T0
+9D001B3C  0048402B   SLTU T0, V0, T0
+9D001B40  15000004   BNE T0, ZERO, 0x9D001B54
+9D001B44  24C4FFFF   ADDIU A0, A2, -1
+9D001B48  004B582B   SLTU T3, V0, T3
+9D001B4C  24C6FFFE   ADDIU A2, A2, -2
+9D001B50  00CB200B   MOVN A0, A2, T3
+9D001B54  00091400   SLL V0, T1, 16
+9D001B58  03E00008   JR RA
+9D001B5C  00821025   OR V0, A0, V0
+9D001D90  0B4006BF   J 0x9D001AFC
+9D001D94  00C83021   ADDU A2, A2, T0
+9D0015C8  00491006   SRLV V0, T1, V0
+9D0016EC  00491006   SRLV V0, T1, V0
+9D0015CC  03E00008   JR RA
+9D0015D0  00001821   ADDU V1, ZERO, ZERO
+9D0016F0  03E00008   JR RA
+9D0016F4  00001821   ADDU V1, ZERO, ZERO
+9D0015D4  00A7102B   SLTU V0, A1, A3
+9D0015D8  14400047   BNE V0, ZERO, 0x9D0016F8
+9D0015DC  70EA5020   CLZ T2, A3
+9D001A48  00A7102B   SLTU V0, A1, A3
+9D001A4C  14400044   BNE V0, ZERO, 0x9D001B60
+9D001A50  70E84020   CLZ T0, A3
+9D001B60  00001821   ADDU V1, ZERO, ZERO
+9D001B64  03E00008   JR RA
+9D001B68  00001021   ADDU V0, ZERO, ZERO
+9D0016F8  00801021   ADDU V0, A0, ZERO
+9D0016FC  03E00008   JR RA
+9D001700  00A01821   ADDU V1, A1, ZERO
+9D0015E0  15400048   BNE T2, ZERO, 0x9D001704
+9D0015E4  240B0020   ADDIU T3, ZERO, 32
+9D001A54  55000045   BNEL T0, ZERO, 0x9D001B6C
+9D001A58  24020020   ADDIU V0, ZERO, 32
+9D0015E8  00E5102B   SLTU V0, A3, A1
+9D0015EC  14400005   BNE V0, ZERO, 0x9D001604
+9D0015F0  00861023   SUBU V0, A0, A2
+9D0015F4  0086402B   SLTU T0, A0, A2
+9D0015F8  15000089   BNE T0, ZERO, 0x9D001820
+9D0015FC  00801021   ADDU V0, A0, ZERO
+9D001A5C  00E5282B   SLTU A1, A3, A1
+9D001A60  14A000C8   BNE A1, ZERO, 0x9D001D84
+9D001A64  0086302B   SLTU A2, A0, A2
+9D001A68  38C20001   XORI V0, A2, 1
+9D001A6C  03E00008   JR RA
+9D001A70  00001821   ADDU V1, ZERO, ZERO
+9D001D84  00001821   ADDU V1, ZERO, ZERO
+9D001600  00861023   SUBU V0, A0, A2
+9D001604  00A72823   SUBU A1, A1, A3
+9D001608  0082202B   SLTU A0, A0, V0
+9D00160C  03E00008   JR RA
+9D001610  00A41823   SUBU V1, A1, A0
+9D001704  016A5823   SUBU T3, T3, T2
+9D001B6C  00481023   SUBU V0, V0, T0
+9D001708  01473804   SLLV A3, A3, T2
+9D00170C  01661006   SRLV V0, A2, T3
+9D001710  00473825   OR A3, V0, A3
+9D001B70  01073804   SLLV A3, A3, T0
+9D001B74  00461806   SRLV V1, A2, V0
+9D001B78  00673825   OR A3, V1, A3
+9D001740  01463004   SLLV A2, A2, T2
+9D001714  01656806   SRLV T5, A1, T3
+9D001B7C  00455006   SRLV T2, A1, V0
+9D001730  01452804   SLLV A1, A1, T2
+9D001734  01641006   SRLV V0, A0, T3
+9D001738  00451025   OR V0, V0, A1
+9D001B98  01052804   SLLV A1, A1, T0
+9D001B9C  00441006   SRLV V0, A0, V0
+9D001BA0  00452825   OR A1, V0, A1
+9D001718  00074C02   SRL T1, A3, 16
+9D00171C  01A9001B   DIVU T5, T1
+9D001720  012001F4   TEQ T1, ZERO
+9D001724  00006010   MFHI T4
+9D001728  00001812   MFLO V1
+9D00172C  30EEFFFF   ANDI T6, A3, -1
+9D00173C  00022C02   SRL A1, V0, 16
+9D001744  00004012   MFLO T0
+9D001748  706E7802   MUL T7, V1, T6
+9D00174C  000C6400   SLL T4, T4, 16
+9D001750  01856025   OR T4, T4, A1
+9D001754  018F282B   SLTU A1, T4, T7
+9D001758  01A9001B   DIVU T5, T1
+9D00175C  012001F4   TEQ T1, ZERO
+9D001760  10A0000A   BEQ A1, ZERO, 0x9D00178C
+9D001764  01442004   SLLV A0, A0, T2
+9D001768  01876021   ADDU T4, T4, A3
+9D00176C  0187282B   SLTU A1, T4, A3
+9D001770  14A00006   BNE A1, ZERO, 0x9D00178C
+9D001774  2468FFFF   ADDIU T0, V1, -1
+9D001778  018F282B   SLTU A1, T4, T7
+9D00177C  50A00004   BEQL A1, ZERO, 0x9D001790
+9D001780  018F6023   SUBU T4, T4, T7
+9D001784  2468FFFE   ADDIU T0, V1, -2
+9D001788  01876021   ADDU T4, T4, A3
+9D00178C  018F6023   SUBU T4, T4, T7
+9D001790  3042FFFF   ANDI V0, V0, -1
+9D001794  0189001B   DIVU T4, T1
+9D001798  012001F4   TEQ T1, ZERO
+9D00179C  00002810   MFHI A1
+9D0017A0  00001812   MFLO V1
+9D0017A4  00006812   MFLO T5
+9D0017A8  706E7002   MUL T6, V1, T6
+9D0017AC  00052C00   SLL A1, A1, 16
+9D0017B0  00A21025   OR V0, A1, V0
+9D0017B4  004E282B   SLTU A1, V0, T6
+9D0017B8  0189001B   DIVU T4, T1
+9D0017BC  012001F4   TEQ T1, ZERO
+9D0017C0  50A00006   BEQL A1, ZERO, 0x9D0017DC
+9D0017C4  00084400   SLL T0, T0, 16
+9D0017C8  00471021   ADDU V0, V0, A3
+9D0017CC  0047282B   SLTU A1, V0, A3
+9D0017D0  10A0004C   BEQ A1, ZERO, .LBE25
+9D0017D4  246DFFFF   ADDIU T5, V1, -1
+9D0017D8  00084400   SLL T0, T0, 16
+9D0017DC  01A84025   OR T0, T5, T0
+9D0017E0  004E1023   SUBU V0, V0, T6
+9D001904  004E282B   SLTU A1, V0, T6
+9D001908  50A0FFB4   BEQL A1, ZERO, 0x9D0017DC
+9D00190C  00084400   SLL T0, T0, 16
+9D001910  246DFFFE   ADDIU T5, V1, -2
+9D001914  0B4005F6   J 0x9D0017D8
+9D001918  00471021   ADDU V0, V0, A3
+9D001B80  00071C02   SRL V1, A3, 16
+9D001B84  0143001B   DIVU T2, V1
+9D001B88  006001F4   TEQ V1, ZERO
+9D001B8C  00004810   MFHI T1
+9D001B90  00006812   MFLO T5
+9D001B94  30EBFFFF   ANDI T3, A3, -1
+9D001BA4  00057402   SRL T6, A1, 16
+9D001BA8  00001012   MFLO V0
+9D001BAC  71AB6002   MUL T4, T5, T3
+9D001BB0  00094C00   SLL T1, T1, 16
+9D001BB4  012E4825   OR T1, T1, T6
+9D001BB8  012C702B   SLTU T6, T1, T4
+9D001BBC  0143001B   DIVU T2, V1
+9D001BC0  006001F4   TEQ V1, ZERO
+9D001BC4  11C0000A   BEQ T6, ZERO, 0x9D001BF0
+9D001BC8  01063004   SLLV A2, A2, T0
+9D001BCC  01274821   ADDU T1, T1, A3
+9D001BD0  0127502B   SLTU T2, T1, A3
+9D001BD4  15400006   BNE T2, ZERO, 0x9D001BF0
+9D001BD8  25A2FFFF   ADDIU V0, T5, -1
+9D001BDC  012C502B   SLTU T2, T1, T4
+9D001BE0  51400004   BEQL T2, ZERO, 0x9D001BF4
+9D001BE4  012C4823   SUBU T1, T1, T4
+9D001BE8  25A2FFFE   ADDIU V0, T5, -2
+9D001BEC  01274821   ADDU T1, T1, A3
+9D001BF0  012C4823   SUBU T1, T1, T4
+9D001BF4  30A5FFFF   ANDI A1, A1, -1
+9D001BF8  0123001B   DIVU T1, V1
+9D001BFC  006001F4   TEQ V1, ZERO
+9D001C00  00006810   MFHI T5
+9D001C04  00006012   MFLO T4
+9D001C08  00005012   MFLO T2
+9D001C0C  718B5802   MUL T3, T4, T3
+9D001C10  000D6C00   SLL T5, T5, 16
+9D001C14  01A52825   OR A1, T5, A1
+9D001C18  00AB682B   SLTU T5, A1, T3
+9D001C1C  0123001B   DIVU T1, V1
+9D001C20  006001F4   TEQ V1, ZERO
+9D001C24  51A0000B   BEQL T5, ZERO, 0x9D001C54
+9D001C28  00021400   SLL V0, V0, 16
+9D001C2C  00A72821   ADDU A1, A1, A3
+9D001C30  00A7182B   SLTU V1, A1, A3
+9D001C34  14600006   BNE V1, ZERO, 0x9D001C50
+9D001C38  258AFFFF   ADDIU T2, T4, -1
+9D001C3C  00AB182B   SLTU V1, A1, T3
+9D001C40  50600004   BEQL V1, ZERO, 0x9D001C54
+9D001C44  00021400   SLL V0, V0, 16
+9D001C48  258AFFFE   ADDIU T2, T4, -2
+9D001C4C  00A72821   ADDU A1, A1, A3
+9D001C50  00021400   SLL V0, V0, 16
+9D001C54  01421025   OR V0, T2, V0
+9D001C58  00AB2823   SUBU A1, A1, T3
+9D0017E4  01060019   MULTU 0, T0, A2
+9D0017E8  00004810   MFHI T1
+9D001800  00003012   MFLO A2
+9D001C5C  00460019   MULTU 0, V0, A2
+9D001C60  00003810   MFHI A3
+9D0017EC  0049182B   SLTU V1, V0, T1
+9D0017F0  1460003E   BNE V1, ZERO, .LBB25
+9D0017F4  00004012   MFLO T0
+9D0017F8  1049004B   BEQ V0, T1, 0x9D001928
+9D0017FC  00491823   SUBU V1, V0, T1
+9D001928  0088182B   SLTU V1, A0, T0
+9D00192C  5460FFF0   BNEL V1, ZERO, 0x9D0018F0
+9D001930  01063023   SUBU A2, T0, A2
+9D001934  00003012   MFLO A2
+9D001938  0B400601   J .LBB24
+9D00193C  00001821   ADDU V1, ZERO, ZERO
+9D001C64  00A7182B   SLTU V1, A1, A3
+9D001C68  14600044   BNE V1, ZERO, 0x9D001D7C
+9D001C6C  00003012   MFLO A2
+9D001C70  10A7003F   BEQ A1, A3, 0x9D001D70
+9D001C74  01042004   SLLV A0, A0, T0
+9D001D70  0086302B   SLTU A2, A0, A2
+9D001D74  10C0FFC0   BEQ A2, ZERO, 0x9D001C78
+9D001D78  00000000   NOP
+9D001C78  03E00008   JR RA
+9D001C7C  00001821   ADDU V1, ZERO, ZERO
+9D001D7C  0B40071E   J 0x9D001C78
+9D001D80  2442FFFF   ADDIU V0, V0, -1
+9D0018EC  01063023   SUBU A2, T0, A2
+9D0018F0  01271823   SUBU V1, T1, A3
+9D0018F4  0106402B   SLTU T0, T0, A2
+9D0018F8  00681823   SUBU V1, V1, T0
+9D0018FC  0B400601   J .LBB24
+9D001900  00431823   SUBU V1, V0, V1
+9D001804  00863023   SUBU A2, A0, A2
+9D001808  0086202B   SLTU A0, A0, A2
+9D00180C  00641823   SUBU V1, V1, A0
+9D001810  01631004   SLLV V0, V1, T3
+9D001814  01463006   SRLV A2, A2, T2
+9D001818  00461025   OR V0, V0, A2
+9D00181C  01431806   SRLV V1, V1, T2
+9D001820  03E00008   JR RA
+9D001824  00000000   NOP
+9D001828  24090020   ADDIU T1, ZERO, 32
+9D00182C  01224823   SUBU T1, T1, V0
+9D001830  01255006   SRLV T2, A1, T1
+9D001834  00081C02   SRL V1, T0, 16
+9D001838  0143001B   DIVU T2, V1
+9D00183C  006001F4   TEQ V1, ZERO
+9D001840  00003010   MFHI A2
+9D001844  00005812   MFLO T3
+9D001848  3107FFFF   ANDI A3, T0, -1
+9D00184C  00452804   SLLV A1, A1, V0
+9D001850  01244806   SRLV T1, A0, T1
+9D001854  01252825   OR A1, T1, A1
+9D001858  00056402   SRL T4, A1, 16
+9D00185C  00444804   SLLV T1, A0, V0
+9D001860  71675802   MUL T3, T3, A3
+9D001864  00063400   SLL A2, A2, 16
+9D001868  01863025   OR A2, T4, A2
+9D00186C  00CB202B   SLTU A0, A2, T3
+9D001870  0143001B   DIVU T2, V1
+9D001874  006001F4   TEQ V1, ZERO
+9D001878  50800006   BEQL A0, ZERO, 0x9D001894
+9D00187C  00CB3023   SUBU A2, A2, T3
+9D001880  00C83021   ADDU A2, A2, T0
+9D001884  00C8202B   SLTU A0, A2, T0
+9D001888  10800024   BEQ A0, ZERO, 0x9D00191C
+9D00188C  00CB502B   SLTU T2, A2, T3
+9D001890  00CB3023   SUBU A2, A2, T3
+9D001894  30AAFFFF   ANDI T2, A1, -1
+9D001898  00C3001B   DIVU A2, V1
+9D00189C  006001F4   TEQ V1, ZERO
+9D0018A0  00002010   MFHI A0
+9D0018A4  00002812   MFLO A1
+9D0018A8  70A72802   MUL A1, A1, A3
+9D0018AC  00042400   SLL A0, A0, 16
+9D0018B0  008A2025   OR A0, A0, T2
+9D0018B4  0085502B   SLTU T2, A0, A1
+9D0018B8  00C3001B   DIVU A2, V1
+9D0018BC  006001F4   TEQ V1, ZERO
+9D0018C0  5140FF60   BEQL T2, ZERO, .LBB17
+9D0018C4  00852823   SUBU A1, A0, A1
+9D0018C8  00882021   ADDU A0, A0, T0
+9D0018CC  0088302B   SLTU A2, A0, T0
+9D0018D0  54C0FF5C   BNEL A2, ZERO, .LBB17
+9D0018D4  00852823   SUBU A1, A0, A1
+9D0018D8  0085502B   SLTU T2, A0, A1
+9D0018DC  00883021   ADDU A2, A0, T0
+9D0018E0  00CA200B   MOVN A0, A2, T2
+9D0018E4  0B400591   J .LBB17
+9D0018E8  00852823   SUBU A1, A0, A1
+9D0018EC  01063023   SUBU A2, T0, A2
+9D0018F0  01271823   SUBU V1, T1, A3
+9D0018F4  0106402B   SLTU T0, T0, A2
+9D0018F8  00681823   SUBU V1, V1, T0
+9D0018FC  0B400601   J .LBB24
+9D001900  00431823   SUBU V1, V0, V1
+9D001904  004E282B   SLTU A1, V0, T6
+9D001908  50A0FFB4   BEQL A1, ZERO, 0x9D0017DC
+9D00190C  00084400   SLL T0, T0, 16
+9D001910  246DFFFE   ADDIU T5, V1, -2
+9D001914  0B4005F6   J 0x9D0017D8
+9D001918  00471021   ADDU V0, V0, A3
+9D00191C  00C82021   ADDU A0, A2, T0
+9D001920  0B400624   J 0x9D001890
+9D001924  008A300B   MOVN A2, A0, T2
+9D001928  0088182B   SLTU V1, A0, T0
+9D00192C  5460FFF0   BNEL V1, ZERO, 0x9D0018F0
+9D001930  01063023   SUBU A2, T0, A2
+9D001934  00003012   MFLO A2
+9D001938  0B400601   J .LBB24
+9D00193C  00001821   ADDU V1, ZERO, ZERO
+9D001D88  03E00008   JR RA
+9D001D8C  24020001   ADDIU V0, ZERO, 1
+9D001D90  0B4006BF   J 0x9D001AFC
+9D001D94  00C83021   ADDU A2, A2, T0
+---  /Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/pic32_init_cache.S
+                                                  1:     /*-------------------------------------------------------------------------
+                                                  2:      *
+                                                  3:      * Copyright (c) 2014, Microchip Technology Inc. and its subsidiaries ("Microchip")
+                                                  4:      * All rights reserved.
+                                                  5:      * 
+                                                  6:      * This software is developed by Microchip Technology Inc. and its
+                                                  7:      * subsidiaries ("Microchip").
+                                                  8:      *
+                                                  9:      * Redistribution and use in source and binary forms, with or without
+                                                  10:     * modification, are permitted provided that the following conditions are
+                                                  11:     * met:
+                                                  12:     *
+                                                  13:     * 1.      Redistributions of source code must retain the above copyright
+                                                  14:     *         notice, this list of conditions and the following disclaimer.
+                                                  15:     * 2.      Redistributions in binary form must reproduce the above
+                                                  16:     *         copyright notice, this list of conditions and the following
+                                                  17:     *         disclaimer in the documentation and/or other materials provided
+                                                  18:     *         with the distribution.
+                                                  19:     * 3.      Microchip's name may not be used to endorse or promote products
+                                                  20:     *         derived from this software without specific prior written
+                                                  21:     *         permission.
+                                                  22:     *
+                                                  23:     * THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED
+                                                  24:     * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+                                                  25:     * MERCHANTABILITY AND FITNESS FOR PURPOSE ARE DISCLAIMED. IN NO EVENT
+                                                  26:     * SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+                                                  27:     * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+                                                  28:     * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS;
+                                                  29:     * OR BUSINESS INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+                                                  30:     * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+                                                  31:     * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+                                                  32:     * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+                                                  33:     *
+                                                  34:     *-------------------------------------------------------------------------*/
+                                                  35:    
+                                                  36:    #include <xc.h>
+                                                  37:    #include <cp0defs.h>
+                                                  38:    
+                                                  39:            /* Symbols defined in linker script */
+                                                  40:            .weak __pic32_init_cache_program_base_addr
+                                                  41:            .weak __pic32_init_cache_data_base_addr
+                                                  42:    
+                                                  43:    /* Cache Coherency Attributes */
+                                                  44:    #define _CACHE_WRITEBACK_WRITEALLOCATE      3
+                                                  45:    #define _CACHE_WRITETHROUGH_WRITEALLOCATE   1
+                                                  46:    #define _CACHE_WRITETHROUGH_NOWRITEALLOCATE 0
+                                                  47:    #define _CACHE_DISABLE                      2
+                                                  48:    
+                                                  49:    #ifndef _CP0_ERRCTL
+                                                  50:    #define _CP0_ERRCTL                         $26, 0
+                                                  51:    #endif
+                                                  52:    
+                                                  53:    #ifndef _CP0_TAGLO
+                                                  54:    #define _CP0_TAGLO                          $28, 0
+                                                  55:    #endif
+                                                  56:    
+                                                  57:    /* Set __PIC32_CACHE_MODE to the desired coherency attribute */
+                                                  58:    #define __PIC32_CACHE_MODE _CACHE_WRITEBACK_WRITEALLOCATE
+                                                  59:    //#define __PIC32_CACHE_MODE _CACHE_DISABLE
+                                                  60:    
+                                                  61:    /* ==================================== */
+                                                  62:    #define Index_Store_Tag_I 0x08
+                                                  63:    #define Index_Store_Tag_D 0x09
+                                                  64:    
+                                                  65:    #define tmp t0
+                                                  66:    #define cfg t1
+                                                  67:    #define icachesize t2
+                                                  68:    #define ilinesize t3
+                                                  69:    #define iways t4
+                                                  70:    #define dcachesize t5
+                                                  71:    #define dlinesize t6
+                                                  72:    #define dways t7
+                                                  73:    #define save_ra v1
+                                                  74:    
+                                                  75:    #define INIT_L1_CACHE
+                                                  76:    #if defined(INIT_L1_CACHE)
+                                                  77:    .sdata; .globl __pic32_icache_size; .type __pic32_icache_size,@object; .size __pic32_icache_size,4; __pic32_icache_size:; .word -1
+                                                  78:    .sdata; .globl __pic32_icache_linesize; .type __pic32_icache_linesize,@object; .size __pic32_icache_linesize,4; __pic32_icache_linesize:; .word -1
+                                                  79:    .sdata; .globl __pic32_icache_ways; .type __pic32_icache_ways,@object; .size __pic32_icache_ways,4; __pic32_icache_ways:; .word 1
+                                                  80:    
+                                                  81:    .sdata; .globl __pic32_dcache_size; .type __pic32_dcache_size,@object; .size __pic32_dcache_size,4; __pic32_dcache_size:; .word -1
+                                                  82:    .sdata; .globl __pic32_dcache_linesize; .type __pic32_dcache_linesize,@object; .size __pic32_dcache_linesize,4; __pic32_dcache_linesize:; .word -1
+                                                  83:    .sdata; .globl __pic32_dcache_ways; .type __pic32_dcache_ways,@object; .size __pic32_dcache_ways,4; __pic32_dcache_ways:; .word 1
+                                                  84:    
+                                                  85:    .sdata; .globl __pic32_scache_size; .type __pic32_scache_size,@object; .size __pic32_scache_size,4; __pic32_scache_size:; .word -1
+                                                  86:    .sdata; .globl __pic32_scache_linesize; .type __pic32_scache_linesize,@object; .size __pic32_scache_linesize,4; __pic32_scache_linesize:; .word -1
+                                                  87:    .sdata; .globl __pic32_scache_ways; .type __pic32_scache_ways,@object; .size __pic32_scache_ways,4; __pic32_scache_ways:; .word 1
+                                                  88:    
+                                                  89:    .section .cache_init.cache, code
+                                                  90:            .set nomips16
+                                                  91:            .ent __size_cache; __size_cache:
+BFC004B0  40098000   MFC0 T1, Config              92:            mfc0 cfg,_CP0_CONFIG
+                                                  93:    
+BFC004B4  240A0000   ADDIU T2, ZERO, 0            94:            li icachesize,0
+BFC004B8  240B0000   ADDIU T3, ZERO, 0            95:            li ilinesize,0
+BFC004C0  240E0000   ADDIU T6, ZERO, 0            97:            li dlinesize,0
+                                                  98:    
+                                                  99:            /* Check that we have Config1 */
+BFC004C4  3C018000   LUI AT, -32768               100:           and tmp,cfg,_CP0_CONFIG_M_MASK
+                                                  101:           mfc0 cfg,_CP0_CONFIG1
+BFC004CC  11000025   BEQ T0, ZERO, 0xBFC00564     102:           beqz tmp,9f
+BFC004D4  00000000   NOP                          103:           nop
+                                                  104:   
+                                                  105:           /* Get icache line size (log2) */
+BFC004D8  3C010038   LUI AT, 56                   106:           and tmp,cfg,_CP0_CONFIG1_IL_MASK
+BFC004EC  25080001   ADDIU T0, T0, 1              109:           addu tmp,1
+                                                  110:   
+                                                  111:           /* Get number of icache ways */
+BFC004F0  3C010007   LUI AT, 7                    112:           and iways,cfg,_CP0_CONFIG1_IA_MASK
+BFC004F8  000C6402   SRL T4, T4, 16               113:           srl iways,_CP0_CONFIG1_IA_POSITION
+BFC004FC  258C0001   ADDIU T4, T4, 1              114:           addu iways,1
+BFC00500  01805021   ADDU T2, T4, ZERO            115:           move icachesize,iways
+                                                  116:   
+                                                  117:           /* total icache size = lines/way * linesize *ways */
+BFC00504  240B0001   ADDIU T3, ZERO, 1            118:           li ilinesize,1
+BFC00508  010B5804   SLLV T3, T3, T0              119:           sll ilinesize,tmp
+BFC0050C  010A5004   SLLV T2, T2, T0              120:           sll icachesize,tmp
+                                                  121:   
+                                                  122:           /* get icache lines per way */
+BFC00510  3C0101C0   LUI AT, 448                  123:           and tmp,cfg,_CP0_CONFIG1_IS_MASK
+BFC00518  00084582   SRL T0, T0, 22               124:           srl tmp,_CP0_CONFIG1_IS_POSITION
+BFC0051C  25080006   ADDIU T0, T0, 6              125:           addu tmp,6
+                                                  127:   
+                                                  128:           /* Get dcache line size (log2) */
+BFC00524  31281C00   ANDI T0, T1, 7168            129:   8:      and tmp,cfg,_CP0_CONFIG1_DL_MASK
+BFC00528  00084282   SRL T0, T0, 10               130:           srl tmp,_CP0_CONFIG1_DL_POSITION
+BFC0052C  1100000D   BEQ T0, ZERO, 0xBFC00564     131:           beqz tmp,8f # no d-cache
+BFC00534  25080001   ADDIU T0, T0, 1              132:           addu tmp,1
+                                                  133:   
+                                                  134:           /* Get number of dcache ways */
+BFC00538  312F0380   ANDI T7, T1, 896             135:           and dways,cfg,_CP0_CONFIG1_DA_MASK
+BFC0053C  000F79C2   SRL T7, T7, 7                136:           srl dways,_CP0_CONFIG1_DA_POSITION
+BFC00540  25EF0001   ADDIU T7, T7, 1              137:           addu dways,1
+BFC00544  01E06821   ADDU T5, T7, ZERO            138:           move dcachesize,dways
+                                                  139:   
+                                                  140:           /* Total dcache size = lines/way * linesize * ways */
+BFC00548  240E0001   ADDIU T6, ZERO, 1            141:           li dlinesize,1
+BFC0054C  010E7004   SLLV T6, T6, T0              142:           sll dlinesize,tmp
+BFC00550  010D6804   SLLV T5, T5, T0              143:           sll dcachesize,tmp
+                                                  144:   
+BFC00554  3128E000   ANDI T0, T1, -8192           145:           and tmp,cfg,_CP0_CONFIG1_DS_MASK
+BFC00558  00084342   SRL T0, T0, 13               146:           srl tmp,_CP0_CONFIG1_DS_POSITION
+BFC0055C  25080006   ADDIU T0, T0, 6              147:           addu tmp,6
+BFC00560  010D6804   SLLV T5, T5, T0              148:           sll dcachesize,tmp
+                                                  149:   
+                                                  150:   #undef cfg
+                                                  151:   #undef tmp
+                                                  152:   
+                                                  153:   8:
+BFC00564  03E00008   JR RA                        154:   9:   j ra
+BFC0056C  00000000   NOP                          155:        nop
+                                                  156:       .size __size_cache,.-__size_cache; .end __size_cache;
+                                                  157:   
+                                                  158:   /*
+                                                  159:    * void __pic32_size_cache()
+                                                  160:    *
+                                                  161:    * Work out size of I & D caches (assume already initialized)
+                                                  162:    */
+                                                  163:           .section .cache_init.pic32_size_cache, code
+                                                  164:           .set nomips16
+                                                  165:           .globl __pic32_size_cache; .ent __pic32_size_cache;
+                                                  166:   
+                                                  167:   __pic32_size_cache:
+BFC00570  8F888010   LW T0, -32752(GP)            168:           lw t0,__pic32_icache_size
+                                                  169:           move a3,ra
+BFC00574  1D00000A   BGTZ T0, 0xBFC005A0          170:           bgtz t0,8f # already known?
+                                                  171:   
+BFC0057C  0411FFCC   BGEZAL ZERO, 0xBFC004B0      172:           bal __size_cache
+BFC00584  00E0F821   ADDU RA, A3, ZERO            173:           move ra,a3
+                                                  174:   
+                                                  175:   ..savesize:
+BFC00588  AF8A8010   SW T2, -32752(GP)            176:           sw icachesize,__pic32_icache_size
+BFC0058C  AF8D801C   SW T5, -32740(GP)            177:           sw dcachesize,__pic32_dcache_size
+BFC00590  AF8B8014   SW T3, -32748(GP)            178:           sw ilinesize,__pic32_icache_linesize
+BFC00594  AF8E8020   SW T6, -32736(GP)            179:           sw dlinesize,__pic32_dcache_linesize
+BFC00598  AF8C8018   SW T4, -32744(GP)            180:           sw iways,__pic32_icache_ways
+BFC0059C  AF8F8024   SW T7, -32732(GP)            181:           sw dways,__pic32_dcache_ways
+                                                  182:   
+BFC005A0  03E00008   JR RA                        183:   8:      j ra
+BFC005A8  00000000   NOP                          184:           nop
+                                                  185:           .size __pic32_size_cache,.-__pic32_size_cache; .end __pic32_size_cache
+                                                  186:   
+                                                  187:   /*
+                                                  188:    * void __pic32_init_cache()
+                                                  189:    *
+                                                  190:    * Work out size and initialize I & D caches.
+                                                  191:    */
+                                                  192:           .section .cache_init.pic32_init_cache, code
+                                                  193:           .set nomips16
+                                                  194:           .globl __pic32_init_cache; .ent __pic32_init_cache;
+                                                  195:   __pic32_init_cache:
+                                                  196:   
+                                                  197:           /* If the cache is enabled, then return. */
+BFC005AC  40088000   MFC0 T0, Config              198:           mfc0 t0,_CP0_CONFIG          # Load the Config register
+BFC005B0  24090007   ADDIU T1, ZERO, 7            199:           li t1,_CP0_CONFIG_K0_MASK    # Load the K0 mask
+BFC005B4  01284824   AND T1, T1, T0               200:           and t1,t0                    # Get the K0 bits of the Config register
+BFC005B8  39290002   XORI T1, T1, 2               201:           xori t1,_CACHE_DISABLE       # Check if equal to the disable value
+BFC005BC  11200004   BEQ T1, ZERO, 0xBFC005D0     202:           beqz t1,1f                   # If 0, then disabled. Jump over and continue
+                                                  203:           nop
+BFC005C4  03E00008   JR RA                        204:           jr ra                        # If not 0, return.
+BFC005CC  00000000   NOP                          205:           nop
+                                                  206:   
+BFC005D0  03E01821   ADDU V1, RA, ZERO            207:   1:      move save_ra,ra
+BFC005D4  0411FFB6   BGEZAL ZERO, 0xBFC004B0      208:           bal __size_cache
+                                                  209:   
+                                                  210:           /* Run uncached */
+                                                  211:           .set noreorder
+                                                  212:           .set nomacro
+                                                  213:   #if 0
+                                                  214:           bal 1f
+                                                  215:           #
+                                                  216:           li cfg,0xa0000000
+                                                  217:   1:      or cfg,ra
+                                                  218:           addu cfg,16
+                                                  219:           jr cfg
+                                                  220:           move ra,v1
+                                                  221:   #endif
+                                                  222:   
+                                                  223:           /*
+                                                  224:            * The caches may be in an indeterminate state, so we force an
+                                                  225:            * invalidate, load/fill, and invalidate for each line.
+                                                  226:            */
+                                                  227:   
+                                                  228:           /* Disable all i/u and cache exceptions */
+                                                  229:           .set macro
+                                                  230:           .set noreorder
+                                                  231:           # Disable interrupts and set UM=1
+                                                  232:           # Save current status in tmp
+BFC005DC  40086000   MFC0 T0, Status              233:           mfc0 t0,_CP0_STATUS
+BFC005E0  2409FFFE   ADDIU T1, ZERO, -2           234:           li t1,~_CP0_STATUS_IE_MASK
+BFC005E4  01284824   AND T1, T1, T0               235:           and t1,t0
+BFC005E8  35290004   ORI T1, T1, 4                236:           or t1,_CP0_STATUS_ERL_MASK
+BFC005F0  000000C0   EHB                          238:           ehb
+                                                  239:   
+BFC005F4  4080D000   MTC0 ZERO, ErrCtl            240:           mtc0 zero,_CP0_ERRCTL
+BFC005F8  4080E000   MTC0 ZERO, TagLo             241:           mtc0 zero,_CP0_TAGLO # 4K taglo / 2*K itaglo
+                                                  243:   
+                                                  244:           /* Initialize primary instruction cache */
+                                                  245:           .set noreorder
+BFC00608  14800001   BNE A0, ZERO, 0xBFC00610     247:           bne a0,zero,0f
+                                                  248:           /* Use a default if the symbol is not defined */
+BFC0060C  3C049D00   LUI A0, -25344               249:           li a0,0x9D000000 /* KSEG0_PROGRAM_BASE */
+BFC00610  11400004   BEQ T2, ZERO, 0xBFC00624     250:   0:      beqz icachesize,8f    # icachesize
+BFC00614  008A2821   ADDU A1, A0, T2              251:           addu a1,a0,icachesize # limit = base + icachesize
+BFC00618  008B2021   ADDU A0, A0, T3              252:   1:      addu a0,ilinesize  # line size
+BFC0061C  1485FFFE   BNE A0, A1, 0xBFC00618       253:           bne a0,a1,1b
+BFC00620  BC88FFFC   CACHE 8, 65532(A0)           254:           cache Index_Store_Tag_I,-4(a0) # BDSLOT: clear tag
+                                                  255:   
+                                                  256:   
+                                                  257:           /* Initialize primary data cache */
+                                                  258:           .set noreorder
+BFC0062C  14800001   BNE A0, ZERO, 0xBFC00634     260:           bne a0,zero,0f
+                                                  261:           /* Use a default if the symbol is not defined */
+                                                  263:   
+BFC00634  11A00004   BEQ T5, ZERO, 0xBFC00648     264:   0:      beqz dcachesize,8f
+BFC00638  008D2821   ADDU A1, A0, T5              265:           addu a1,a0,dcachesize # limit = base + dcachesize
+BFC0063C  008E2021   ADDU A0, A0, T6              266:   1:      addu a0,dlinesize
+BFC00640  1485FFFE   BNE A0, A1, 0xBFC0063C       267:           bne a0,a1,1b
+BFC00644  BC89FFFC   CACHE 9, 65532(A0)           268:           cache Index_Store_Tag_D,-4(a0) # BDSLOT: clear tag
+                                                  269:   
+                                                  270:           .set reorder
+                                                  271:   
+BFC00648  0000000F   SYNC                         272:   8:      sync
+                                                  273:   
+                                                  274:           /* Store the sizes only after the caches are initialized */
+BFC0064C  AF8A8010   SW T2, -32752(GP)            275:   4:      sw icachesize,__pic32_icache_size
+BFC00650  AF8D801C   SW T5, -32740(GP)            276:           sw dcachesize,__pic32_dcache_size
+BFC00654  AF8B8014   SW T3, -32748(GP)            277:           sw ilinesize,__pic32_icache_linesize
+BFC00658  AF8E8020   SW T6, -32736(GP)            278:           sw dlinesize,__pic32_dcache_linesize
+BFC0065C  AF8C8018   SW T4, -32744(GP)            279:           sw iways,__pic32_icache_ways
+BFC00660  AF8F8024   SW T7, -32732(GP)            280:           sw dways,__pic32_dcache_ways
+                                                  281:   
+                                                  282:           .set noreorder
+                                                  283:   
+                                                  284:           # restore status
+BFC00664  40886000   MTC0 T0, Status              285:           mtc0 t0,_CP0_STATUS
+                                                  287:   
+                                                  288:           # Configure Cache Mode
+BFC0066C  40098000   MFC0 T1, Config              289:           mfc0 t1, _CP0_CONFIG
+BFC00670  35290007   ORI T1, T1, 7                290:           ori t1, _CP0_CONFIG_K0_MASK
+BFC00674  39290007   XORI T1, T1, 7               291:           xori t1, _CP0_CONFIG_K0_MASK
+BFC00678  35290003   ORI T1, T1, 3                292:           ori t1, __PIC32_CACHE_MODE
+BFC0067C  40898000   MTC0 T1, Config              293:           mtc0 t1, _CP0_CONFIG
+BFC00680  000000C0   EHB                          294:           ehb
+                                                  295:           
+                                                  296:            .set reorder
+                                                  297:   
+BFC00684  0060F821   ADDU RA, V1, ZERO            298:           move ra, save_ra
+BFC00688  03E00008   JR RA                        299:           jr ra
+BFC00690  00000000   NOP                          300:           nop
+                                                  301:           .size __pic32_init_cache,.-__pic32_init_cache; .end __pic32_init_cache;
+                                                  302:   #endif /* INIT_L1_CACHE */
+                                                  303:   
+                                                  304:   #undef _CACHE_WRITEBACK_WRITEALLOCATE
+                                                  305:   #undef _CACHE_WRITETHROUGH_WRITEALLOCATE
+                                                  306:   #undef _CACHE_WRITETHROUGH_NOWRITEALLOCATE
+                                                  307:   #undef _CACHE_DISABLE
+                                                  308:   
+                                                  309:   #undef _CP0_ERRCTL
+                                                  310:   #undef _CP0_TAGLO
 ---  /Users/Dennis/Documents/design.projects/thinkific.cool-mcu.com/github/mcu-tips-n-tricks/mcu-irq-benchmark/mcu-irq-benchmark.X/main.c
-1:                 /*******************************************************************************
-2:                  * Copyright (c) 2020 dBm Signal Dynamics Inc.
-3:                  * 
-4:                  * File:        main.c
-5:                  * Project:     mcu-irq-benchmark
-6:                  * Compiler:    XC8 v2.20, XC16 v1.60, XC32 v2.41
-7:                  * Hardware:    PIC16F19197 Basic Hookup (Schematic #14-00058A)
-8:                  *              PIC24FJ1024GA606 Basic Hookup (Schematic #14-00059A)
-9:                  *              PIC32MZ1024EFH064 Basic Hookup (Schematic #14-00060A)
-10:                 * 
-11:                 * Project used to measure the latency between interrupt assertion and the first
-12:                 * instruction executed in the ISR for all 3 MCUs. An Oscilloscope is required.
-13:                 * 
-14:                 * Project produces a 1 kHz, 50% duty-cycle PWM output signal (and IRQ),
-15:                 * The IRQ's ISR routine toggles a digital output pin (USER LED pin).
-16:                 * 
-17:                 * An Oscilloscope is used to measure IRQ latency (PWM 0-->1 to LED toggle).
-18:                 * 
-19:                 * The Disassembly listing must be consulted to subtract the #instruction cycles
-20:                 * used to toggle the USER LED. 
-21:                 * 
-22:                 * SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
-23:                 * EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
-24:                 * MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
-25:                 * IN NO EVENT SHALL DBM SIGNAL DYNAMICS OR ITS LICENSORS BE LIABLE OR OBLIGATED
-26:                 * UNDER CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY,
-27:                 * OR OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
-28:                 * INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
-29:                 * CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
-30:                 * SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
-31:                 * (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
-32:                *******************************************************************************/
-33:                #include <xc.h>
-34:                #include <stdint.h>
-35:                #include <stdio.h>
-36:                #include "configBits.h"     // Hardware Configuration bit settings
-37:                
-38:                #if defined(PIC16F19197_BH)
-39:                #define ELAPSED_TICKS_ADJUSTMENT 9
-40:                #define NoOP() NOP()                        // Define macro for NOP assembly instruction
-41:                #define MAX_LOOP_COUNT  1
-42:                #elif defined(PIC24FJ1024GA606_BH)
-43:                #include <libpic30.h>                       // Added for printf() --> UART2 redirect support
-44:                #define ELAPSED_TICKS_ADJUSTMENT 10         // Timer Tick Adjustment for reading the timer register
-45:                #define NoOP() Nop()                        // Define macro for NOP assembly instruction
-46:                #define MAX_LOOP_COUNT  1
-47:                #elif defined(PIC32MZ1024EFH064_BH)
-48:                #include <cp0defs.h>                        // CP0 access macros for PIC32M devices
-49:                #define ELAPSED_TICKS_ADJUSTMENT 12         // Timer Tick Adjustment for reading the timer register
-50:                #define NoOP() Nop()                        // Define macro for NOP assembly instruction
-51:                #define MAX_LOOP_COUNT  4
-52:                #endif
-53:                
-54:                // Global Variables
-55:                
-56:                const char Project[] = "mcu-irq-benchmark";
-57:                const char Version[] = "00.01";
-58:                const char CompileDate[] = __DATE__;
-59:                const char CompileTime[] = __TIME__;
-60:                
-61:                
-62:                // Local Function Prototypes
-63:                void Initiallize(void);                     // 1-time System Initialization
-64:                void SetPerformanceMode(void);              // Configure Clocks, Interrupts, Cache, Pre-fetch for desired performance
-65:                void PinConfig(void);                       // Configure Programmable I/O pins
-66:                void UartConfig(void);                      // Configure UART for printf() statement
-67:                void PWMConfig(void);                       // Configure a PWM resource to produce a 1 kHz signal (and irq) on selected output pin
-68:                
-69:                int main(void) {
-000E42  FA0000     LNK #0x0
-70:                    
-71:                    Initiallize();
-000E44  070001     RCALL Initiallize
-72:                    
-73:                    while(1);
-000E46  37FFFF     BRA .L2
-74:                  
-75:                }
-76:                
-77:                void Initiallize(void){
-000E48  FA0000     LNK #0x0
-78:                    
-79:                    // Configure Clocks, Interrupts, Cache, Pre-fetch for desired performance
-80:                    SetPerformanceMode();       
-000E4A  070022     RCALL SetPerformanceMode
-81:                    
-82:                    // Configure Programmable I/O Pins for all I/O in this application
-83:                    PinConfig();
-000E4C  070029     RCALL PinConfig
-84:                    
-85:                    // Configure UART resource for printf() statement
-86:                    UartConfig();
-000E4E  070050     RCALL UartConfig
-87:                    
-88:                    printf("Cool-MCU.com\r\n");
-000E50  28DF30     MOV #0x8DF3, W0
-000E52  07FA6A     RCALL _puts
-89:                    printf("Project: %s\r\n", Project);
-000E54  28DC60     MOV #0x8DC6, W0
-000E56  781F80     MOV W0, [W15++]
-000E58  28E010     MOV #0x8E01, W0
-000E5A  781F80     MOV W0, [W15++]
-000E5C  07FBF5     RCALL __dprintf_s, __dprintf_0
-000E5E  5787E4     SUB W15, #0x4, W15
-90:                    printf("Version: %s\r\n", Version);
-000E60  28DD80     MOV #0x8DD8, W0
-000E62  781F80     MOV W0, [W15++]
-000E64  28E0F0     MOV #0x8E0F, W0
-000E66  781F80     MOV W0, [W15++]
-000E68  07FBEF     RCALL __dprintf_s, __dprintf_0
-000E6A  5787E4     SUB W15, #0x4, W15
-91:                    printf("Build date: %s\r\n", CompileDate);
-000E6C  28DDE0     MOV #0x8DDE, W0
-000E6E  781F80     MOV W0, [W15++]
-000E70  28E1D0     MOV #0x8E1D, W0
-000E72  781F80     MOV W0, [W15++]
-000E74  07FBE9     RCALL __dprintf_s, __dprintf_0
-000E76  5787E4     SUB W15, #0x4, W15
-92:                    printf("Build time: %s\r\n\r\n", CompileTime);
-000E78  28DEA0     MOV #0x8DEA, W0
-000E7A  781F80     MOV W0, [W15++]
-000E7C  28E2E0     MOV #0x8E2E, W0
-000E7E  781F80     MOV W0, [W15++]
-000E80  07FBE3     RCALL __dprintf_s, __dprintf_0
-000E82  5787E4     SUB W15, #0x4, W15
-93:                
-94:                    // Configure a PWM resource to produce a 50% duty cycle, 1 kHz signal (and interrupt)
-95:                    PWMConfig();
-000E84  070041     RCALL PWMConfig
-96:                    
-97:                    // Configure LED output
-98:                
-99:                #if defined(PIC16F19197_BH)
-100:               
-101:                   ANSELEbits.ANSE5 = 0;
-102:                   TRISEbits.TRISE5 = 0;
-103:                   LATEbits.LATE5 = 0;
-104:               
-105:               #elif defined(PIC24FJ1024GA606_BH)
-106:                   
-107:                   TRISEbits.TRISE2 = 0;
-000E86  A946B2     BCLR TRISE, #2
-108:                   LATEbits.LATE2 = 0;
-000E88  A946B6     BCLR LATE, #2
-109:                   
-110:               #endif      
-111:                   
-112:                   // Enable Interrupts Globally
-113:               
-114:               #if defined(PIC16F19197_BH)
-115:                   
-116:                   INTCONbits.PEIE = 1;    // Enable all peripheral interrupt sources
-117:                   INTCONbits.GIE = 1;     // Enable interrupts globally    
-118:               
-119:               #elif defined(PIC24FJ1024GA606_BH)
-120:                   
-121:                   INTCON2bits.GIE = 1;    // Enable interrupts globally
-000E8A  A8E083     BSET 0x83, #7
-122:                   
-123:               #endif    
-124:                   
-125:                   
-126:               }
-000E8C  FA8000     ULNK
-000E8E  060000     RETURN
-127:               
-128:               void SetPerformanceMode(void) {
-000E90  FA0000     LNK #0x0
-129:                   
-130:                   // At this point, the CPU is operating using the default oscillator and
-131:                   // clocking options defined by the hardware configuration bits.
-132:                   
-133:                   // Add any code below to adjust clocks and any other configuration for
-134:                   // desired performance before running your main code loop.
-135:                   
-136:               #if defined(PIC32MZ1024EFH064_BH)
-137:                   
-138:                   // At this point, the Hardware Clock Initialization is Complete
-139:               	// The Primary External XTAL OSC Oscillator Circuit (8 MHz) provides the clock source
-140:               	// Instruction Clock, PBCLK7 (SYSCLK) set to 8 MHz
-141:                   // Peripheral Bus Clocks divisors set to defaults (divide by 2))
-142:                   // Flash memory predictive prefetch is disabled
-143:                   // Cache memory is enabled (per compiler default XC32 startup setting)
-144:                   // Interrupt controller is in single vector mode (per compiler default XC32 startup setting)
-145:                   // Interrupts are disabled (per compiler default XC32 startup setting)
-146:                   
-147:                   // Set the desired performance mode:
-148:                   // SYSCLK = 8 MHz, All PBCLKx = 8 MHz
-149:                   // Cache Enabled (per default setting in "pic32_init_cache.S" - _CACHE_WRITEBACK_WRITEALLOCATE)
-150:                   // Pre-Fetch Enabled
-151:                   
-152:                   unsigned int cp0;
-153:               	
-154:                   // Unlock Sequence
-155:                   asm volatile("di");     // disable all interrupts
-156:                   SYSKEY = 0xAA996655;
-157:                   SYSKEY = 0x556699AA;  
-158:               
-159:                   // PB1DIV
-160:                                           // Peripheral Bus 1 cannot be turned off, so there's no need to turn it on
-161:                   PB1DIVbits.PBDIV = 0;   // Peripheral Bus 1 Clock Divisor Control (PBCLK1 is SYSCLK divided by 1)
-162:               
-163:                   // PB2DIV
-164:                   PB2DIVbits.ON = 1;      // Peripheral Bus 2 Output Clock Enable (Output clock is enabled)
-165:                   PB2DIVbits.PBDIV = 0;   // Peripheral Bus 2 Clock Divisor Control (PBCLK2 is SYSCLK divided by 1)
-166:               
-167:                   // PB3DIV
-168:                   PB3DIVbits.ON = 1;      // Peripheral Bus 2 Output Clock Enable (Output clock is enabled)
-169:                   PB3DIVbits.PBDIV = 0;   // Peripheral Bus 3 Clock Divisor Control (PBCLK3 is SYSCLK divided by 1)
-170:               
-171:                   // PB4DIV
-172:                   PB4DIVbits.ON = 1;      // Peripheral Bus 4 Output Clock Enable (Output clock is enabled)
-173:                   while (!PB4DIVbits.PBDIVRDY); // Wait until it is ready to write to
-174:                   PB4DIVbits.PBDIV = 0;   // Peripheral Bus 4 Clock Divisor Control (PBCLK4 is SYSCLK divided by 1)
-175:               
-176:                   // PB5DIV
-177:                   PB5DIVbits.ON = 1;      // Peripheral Bus 5 Output Clock Enable (Output clock is enabled)
-178:                   PB5DIVbits.PBDIV = 0;   // Peripheral Bus 5 Clock Divisor Control (PBCLK5 is SYSCLK divided by 1)
-179:               
-180:                   // PB7DIV
-181:                   PB7DIVbits.ON = 1;      // Peripheral Bus 7 Output Clock Enable (Output clock is enabled)
-182:                   PB7DIVbits.PBDIV = 0;   // Peripheral Bus 7 Clock Divisor Control (PBCLK7 is SYSCLK divided by 1)
-183:               
-184:                   // PB8DIV
-185:                   PB8DIVbits.ON = 1;      // Peripheral Bus 8 Output Clock Enable (Output clock is enabled)
-186:                   PB8DIVbits.PBDIV = 0;   // Peripheral Bus 8 Clock Divisor Control (PBCLK8 is SYSCLK divided by 1)
-187:               
-188:                   // PRECON - Set up prefetch (60 MHz operation))
-189:                   //PRECONbits.PFMSECEN = 0; // Flash SEC Interrupt Enable (Do not generate an interrupt when the PFMSEC bit is set)
-190:                   PRECONbits.PREFEN = 0b11; // Predictive Prefetch Enable (Enable predictive prefetch for any address)
-191:                   PRECONbits.PFMWS = 0b000; // PFM Access Time Defined in Terms of SYSCLK Wait States (Zero wait states @ 8 MHz)
-192:               
-193:                   // Set up caching
-194:                   // See  https://microchipdeveloper.com/32bit:mz-cache-disable
-195:                   // Added "pic32_init_cache.S" to project from XC32 tool chain, and set __PIC32_CACHE_MODE to _CACHE_WRITEBACK_WRITEALLOCATE
-196:               
-197:                   // Lock Sequence
-198:                   SYSKEY = 0x33333333;
-199:                   asm volatile("ei");     // Enable all interrupts    
-200:                   
-201:               #elif defined(PIC24FJ1024GA606_BH)
-202:                   
-203:                   // At this point, the Hardware Clock Initialization is Complete
-204:                   // Primary OSC with 4X PLL provides 32 MHz Fosc (16 MIPs)
-205:                   
-206:                   // Need to set Fosc to 16 MHz (8 MIPs)
-207:                   
-208:                   CLKDIVbits.CPDIV = 0x01;    // Select DIV2 clock scaling (16 MHz, 8 MIPs)    
-000E92  800811     MOV CLKDIV, W1
-000E94  2FF3F0     MOV #0xFF3F, W0
-000E96  608000     AND W1, W0, W0
-000E98  A06000     BSET W0, #6
-000E9A  880810     MOV W0, CLKDIV
-209:                   
-210:               #endif
-211:                   
-212:               }
-000E9C  FA8000     ULNK
-000E9E  060000     RETURN
-213:               
-214:               void PinConfig(void){
-000EA0  FA0000     LNK #0x0
-215:                       
-216:               #if defined(PIC16F19197_BH)
-217:                   
-218:                   // Configure digital pins for UART function
-219:                   TRISCbits.TRISC7 = 0;       // TX1 --> RC7
-220:                   TRISCbits.TRISC6 = 1;       // RX1 <-- RC6
-221:                   
-222:                   // RE6 used as CCP1 PWM output signal
-223:                   // Make pin digital
-224:                   ANSELEbits.ANSE6 = 0;
-225:                   // Make pin digital output and initialize level
-226:                   TRISEbits.TRISE6 = 0;
-227:                   LATEbits.LATE6 = 0;
-228:                   
-229:                   // Initiallize PPS Pin Mapping for this Application
-230:                   // TX1 --> RC7 
-231:                   // RX1 <-- RC6
-232:                   // CCP1 --> RE6
-233:                   // 1. Unlock PPS registers
-234:                   //bit oldGIE = INTCONbits.GIE;
-235:                   //INTCONbits.GIE = 0;
-236:                   PPSLOCK = 0x55;
-237:                   PPSLOCK = 0xAA;
-238:                   PPSLOCKbits.PPSLOCKED = 0;
-239:                   //INTCONbits.GIE = oldGIE;
-240:                   // 2. Configure Output Functions
-241:                   // Assign TX1 output function to pin RC7
-242:                   RC7PPS = 0x0D;
-243:                   // Assign CCP1 output function to pin RE6
-244:                   RE6PPS = 0x09;
-245:                   // 3. Configure Input Functions
-246:                   // Assign RC6 pin to RX1 input function
-247:                   RX1PPS = 0x16;
-248:                   // 4 Lock the PPS registers
-249:                   //oldGIE = INTCONbits.GIE;
-250:                   //INTCONbits.GIE = 0;
-251:                   PPSLOCK = 0x55;
-252:                   PPSLOCK = 0xAA;
-253:                   PPSLOCKbits.PPSLOCKED = 1;
-254:                   //INTCONbits.GIE = oldGIE;
-255:                   
-256:               #elif defined(PIC24FJ1024GA606_BH)
-257:                   
-258:                   // RD0 used as OC1 PWM output signal
-259:                   // Make pin digital
-260:                   // ANSELEbits.ANSE6 = 0;
-261:                   // Make pin digital output and initialize level
-262:                   TRISDbits.TRISD0 = 0;
-000EA2  A9069E     BCLR TRISD, #0
-263:                   LATDbits.LATD0 = 0;
-000EA4  A906A2     BCLR LATD, #0
-264:                   
-265:                   // Set up PPS (I/O Pin-Mapping) for all I/O in this application
-266:                   // U2RX <-- RP10/RF4   (DEBUG PORT PC-TX pin)
-267:                   // U2TX --> RP17/RF5   (DEBUG PORT PC-RX pin)
-268:                   // OC1 --> RP11/RD0     1 kHz PWM output
-269:                   // 1. Unlock PPS registers
-270:                   __builtin_write_OSCCONL(OSCCON & 0xBF);
-000EA6  800801     MOV OSCCON, W1
-000EA8  200BF0     MOV #0xBF, W0
-000EAA  608100     AND W1, W0, W2
-000EAC  200460     MOV #0x46, W0
-000EAE  200571     MOV #0x57, W1
-000EB0  201003     MOV #0x100, W3
-000EB2  784980     MOV.B W0, [W3]
-000EB4  784981     MOV.B W1, [W3]
-000EB6  784982     MOV.B W2, [W3]
-271:                   // 2. Configure Output Functions
-272:                   // Assign U2TX output function to pin RP17
-273:                   RPOR8bits.RP17R = 5;
-000EB8  803F21     MOV RPOR8, W1
-000EBA  280FF0     MOV #0x80FF, W0
-000EBC  608080     AND W1, W0, W1
-000EBE  205000     MOV #0x500, W0
-000EC0  700001     IOR W0, W1, W0
-000EC2  883F20     MOV W0, RPOR8
-274:                   // Assign OC1 output function to pin RP11
-275:                   RPOR5bits.RP11R = 13;
-000EC4  803EF1     MOV RPOR5, W1
-000EC6  280FF0     MOV #0x80FF, W0
-000EC8  608080     AND W1, W0, W1
-000ECA  20D000     MOV #0xD00, W0
-000ECC  700001     IOR W0, W1, W0
-000ECE  883EF0     MOV W0, RPOR5
-276:                   // 3. Configure Input Functions
-277:                   // Assign pin RP10 to U2RX input function
-278:                   RPINR19bits.U2RXR = 10;
-000ED0  803DB1     MOV RPINR19, W1
-000ED2  2FFC00     MOV #0xFFC0, W0
-000ED4  608000     AND W1, W0, W0
-000ED6  B300A0     IOR #0xA, W0
-000ED8  883DB0     MOV W0, RPINR19
-279:                   // 4 Lock the PPS registers
-280:                   __builtin_write_OSCCONL(OSCCON | 0x40);    
-000EDA  800800     MOV OSCCON, W0
-000EDC  780100     MOV W0, W2
-000EDE  A06002     BSET W2, #6
-000EE0  200460     MOV #0x46, W0
-000EE2  200571     MOV #0x57, W1
-000EE4  201003     MOV #0x100, W3
-000EE6  784980     MOV.B W0, [W3]
-000EE8  784981     MOV.B W1, [W3]
-000EEA  784982     MOV.B W2, [W3]
-281:                   
-282:               #elif defined(PIC32MZ1024EFH064_BH)
-283:                   
-284:                   // Set up PPS (I/O Pin-Mapping) for all I/O in this application
-285:                   // U2RX <-- RPB15   (DEBUG PORT PC-TX pin)
-286:                   // U2TX --> RPB14   (DEBUG PORT PC-RX pin)
-287:                   
-288:                   // U2RX pin (RPB15) is an ADC input, so need to configure ANSEL register to
-289:                   // disable analog pin function
-290:                   ANSELBbits.ANSB15 = 0;
-291:                   
-292:                   // PPS unlock sequence
-293:                   SYSKEY = 0x0;         
-294:                   SYSKEY = 0xAA996655;         
-295:                   SYSKEY = 0x556699AA; 
-296:                   CFGCONbits.IOLOCK = 0;  // unlock PPS registers for writing
-297:                   
-298:                   // modify the PPS registers for the application (per table 11-2 in data sheet)
-299:                   U2RXRbits.U2RXR = 3;        // Map RPB15 to U2RX
-300:                   RPB14Rbits.RPB14R = 2;      // Map U2TX to RPB14
-301:                   
-302:                   // PPS re-lock sequence
-303:                   CFGCONbits.IOLOCK = 1;         
-304:                   SYSKEY = 0x0;    
-305:                   
-306:               #endif
-307:               }
-000EEC  FA8000     ULNK
-000EEE  060000     RETURN
-308:               
-309:               void UartConfig(void){
-000EF0  FA0000     LNK #0x0
-310:               
-311:               #if defined(PIC16F19197_BH)
-312:                   
-313:                   // Initialize UART1 for use as the DEBUG PORT for printf() messages
-314:                   
-315:                   // Turn the UART off
-316:                   RC1STAbits.SPEN = 0;
-317:                   TX1STAbits.TXEN = 0;
-318:               
-319:                   // Disable U1 Interrupts
-320:                   PIR3bits.TX1IF = 0;                                                         // Clear the Transmit Interrupt Flag
-321:                   PIE3bits.TX1IE = 0;                                                         // Disable Transmit Interrupts
-322:                   PIR3bits.RC1IF = 0;                                                         // Clear the Receive Interrupt Flag
-323:                   PIE3bits.RC1IE = 0;                                                         // Disable Receive Interrupts
-324:                   
-325:                   // Configure TX Channel
-326:                   TX1STAbits.SYNC = 0;                                                        // Async mode
-327:                   TX1STAbits.BRGH = 1;                                                        // High speed BRG
-328:                   
-329:                   // Configure RX Channel
-330:                   RC1STAbits.CREN = 1;                                                        // Enable continuous RX
-331:                   
-332:                   // Configure BRG (BRGH = 1, BRG = 1)
-333:                   BAUD1CONbits.BRG16 = 1;
-334:                   SP1BRGH = 0x00;
-335:                   SP1BRGL = 0x44;               // decimal 68 (115200 baud)
-336:                   
-337:                   // ...And turn the UART on
-338:                   RC1STAbits.SPEN = 1;
-339:                   TX1STAbits.TXEN = 1;    
-340:                   
-341:               #elif defined(PIC24FJ1024GA606_BH)
-342:                   
-343:                   // Initialize UART2 for use as the DEBUG PORT for printf() messages
-344:                   
-345:                   __C30_UART = 2;         // MACRO: Divert printf() output to UART 2 - see XC16 manual
-000EF2  200020     MOV #0x2, W0
-000EF4  884530     MOV W0, 0x8A6
-346:                   
-347:                   U2MODEbits.UARTEN = 0;  // Disable UART  
-000EF6  A9E3AF     BCLR 0x3AF, #7
-348:                   U2STAbits.UTXEN = 0;
-000EF8  A943B1     BCLR 0x3B1, #2
-349:                   U2MODEbits.BRGH = 1;    // Enable high rate baud clock
-000EFA  A863AE     BSET U2MODE, #3
-350:                   U2BRG = 16;             // Baud Rate generator set to 115200 baud
-000EFC  200100     MOV #0x10, W0
-000EFE  881DB0     MOV W0, U2BRG
-351:                   U2MODEbits.UARTEN = 1;
-000F00  A8E3AF     BSET 0x3AF, #7
-352:                   U2STAbits.UTXEN = 1;    // Enable UART    
-000F02  A843B1     BSET 0x3B1, #2
-353:                   
-354:               #elif defined(PIC32MZ1024EFH064_BH)
-355:                   
-356:                   // Initialize UART2 for use as the DEBUG PORT for printf() messages
-357:                   
-358:                   // Note: No special initialization is required for printf()
-359:                   // printf() uses UART 2 for output by default as long as UART 2 is initialized before use
-360:                   
-361:                   U2MODEbits.UARTEN = 0;  // Disable UART  
-362:                   U2STAbits.UTXEN = 0;
-363:                   U2MODEbits.BRGH = 1;    // Enable high rate baud clock
-364:                   U2BRG = 16;             // Baud Rate generator set to 115200 baud
-365:                   U2MODEbits.UARTEN = 1;
-366:                   U2STAbits.UTXEN = 1;    // Enable UART    
-367:                   
-368:               #endif
-369:                   
-370:               }
-000F04  FA8000     ULNK
-000F06  060000     RETURN
-371:               
-372:               #if defined(PIC16F19197_BH)
-373:                   
-374:               // XC8 Stub required to redirect printf() statements to UART 1
-375:               
-376:               void putch(char c) {
-377:                   while(!TX1STAbits.TRMT);   // wait while Tx buffer full
-378:                   TX1REG = c;
-379:               }
-380:               
-381:               #endif
-382:               
-383:               void PWMConfig(void){
-000F08  FA0000     LNK #0x0
-384:                   
-385:               #if defined(PIC16F19197_BH)
-386:                   
-387:                   T2CONbits.T2ON = 0;         // turn Timer2 off
-388:                   T2TMR = 0;                  // reset the count   
-389:                   T2CLKCONbits.CS = 1;        // Select Fcyc (8 MHz) as clock source
-390:                   T2CONbits.T2CKPS = 5;       // 1:32 prescale (250 kHz)
-391:                   T2PR = 250;                 // set the PWM period value for 1000 uS (1mS)
-392:                   
-393:                   CCP1CONbits.EN = 0;         // turn CCP1 off
-394:                   CCP1CONbits.MODE = 15;      // set CCP1 mode to PWM
-395:                   CCPR1H = 0x01;
-396:                   CCPR1L = 0xF4;              // set up 50% duty cycle on output (count = 500)
-397:                   CCP1CONbits.EN = 1;         // turn CCP1 on
-398:                   
-399:                   PIR4bits.TMR2IF = 0;
-400:                   PIE4bits.TMR2IE = 1;        // enable Timer2 interrupt on start of PWM cycle
-401:                   T2CONbits.T2ON = 1;         // turn Timer2 on
-402:               
-403:               #elif defined(PIC24FJ1024GA606_BH)
-404:                
-405:                   T2CONbits.TON = 0;          // turn Timer2 off
-000F0A  A9E1A1     BCLR 0x1A1, #7
-406:                   TMR2 = 0x00;                // reset the count
-000F0C  EF2196     CLR TMR2
-407:                   T2CONbits.TCS = 0;          // Select Fcyc (8 MHz) as clock source
-000F0E  A921A0     BCLR T2CON, #1
-408:                   T2CONbits.TCKPS = 1;        // 1:8 prescale (1 MHz)
-000F10  800D01     MOV T2CON, W1
-000F12  2FFCF0     MOV #0xFFCF, W0
-000F14  608000     AND W1, W0, W0
-000F16  A04000     BSET W0, #4
-000F18  880D00     MOV W0, T2CON
-409:                   PR2 = 1000;                 // set the PWM period value for 1000 uS (1mS)
-000F1A  203E80     MOV #0x3E8, W0
-000F1C  880CE0     MOV W0, PR2
-410:                   
-411:                   OC1CON1bits.OCM = 0;        // turn OC1 off
-000F1E  801181     MOV OC1CON1, W1
-000F20  2FFF80     MOV #0xFFF8, W0
-000F22  608000     AND W1, W0, W0
-000F24  881180     MOV W0, OC1CON1
-412:                   OC1R = 500;                 // set up 50% duty cycle on output (count = 500)
-000F26  201F40     MOV #0x1F4, W0
-000F28  8811B0     MOV W0, OC1R
-413:                   OC1CON1bits.OCTSEL = 0;     // select Timer 2 as the OC time base
-000F2A  801181     MOV OC1CON1, W1
-000F2C  2E3FF0     MOV #0xE3FF, W0
-000F2E  608000     AND W1, W0, W0
-000F30  881180     MOV W0, OC1CON1
-414:                   OC1CON1bits.OCM = 0b110;    // set OC1 mode to PWM (Edge PWM)
-000F32  801181     MOV OC1CON1, W1
-000F34  2FFF80     MOV #0xFFF8, W0
-000F36  608000     AND W1, W0, W0
-000F38  B30060     IOR #0x6, W0
-000F3A  881180     MOV W0, OC1CON1
-415:                   
-416:                   IFS0bits.T2IF = 0;          // clear Timer 2 interrupt flag
-000F3C  A9E088     BCLR IFS0, #7
-417:                   //IEC0bits.T2IE = 1;          // enable Timer 2 interrupts
-418:                   IFS0bits.OC1IF = 0;
-000F3E  A94088     BCLR IFS0, #2
-419:                   IEC0bits.OC1IE = 1;
-000F40  A84098     BSET IEC0, #2
-420:                   T2CONbits.TON = 1;          // start timer (starts PWMs)
-000F42  A8E1A1     BSET 0x1A1, #7
-421:                   
-422:               #endif    
-423:                   
-424:               }
-000F44  FA8000     ULNK
-000F46  060000     RETURN
-425:               
-426:               // 1 kHz ISR (generated on rising edge of PWM signal) to toggle USER LED
-427:               
-428:               #if defined(PIC16F19197_BH)
-429:               
-430:               void __interrupt() interruptHandler(void)
-431:               {
-432:                   LATEbits.LATE5 ^= 1;
-433:                   PIR4bits.TMR2IF = 0;
-434:               }
-435:               
-436:               #elif defined(PIC24FJ1024GA606_BH)
-437:               
-438:               void __attribute__((interrupt, no_auto_psv)) _OC1Interrupt(void)
-439:               {
-000214  BE9F80     MOV.D W0, [W15++]
-000216  FA0000     LNK #0x0
-440:                   LATEbits.LATE2 ^= 1;
-000218  8035B0     MOV LATE, W0
-00021A  DE0042     LSR W0, #2, W0
-00021C  604061     AND.B W0, #0x1, W0
-00021E  A20400     BTG.B W0, #0
-000220  604061     AND.B W0, #0x1, W0
-000222  FB8000     ZE W0, W0
-000224  600061     AND W0, #0x1, W0
-000226  DD0042     SL W0, #2, W0
-000228  8035B1     MOV LATE, W1
-00022A  A12001     BCLR W1, #2
-00022C  700001     IOR W0, W1, W0
-00022E  8835B0     MOV W0, LATE
-441:                   IFS0bits.OC1IF = 0;
-000230  A94088     BCLR IFS0, #2
-442:               }
-000232  FA8000     ULNK
-000234  BE004F     MOV.D [--W15], W0
-000236  064000     RETFIE
-443:               
-444:               #endif
-445:               
-446:               
-447:               
-448:               
+1:                   /*******************************************************************************
+2:                    * Copyright (c) 2020 dBm Signal Dynamics Inc.
+3:                    * 
+4:                    * File:        main.c
+5:                    * Project:     mcu-irq-benchmark
+6:                    * Compiler:    XC8 v2.20, XC16 v1.60, XC32 v2.41
+7:                    * Hardware:    PIC16F19197 Basic Hookup (Schematic #14-00058A)
+8:                    *              PIC24FJ1024GA606 Basic Hookup (Schematic #14-00059A)
+9:                    *              PIC32MZ1024EFH064 Basic Hookup (Schematic #14-00060A)
+10:                   * 
+11:                   * Project used to measure the latency between interrupt assertion and the first
+12:                   * instruction executed in the ISR for all 3 MCUs. An Oscilloscope is required.
+13:                   * 
+14:                   * Project produces a 1 kHz, 50% duty-cycle PWM output signal (and IRQ),
+15:                   * The IRQ's ISR routine toggles a digital output pin (USER LED pin).
+16:                   * 
+17:                   * An Oscilloscope is used to measure IRQ latency (PWM 0-->1 to LED toggle).
+18:                   * 
+19:                   * The Disassembly listing must be consulted to subtract the #instruction cycles
+20:                   * used for context save and to toggle the USER LED. 
+21:                   * 
+22:                   * SOFTWARE AND DOCUMENTATION ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND,
+23:                   * EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY WARRANTY OF
+24:                   * MERCHANTABILITY, TITLE, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE.
+25:                   * IN NO EVENT SHALL DBM SIGNAL DYNAMICS OR ITS LICENSORS BE LIABLE OR OBLIGATED
+26:                   * UNDER CONTRACT, NEGLIGENCE, STRICT LIABILITY, CONTRIBUTION, BREACH OF WARRANTY,
+27:                   * OR OTHER LEGAL EQUITABLE THEORY ANY DIRECT OR INDIRECT DAMAGES OR EXPENSES
+28:                   * INCLUDING BUT NOT LIMITED TO ANY INCIDENTAL, SPECIAL, INDIRECT, PUNITIVE OR
+29:                   * CONSEQUENTIAL DAMAGES, LOST PROFITS OR LOST DATA, COST OF PROCUREMENT OF
+30:                   * SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
+31:                   * (INCLUDING BUT NOT LIMITED TO ANY DEFENSE THEREOF), OR OTHER SIMILAR COSTS.
+32:                  *******************************************************************************/
+33:                  #include <xc.h>
+34:                  #include <stdint.h>
+35:                  #include <stdio.h>
+36:                  #include "configBits.h"     // Hardware Configuration bit settings
+37:                  
+38:                  #if defined(PIC16F19197_BH)
+39:                  #define NoOP() NOP()                        // Define macro for NOP assembly instruction
+40:                  #elif defined(PIC24FJ1024GA606_BH)
+41:                  #include <libpic30.h>                       // Added for printf() --> UART2 redirect support
+42:                  #define NoOP() Nop()                        // Define macro for NOP assembly instruction
+43:                  #elif defined(PIC32MZ1024EFH064_BH)
+44:                  #include <cp0defs.h>                        // CP0 access macros for PIC32M (MIPs CPU) devices
+45:                  #include <sys/attribs.h>                    // Provides "_ISR()" macros for PIC32M devices
+46:                  #define NoOP() Nop()                        // Define macro for NOP assembly instruction
+47:                  #endif
+48:                  
+49:                  // Global Variables
+50:                  
+51:                  const char Project[] = "mcu-irq-benchmark";
+52:                  const char Version[] = "00.01";
+53:                  const char CompileDate[] = __DATE__;
+54:                  const char CompileTime[] = __TIME__;
+55:                  
+56:                  
+57:                  // Local Function Prototypes
+58:                  void Initiallize(void);                     // 1-time System Initialization
+59:                  void SetPerformanceMode(void);              // Configure Clocks, Interrupts, Cache, Pre-fetch for desired performance
+60:                  void PinConfig(void);                       // Configure Programmable I/O pins
+61:                  void UartConfig(void);                      // Configure UART for printf() statement
+62:                  void PWMConfig(void);                       // Configure a PWM resource to produce a 1 kHz signal (and irq) on selected output pin
+63:                  
+64:                  int main(void) {
+9D000B34  27BDFFE8   ADDIU SP, SP, -24
+9D000B38  AFBF0014   SW RA, 20(SP)
+9D000B3C  AFBE0010   SW FP, 16(SP)
+9D000B40  03A0F021   ADDU FP, SP, ZERO
+65:                      
+66:                      Initiallize();
+9D000B44  0F4002D5   JAL Initiallize
+9D000B48  00000000   NOP
+67:                      
+68:                      while(1);
+9D000B4C  0B4002D3   J 0x9D000B4C
+9D000B50  00000000   NOP
+69:                    
+70:                  }
+71:                  
+72:                  void Initiallize(void){
+9D000B54  27BDFFE8   ADDIU SP, SP, -24
+9D000B58  AFBF0014   SW RA, 20(SP)
+9D000B5C  AFBE0010   SW FP, 16(SP)
+9D000B60  03A0F021   ADDU FP, SP, ZERO
+73:                      
+74:                      // Configure Clocks, Interrupts, Cache, Pre-fetch for desired performance
+75:                      SetPerformanceMode();       
+9D000B64  0F40030C   JAL SetPerformanceMode
+9D000B68  00000000   NOP
+76:                      
+77:                      // Configure Programmable I/O Pins for all I/O in this application
+78:                      PinConfig();
+9D000B6C  0F400370   JAL PinConfig
+9D000B70  00000000   NOP
+79:                      
+80:                      // Configure UART resource for printf() statement
+81:                      UartConfig();
+9D000B74  0F4003A8   JAL UartConfig
+9D000B78  00000000   NOP
+82:                      
+83:                      printf("Cool-MCU.com\r\n");
+9D000B7C  3C029D00   LUI V0, -25344
+9D000B80  24442610   ADDIU A0, V0, 9744
+9D000B84  0F4009FB   JAL puts
+9D000B88  00000000   NOP
+84:                      printf("Project: %s\r\n", Project);
+9D000B8C  3C029D00   LUI V0, -25344
+9D000B90  24442620   ADDIU A0, V0, 9760
+9D000B94  3C029D00   LUI V0, -25344
+9D000B98  244525DC   ADDIU A1, V0, 9692
+9D000B9C  0F400A7A   JAL _printf_s, _printf_0
+9D000BA0  00000000   NOP
+85:                      printf("Version: %s\r\n", Version);
+9D000BA4  3C029D00   LUI V0, -25344
+9D000BA8  24442630   ADDIU A0, V0, 9776
+9D000BAC  3C029D00   LUI V0, -25344
+9D000BB0  244525F0   ADDIU A1, V0, 9712
+9D000BB4  0F400A7A   JAL _printf_s, _printf_0
+9D000BB8  00000000   NOP
+86:                      printf("Build date: %s\r\n", CompileDate);
+9D000BBC  3C029D00   LUI V0, -25344
+9D000BC0  24442640   ADDIU A0, V0, 9792
+9D000BC4  3C029D00   LUI V0, -25344
+9D000BC8  244525F8   ADDIU A1, V0, 9720
+9D000BCC  0F400A7A   JAL _printf_s, _printf_0
+9D000BD0  00000000   NOP
+87:                      printf("Build time: %s\r\n\r\n", CompileTime);
+9D000BD4  3C029D00   LUI V0, -25344
+9D000BD8  24442654   ADDIU A0, V0, 9812
+9D000BDC  3C029D00   LUI V0, -25344
+9D000BE0  24452604   ADDIU A1, V0, 9732
+9D000BE4  0F400A7A   JAL _printf_s, _printf_0
+9D000BE8  00000000   NOP
+88:                  
+89:                      // Configure a PWM resource to produce a 50% duty cycle, 1 kHz signal (and interrupt)
+90:                      PWMConfig();
+9D000BEC  0F4003CA   JAL PWMConfig
+9D000BF0  00000000   NOP
+91:                      
+92:                      // Configure LED output
+93:                  
+94:                  #if defined(PIC16F19197_BH)
+95:                  
+96:                      ANSELEbits.ANSE5 = 0;
+97:                      TRISEbits.TRISE5 = 0;
+98:                      LATEbits.LATE5 = 0;
+99:                  
+100:                 #elif defined(PIC24FJ1024GA606_BH)
+101:                     
+102:                     TRISEbits.TRISE2 = 0;
+103:                     LATEbits.LATE2 = 0;
+104:                     
+105:                 #elif defined(PIC32MZ1024EFH064_BH)
+106:                 
+107:                     TRISEbits.TRISE2 = 0;
+9D000BF4  3C03BF86   LUI V1, -16506
+9D000BF8  90620410   LBU V0, 1040(V1)
+9D000BFC  7C021084   INS V0, ZERO, 2, 1
+9D000C00  A0620410   SB V0, 1040(V1)
+108:                     LATEbits.LATE2 = 0;
+9D000C04  3C03BF86   LUI V1, -16506
+9D000C08  90620430   LBU V0, 1072(V1)
+9D000C0C  7C021084   INS V0, ZERO, 2, 1
+9D000C10  A0620430   SB V0, 1072(V1)
+109:                 
+110:                 #endif      
+111:                     
+112:                     // Enable Interrupts Globally
+113:                 
+114:                 #if defined(PIC16F19197_BH)
+115:                     
+116:                     INTCONbits.PEIE = 1;            // Enable all peripheral interrupt sources
+117:                     INTCONbits.GIE = 1;             // Enable interrupts globally    
+118:                 
+119:                 #elif defined(PIC24FJ1024GA606_BH)
+120:                     
+121:                     INTCON2bits.GIE = 1;            // Enable interrupts globally
+122:                     
+123:                 #elif defined(PIC32MZ1024EFH064_BH)
+124:                     
+125:                     __builtin_enable_interrupts();  // Sets the IE bit in the CP0 Status register to globally enable interrupts
+9D000C14  41626020   EI V0
+126:                     
+127:                 #endif    
+128:                     
+129:                     
+130:                 }
+9D000C18  03C0E821   ADDU SP, FP, ZERO
+9D000C1C  8FBF0014   LW RA, 20(SP)
+9D000C20  8FBE0010   LW FP, 16(SP)
+9D000C24  27BD0018   ADDIU SP, SP, 24
+9D000C28  03E00008   JR RA
+9D000C2C  00000000   NOP
+131:                 
+132:                 void SetPerformanceMode(void) {
+9D000C30  27BDFFF8   ADDIU SP, SP, -8
+9D000C34  AFBE0004   SW FP, 4(SP)
+9D000C38  03A0F021   ADDU FP, SP, ZERO
+133:                     
+134:                     // At this point, the CPU is operating using the default oscillator and
+135:                     // clocking options defined by the hardware configuration bits.
+136:                     
+137:                     // Add any code below to adjust clocks and any other configuration for
+138:                     // desired performance before running your main code loop.
+139:                     
+140:                 #if defined(PIC32MZ1024EFH064_BH)
+141:                     
+142:                     // At this point, the Hardware Clock Initialization is Complete
+143:                 	// The Primary External XTAL OSC Oscillator Circuit (8 MHz) provides the clock source
+144:                 	// Instruction Clock, PBCLK7 (SYSCLK) set to 8 MHz
+145:                     // Peripheral Bus Clocks divisors set to defaults (divide by 2))
+146:                     // Flash memory predictive prefetch is disabled
+147:                     // Cache memory is enabled (per compiler default XC32 startup setting)
+148:                     // Interrupt controller is in single vector mode (per compiler default XC32 startup setting)
+149:                     // Interrupts are disabled (per compiler default XC32 startup setting)
+150:                     
+151:                     // Set the desired performance mode:
+152:                     // SYSCLK = 8 MHz, All PBCLKx = 8 MHz
+153:                     // Cache Enabled (per default setting in "pic32_init_cache.S" - _CACHE_WRITEBACK_WRITEALLOCATE)
+154:                     // Pre-Fetch Enabled
+155:                     
+156:                     unsigned int cp0;
+157:                 	
+158:                     // Unlock Sequence
+159:                     SYSKEY = 0xAA996655;
+9D000C3C  3C02BF80   LUI V0, -16512
+9D000C40  3C03AA99   LUI V1, -21863
+9D000C44  34636655   ORI V1, V1, 26197
+9D000C48  AC430030   SW V1, 48(V0)
+160:                     SYSKEY = 0x556699AA;  
+9D000C4C  3C02BF80   LUI V0, -16512
+9D000C50  3C035566   LUI V1, 21862
+9D000C54  346399AA   ORI V1, V1, -26198
+9D000C58  AC430030   SW V1, 48(V0)
+161:                 
+162:                     // PB1DIV
+163:                                             // Peripheral Bus 1 cannot be turned off, so there's no need to turn it on
+164:                     PB1DIVbits.PBDIV = 0;   // Peripheral Bus 1 Clock Divisor Control (PBCLK1 is SYSCLK divided by 1)
+9D000C5C  3C03BF80   LUI V1, -16512
+9D000C60  94621300   LHU V0, 4864(V1)
+9D000C64  7C023004   INS V0, ZERO, 0, 7
+9D000C68  A4621300   SH V0, 4864(V1)
+165:                 
+166:                     // PB2DIV
+167:                     PB2DIVbits.ON = 1;      // Peripheral Bus 2 Output Clock Enable (Output clock is enabled)
+9D000C6C  3C03BF80   LUI V1, -16512
+9D000C70  94621310   LHU V0, 4880(V1)
+9D000C74  24040001   ADDIU A0, ZERO, 1
+9D000C78  7C827BC4   INS V0, A0, 15, 1
+9D000C7C  A4621310   SH V0, 4880(V1)
+168:                     PB2DIVbits.PBDIV = 0;   // Peripheral Bus 2 Clock Divisor Control (PBCLK2 is SYSCLK divided by 1)
+9D000C80  3C03BF80   LUI V1, -16512
+9D000C84  94621310   LHU V0, 4880(V1)
+9D000C88  7C023004   INS V0, ZERO, 0, 7
+9D000C8C  A4621310   SH V0, 4880(V1)
+169:                 
+170:                     // PB3DIV
+171:                     PB3DIVbits.ON = 1;      // Peripheral Bus 2 Output Clock Enable (Output clock is enabled)
+9D000C90  3C03BF80   LUI V1, -16512
+9D000C94  94621320   LHU V0, 4896(V1)
+9D000C98  24040001   ADDIU A0, ZERO, 1
+9D000C9C  7C827BC4   INS V0, A0, 15, 1
+9D000CA0  A4621320   SH V0, 4896(V1)
+172:                     PB3DIVbits.PBDIV = 0;   // Peripheral Bus 3 Clock Divisor Control (PBCLK3 is SYSCLK divided by 1)
+9D000CA4  3C03BF80   LUI V1, -16512
+9D000CA8  94621320   LHU V0, 4896(V1)
+9D000CAC  7C023004   INS V0, ZERO, 0, 7
+9D000CB0  A4621320   SH V0, 4896(V1)
+173:                 
+174:                     // PB4DIV
+175:                     PB4DIVbits.ON = 1;      // Peripheral Bus 4 Output Clock Enable (Output clock is enabled)
+9D000CB4  3C03BF80   LUI V1, -16512
+9D000CB8  94621330   LHU V0, 4912(V1)
+9D000CBC  24040001   ADDIU A0, ZERO, 1
+9D000CC0  7C827BC4   INS V0, A0, 15, 1
+9D000CC4  A4621330   SH V0, 4912(V1)
+176:                     while (!PB4DIVbits.PBDIVRDY); // Wait until it is ready to write to
+9D000CC8  00000000   NOP
+9D000CCC  3C02BF80   LUI V0, -16512
+9D000CD0  8C421330   LW V0, 4912(V0)
+9D000CD4  30420800   ANDI V0, V0, 2048
+9D000CD8  1040FFFC   BEQ V0, ZERO, 0x9D000CCC
+9D000CDC  00000000   NOP
+177:                     PB4DIVbits.PBDIV = 0;   // Peripheral Bus 4 Clock Divisor Control (PBCLK4 is SYSCLK divided by 1)
+9D000CE0  3C03BF80   LUI V1, -16512
+9D000CE4  94621330   LHU V0, 4912(V1)
+9D000CE8  7C023004   INS V0, ZERO, 0, 7
+9D000CEC  A4621330   SH V0, 4912(V1)
+178:                 
+179:                     // PB5DIV
+180:                     PB5DIVbits.ON = 1;      // Peripheral Bus 5 Output Clock Enable (Output clock is enabled)
+9D000CF0  3C03BF80   LUI V1, -16512
+9D000CF4  94621340   LHU V0, 4928(V1)
+9D000CF8  24040001   ADDIU A0, ZERO, 1
+9D000CFC  7C827BC4   INS V0, A0, 15, 1
+9D000D00  A4621340   SH V0, 4928(V1)
+181:                     PB5DIVbits.PBDIV = 0;   // Peripheral Bus 5 Clock Divisor Control (PBCLK5 is SYSCLK divided by 1)
+9D000D04  3C03BF80   LUI V1, -16512
+9D000D08  94621340   LHU V0, 4928(V1)
+9D000D0C  7C023004   INS V0, ZERO, 0, 7
+9D000D10  A4621340   SH V0, 4928(V1)
+182:                 
+183:                     // PB7DIV
+184:                     PB7DIVbits.ON = 1;      // Peripheral Bus 7 Output Clock Enable (Output clock is enabled)
+9D000D14  3C03BF80   LUI V1, -16512
+9D000D18  94621360   LHU V0, 4960(V1)
+9D000D1C  24040001   ADDIU A0, ZERO, 1
+9D000D20  7C827BC4   INS V0, A0, 15, 1
+9D000D24  A4621360   SH V0, 4960(V1)
+185:                     PB7DIVbits.PBDIV = 0;   // Peripheral Bus 7 Clock Divisor Control (PBCLK7 is SYSCLK divided by 1)
+9D000D28  3C03BF80   LUI V1, -16512
+9D000D2C  94621360   LHU V0, 4960(V1)
+9D000D30  7C023004   INS V0, ZERO, 0, 7
+9D000D34  A4621360   SH V0, 4960(V1)
+186:                 
+187:                     // PB8DIV
+188:                     PB8DIVbits.ON = 1;      // Peripheral Bus 8 Output Clock Enable (Output clock is enabled)
+9D000D38  3C03BF80   LUI V1, -16512
+9D000D3C  94621370   LHU V0, 4976(V1)
+9D000D40  24040001   ADDIU A0, ZERO, 1
+9D000D44  7C827BC4   INS V0, A0, 15, 1
+9D000D48  A4621370   SH V0, 4976(V1)
+189:                     PB8DIVbits.PBDIV = 0;   // Peripheral Bus 8 Clock Divisor Control (PBCLK8 is SYSCLK divided by 1)
+9D000D4C  3C03BF80   LUI V1, -16512
+9D000D50  94621370   LHU V0, 4976(V1)
+9D000D54  7C023004   INS V0, ZERO, 0, 7
+9D000D58  A4621370   SH V0, 4976(V1)
+190:                 
+191:                     // PRECON - Set up prefetch (60 MHz operation))
+192:                     //PRECONbits.PFMSECEN = 0; // Flash SEC Interrupt Enable (Do not generate an interrupt when the PFMSEC bit is set)
+193:                     PRECONbits.PREFEN = 0b11; // Predictive Prefetch Enable (Enable predictive prefetch for any address)
+9D000D5C  3C03BF8E   LUI V1, -16498
+9D000D60  8C620000   LW V0, 0(V1)
+9D000D64  24040003   ADDIU A0, ZERO, 3
+9D000D68  7C822904   INS V0, A0, 4, 2
+9D000D6C  AC620000   SW V0, 0(V1)
+194:                     PRECONbits.PFMWS = 0b000; // PFM Access Time Defined in Terms of SYSCLK Wait States (Zero wait states @ 8 MHz)
+9D000D70  3C03BF8E   LUI V1, -16498
+9D000D74  8C620000   LW V0, 0(V1)
+9D000D78  7C021004   INS V0, ZERO, 0, 3
+9D000D7C  AC620000   SW V0, 0(V1)
+195:                 
+196:                     // Set up cache using settings in start-up code.
+197:                     // See  https://microchipdeveloper.com/32bit:mz-cache-disable
+198:                     // Add "pic32_init_cache.S" to this project from XC32 tool chain, and set __PIC32_CACHE_MODE to _CACHE_WRITEBACK_WRITEALLOCATE
+199:                 
+200:                     // Lock Sequence
+201:                     SYSKEY = 0x33333333;
+9D000D80  3C02BF80   LUI V0, -16512
+9D000D84  3C033333   LUI V1, 13107
+9D000D88  34633333   ORI V1, V1, 13107
+9D000D8C  AC430030   SW V1, 48(V0)
+202:                 
+203:                     // Configure interrupt controller, and use of shadow register sets
+204:                     PRISS = 0x76543210;                 // Assign shadow register set #7 to #1 to priority level #7 to #1 ISRs
+9D000D90  3C02BF81   LUI V0, -16511
+9D000D94  3C037654   LUI V1, 30292
+9D000D98  34633210   ORI V1, V1, 12816
+9D000D9C  AC430010   SW V1, 16(V0)
+205:                     INTCONSET = _INTCON_MVEC_MASK;      // Configure interrupt controller for multi-vector mode
+9D000DA0  3C02BF81   LUI V0, -16511
+9D000DA4  24031000   ADDIU V1, ZERO, 4096
+9D000DA8  AC430008   SW V1, 8(V0)
+206:                     
+207:                     
+208:                 #elif defined(PIC24FJ1024GA606_BH)
+209:                     
+210:                     // At this point, the Hardware Clock Initialization is Complete
+211:                     // Primary OSC with 4X PLL provides 32 MHz Fosc (16 MIPs)
+212:                     
+213:                     // Need to set Fosc to 16 MHz (8 MIPs)
+214:                     
+215:                     CLKDIVbits.CPDIV = 0x01;    // Select DIV2 clock scaling (16 MHz, 8 MIPs)    
+216:                     
+217:                 #endif
+218:                     
+219:                 }
+9D000DAC  03C0E821   ADDU SP, FP, ZERO
+9D000DB0  8FBE0004   LW FP, 4(SP)
+9D000DB4  27BD0008   ADDIU SP, SP, 8
+9D000DB8  03E00008   JR RA
+9D000DBC  00000000   NOP
+220:                 
+221:                 void PinConfig(void){
+9D000DC0  27BDFFF8   ADDIU SP, SP, -8
+9D000DC4  AFBE0004   SW FP, 4(SP)
+9D000DC8  03A0F021   ADDU FP, SP, ZERO
+222:                         
+223:                 #if defined(PIC16F19197_BH)
+224:                     
+225:                     // Configure digital pins for UART function
+226:                     TRISCbits.TRISC7 = 0;       // TX1 --> RC7
+227:                     TRISCbits.TRISC6 = 1;       // RX1 <-- RC6
+228:                     
+229:                     // RE6 used as CCP1 PWM output signal
+230:                     // Make pin digital
+231:                     ANSELEbits.ANSE6 = 0;
+232:                     // Make pin digital output and initialize level
+233:                     TRISEbits.TRISE6 = 0;
+234:                     LATEbits.LATE6 = 0;
+235:                     
+236:                     // Initiallize PPS Pin Mapping for this Application
+237:                     // TX1 --> RC7 
+238:                     // RX1 <-- RC6
+239:                     // CCP1 --> RE6
+240:                     // 1. Unlock PPS registers
+241:                     //bit oldGIE = INTCONbits.GIE;
+242:                     //INTCONbits.GIE = 0;
+243:                     PPSLOCK = 0x55;
+244:                     PPSLOCK = 0xAA;
+245:                     PPSLOCKbits.PPSLOCKED = 0;
+246:                     //INTCONbits.GIE = oldGIE;
+247:                     // 2. Configure Output Functions
+248:                     // Assign TX1 output function to pin RC7
+249:                     RC7PPS = 0x0D;
+250:                     // Assign CCP1 output function to pin RE6
+251:                     RE6PPS = 0x09;
+252:                     // 3. Configure Input Functions
+253:                     // Assign RC6 pin to RX1 input function
+254:                     RX1PPS = 0x16;
+255:                     // 4 Lock the PPS registers
+256:                     //oldGIE = INTCONbits.GIE;
+257:                     //INTCONbits.GIE = 0;
+258:                     PPSLOCK = 0x55;
+259:                     PPSLOCK = 0xAA;
+260:                     PPSLOCKbits.PPSLOCKED = 1;
+261:                     //INTCONbits.GIE = oldGIE;
+262:                     
+263:                 #elif defined(PIC24FJ1024GA606_BH)
+264:                     
+265:                     // RD0/RP11 used as OC1 PWM output signal
+266:                     // Make pin digital
+267:                     // ANSELEbits.ANSE6 = 0;
+268:                     // Make pin digital output and initialize level
+269:                     TRISDbits.TRISD0 = 0;
+270:                     LATDbits.LATD0 = 0;
+271:                     
+272:                     // Set up PPS (I/O Pin-Mapping) for all I/O in this application
+273:                     // U2RX <-- RP10/RF4   (DEBUG PORT PC-TX pin)
+274:                     // U2TX --> RP17/RF5   (DEBUG PORT PC-RX pin)
+275:                     // OC1 --> RP11/RD0     1 kHz PWM output
+276:                     // 1. Unlock PPS registers
+277:                     __builtin_write_OSCCONL(OSCCON & 0xBF);
+278:                     // 2. Configure Output Functions
+279:                     // Assign U2TX output function to pin RP17
+280:                     RPOR8bits.RP17R = 5;
+281:                     // Assign OC1 output function to pin RP11
+282:                     RPOR5bits.RP11R = 13;
+283:                     // 3. Configure Input Functions
+284:                     // Assign pin RP10 to U2RX input function
+285:                     RPINR19bits.U2RXR = 10;
+286:                     // 4 Lock the PPS registers
+287:                     __builtin_write_OSCCONL(OSCCON | 0x40);    
+288:                     
+289:                 #elif defined(PIC32MZ1024EFH064_BH)
+290:                     
+291:                     // RD0/RPD0 used as OC1 PWM output signal
+292:                     // Make pin digital
+293:                     // ANSELEbits.ANSE6 = 0;
+294:                     // Make pin digital output and initialize level
+295:                     TRISDbits.TRISD0 = 0;
+9D000DCC  3C03BF86   LUI V1, -16506
+9D000DD0  94620310   LHU V0, 784(V1)
+9D000DD4  7C020004   INS V0, ZERO, 0, 1
+9D000DD8  A4620310   SH V0, 784(V1)
+296:                     LATDbits.LATD0 = 0;
+9D000DDC  3C03BF86   LUI V1, -16506
+9D000DE0  94620330   LHU V0, 816(V1)
+9D000DE4  7C020004   INS V0, ZERO, 0, 1
+9D000DE8  A4620330   SH V0, 816(V1)
+297:                     
+298:                     // Set up PPS (I/O Pin-Mapping) for all I/O in this application
+299:                     // U2RX <-- RPB15   (DEBUG PORT PC-TX pin)
+300:                     // U2TX --> RPB14   (DEBUG PORT PC-RX pin)
+301:                     
+302:                     // U2RX pin (RPB15) is an ADC input, so need to configure ANSEL register to
+303:                     // disable analog pin function
+304:                     ANSELBbits.ANSB15 = 0;
+9D000DEC  3C03BF86   LUI V1, -16506
+9D000DF0  94620100   LHU V0, 256(V1)
+9D000DF4  7C027BC4   INS V0, ZERO, 15, 1
+9D000DF8  A4620100   SH V0, 256(V1)
+305:                     
+306:                     // PPS unlock sequence
+307:                     SYSKEY = 0x0;         
+9D000DFC  3C02BF80   LUI V0, -16512
+9D000E00  AC400030   SW ZERO, 48(V0)
+308:                     SYSKEY = 0xAA996655;         
+9D000E04  3C02BF80   LUI V0, -16512
+9D000E08  3C03AA99   LUI V1, -21863
+9D000E0C  34636655   ORI V1, V1, 26197
+9D000E10  AC430030   SW V1, 48(V0)
+309:                     SYSKEY = 0x556699AA; 
+9D000E14  3C02BF80   LUI V0, -16512
+9D000E18  3C035566   LUI V1, 21862
+9D000E1C  346399AA   ORI V1, V1, -26198
+9D000E20  AC430030   SW V1, 48(V0)
+310:                     CFGCONbits.IOLOCK = 0;  // unlock PPS registers for writing
+9D000E24  3C03BF80   LUI V1, -16512
+9D000E28  8C620000   LW V0, 0(V1)
+9D000E2C  7C026B44   INS V0, ZERO, 13, 1
+9D000E30  AC620000   SW V0, 0(V1)
+311:                     
+312:                     // modify the PPS registers for the application (per table 11-2 in data sheet)
+313:                     U2RXRbits.U2RXR = 3;        // Map RPB15 to U2RX
+9D000E34  3C03BF80   LUI V1, -16512
+9D000E38  90621470   LBU V0, 5232(V1)
+9D000E3C  24040003   ADDIU A0, ZERO, 3
+9D000E40  7C821804   INS V0, A0, 0, 4
+9D000E44  A0621470   SB V0, 5232(V1)
+314:                     RPB14Rbits.RPB14R = 2;      // Map U2TX to RPB14
+9D000E48  3C03BF80   LUI V1, -16512
+9D000E4C  90621578   LBU V0, 5496(V1)
+9D000E50  24040002   ADDIU A0, ZERO, 2
+9D000E54  7C821804   INS V0, A0, 0, 4
+9D000E58  A0621578   SB V0, 5496(V1)
+315:                     RPD0Rbits.RPD0R = 12;       // Map OC1 to RPD0
+9D000E5C  3C03BF80   LUI V1, -16512
+9D000E60  906215C0   LBU V0, 5568(V1)
+9D000E64  2404000C   ADDIU A0, ZERO, 12
+9D000E68  7C821804   INS V0, A0, 0, 4
+9D000E6C  A06215C0   SB V0, 5568(V1)
+316:                     
+317:                     // PPS re-lock sequence
+318:                     CFGCONbits.IOLOCK = 1;         
+9D000E70  3C03BF80   LUI V1, -16512
+9D000E74  8C620000   LW V0, 0(V1)
+9D000E78  24040001   ADDIU A0, ZERO, 1
+9D000E7C  7C826B44   INS V0, A0, 13, 1
+9D000E80  AC620000   SW V0, 0(V1)
+319:                     SYSKEY = 0x0;    
+9D000E84  3C02BF80   LUI V0, -16512
+9D000E88  AC400030   SW ZERO, 48(V0)
+320:                     
+321:                 #endif
+322:                 }
+9D000E8C  03C0E821   ADDU SP, FP, ZERO
+9D000E90  8FBE0004   LW FP, 4(SP)
+9D000E94  27BD0008   ADDIU SP, SP, 8
+9D000E98  03E00008   JR RA
+9D000E9C  00000000   NOP
+323:                 
+324:                 void UartConfig(void){
+9D000EA0  27BDFFF8   ADDIU SP, SP, -8
+9D000EA4  AFBE0004   SW FP, 4(SP)
+9D000EA8  03A0F021   ADDU FP, SP, ZERO
+325:                 
+326:                 #if defined(PIC16F19197_BH)
+327:                     
+328:                     // Initialize UART1 for use as the DEBUG PORT for printf() messages
+329:                     
+330:                     // Turn the UART off
+331:                     RC1STAbits.SPEN = 0;
+332:                     TX1STAbits.TXEN = 0;
+333:                 
+334:                     // Disable U1 Interrupts
+335:                     PIR3bits.TX1IF = 0;                                                         // Clear the Transmit Interrupt Flag
+336:                     PIE3bits.TX1IE = 0;                                                         // Disable Transmit Interrupts
+337:                     PIR3bits.RC1IF = 0;                                                         // Clear the Receive Interrupt Flag
+338:                     PIE3bits.RC1IE = 0;                                                         // Disable Receive Interrupts
+339:                     
+340:                     // Configure TX Channel
+341:                     TX1STAbits.SYNC = 0;                                                        // Async mode
+342:                     TX1STAbits.BRGH = 1;                                                        // High speed BRG
+343:                     
+344:                     // Configure RX Channel
+345:                     RC1STAbits.CREN = 1;                                                        // Enable continuous RX
+346:                     
+347:                     // Configure BRG (BRGH = 1, BRG = 1)
+348:                     BAUD1CONbits.BRG16 = 1;
+349:                     SP1BRGH = 0x00;
+350:                     SP1BRGL = 0x44;               // decimal 68 (115200 baud)
+351:                     
+352:                     // ...And turn the UART on
+353:                     RC1STAbits.SPEN = 1;
+354:                     TX1STAbits.TXEN = 1;    
+355:                     
+356:                 #elif defined(PIC24FJ1024GA606_BH)
+357:                     
+358:                     // Initialize UART2 for use as the DEBUG PORT for printf() messages
+359:                     
+360:                     __C30_UART = 2;         // MACRO: Divert printf() output to UART 2 - see XC16 manual
+361:                     
+362:                     U2MODEbits.UARTEN = 0;  // Disable UART  
+363:                     U2STAbits.UTXEN = 0;
+364:                     U2MODEbits.BRGH = 1;    // Enable high rate baud clock
+365:                     U2BRG = 16;             // Baud Rate generator set to 115200 baud
+366:                     U2MODEbits.UARTEN = 1;
+367:                     U2STAbits.UTXEN = 1;    // Enable UART    
+368:                     
+369:                 #elif defined(PIC32MZ1024EFH064_BH)
+370:                     
+371:                     // Initialize UART2 for use as the DEBUG PORT for printf() messages
+372:                     
+373:                     // Note: No special initialization is required for printf()
+374:                     // printf() uses UART 2 for output by default as long as UART 2 is initialized before use
+375:                     
+376:                     U2MODEbits.UARTEN = 0;  // Disable UART  
+9D000EAC  3C03BF82   LUI V1, -16510
+9D000EB0  94622200   LHU V0, 8704(V1)
+9D000EB4  7C027BC4   INS V0, ZERO, 15, 1
+9D000EB8  A4622200   SH V0, 8704(V1)
+377:                     U2STAbits.UTXEN = 0;
+9D000EBC  3C03BF82   LUI V1, -16510
+9D000EC0  8C622210   LW V0, 8720(V1)
+9D000EC4  7C025284   INS V0, ZERO, 10, 1
+9D000EC8  AC622210   SW V0, 8720(V1)
+378:                     U2MODEbits.BRGH = 1;    // Enable high rate baud clock
+9D000ECC  3C03BF82   LUI V1, -16510
+9D000ED0  94622200   LHU V0, 8704(V1)
+9D000ED4  24040001   ADDIU A0, ZERO, 1
+9D000ED8  7C8218C4   INS V0, A0, 3, 1
+9D000EDC  A4622200   SH V0, 8704(V1)
+379:                     U2BRG = 16;             // Baud Rate generator set to 115200 baud
+9D000EE0  3C02BF82   LUI V0, -16510
+9D000EE4  24030010   ADDIU V1, ZERO, 16
+9D000EE8  AC432240   SW V1, 8768(V0)
+380:                     U2MODEbits.UARTEN = 1;
+9D000EEC  3C03BF82   LUI V1, -16510
+9D000EF0  94622200   LHU V0, 8704(V1)
+9D000EF4  24040001   ADDIU A0, ZERO, 1
+9D000EF8  7C827BC4   INS V0, A0, 15, 1
+9D000EFC  A4622200   SH V0, 8704(V1)
+381:                     U2STAbits.UTXEN = 1;    // Enable UART    
+9D000F00  3C03BF82   LUI V1, -16510
+9D000F04  8C622210   LW V0, 8720(V1)
+9D000F08  24040001   ADDIU A0, ZERO, 1
+9D000F0C  7C825284   INS V0, A0, 10, 1
+9D000F10  AC622210   SW V0, 8720(V1)
+382:                     
+383:                 #endif
+384:                     
+385:                 }
+9D000F14  03C0E821   ADDU SP, FP, ZERO
+9D000F18  8FBE0004   LW FP, 4(SP)
+9D000F1C  27BD0008   ADDIU SP, SP, 8
+9D000F20  03E00008   JR RA
+9D000F24  00000000   NOP
+386:                 
+387:                 #if defined(PIC16F19197_BH)
+388:                     
+389:                 // XC8 Stub required to redirect printf() statements to UART 1
+390:                 
+391:                 void putch(char c) {
+392:                     while(!TX1STAbits.TRMT);   // wait while Tx buffer full
+393:                     TX1REG = c;
+394:                 }
+395:                 
+396:                 #endif
+397:                 
+398:                 void PWMConfig(void){
+9D000F28  27BDFFF8   ADDIU SP, SP, -8
+9D000F2C  AFBE0004   SW FP, 4(SP)
+9D000F30  03A0F021   ADDU FP, SP, ZERO
+399:                     
+400:                 #if defined(PIC16F19197_BH)
+401:                     
+402:                     T2CONbits.T2ON = 0;         // turn Timer2 off
+403:                     T2TMR = 0;                  // reset the count   
+404:                     T2CLKCONbits.CS = 1;        // Select Fcyc (8 MHz) as clock source
+405:                     T2CONbits.T2CKPS = 5;       // 1:32 prescale (250 kHz)
+406:                     T2PR = 250;                 // set the PWM period value for 1000 uS (1mS)
+407:                     
+408:                     CCP1CONbits.EN = 0;         // turn CCP1 off
+409:                     CCP1CONbits.MODE = 15;      // set CCP1 mode to PWM
+410:                     CCPR1H = 0x01;
+411:                     CCPR1L = 0xF4;              // set up 50% duty cycle on output (count = 500)
+412:                     CCP1CONbits.EN = 1;         // turn CCP1 on
+413:                     
+414:                     PIR4bits.TMR2IF = 0;
+415:                     PIE4bits.TMR2IE = 1;        // enable Timer2 interrupt on start of PWM cycle
+416:                     T2CONbits.T2ON = 1;         // turn Timer2 on
+417:                 
+418:                 #elif defined(PIC24FJ1024GA606_BH)
+419:                  
+420:                     T2CONbits.TON = 0;          // turn Timer2 off
+421:                     TMR2 = 0x00;                // reset the count
+422:                     T2CONbits.TCS = 0;          // Select Fcyc (8 MHz) as clock source
+423:                     T2CONbits.TCKPS = 1;        // 1:8 prescale (1 MHz)
+424:                     PR2 = 1000;                 // set the PWM period value for 1000 uS (1mS)
+425:                     
+426:                     OC1CON1bits.OCM = 0;        // turn OC1 off
+427:                     OC1R = 500;                 // set up 50% duty cycle on output (count = 500)
+428:                     OC1CON1bits.OCTSEL = 0;     // select Timer 2 as the OC time base
+429:                     OC1CON1bits.OCM = 0b110;    // set OC1 mode to PWM (Edge PWM)
+430:                     
+431:                     IFS0bits.T2IF = 0;          // clear Timer 2 interrupt flag
+432:                     IFS0bits.OC1IF = 0;
+433:                     IEC0bits.OC1IE = 1;         // enable OC1 interrupts
+434:                     T2CONbits.TON = 1;          // start timer (starts PWMs)
+435:                     
+436:                 #elif defined(PIC32MZ1024EFH064_BH)
+437:                     
+438:                     T2CONbits.TON = 0;          // turn Timer2 off
+9D000F34  3C03BF84   LUI V1, -16508
+9D000F38  94620200   LHU V0, 512(V1)
+9D000F3C  7C027BC4   INS V0, ZERO, 15, 1
+9D000F40  A4620200   SH V0, 512(V1)
+439:                     TMR2 = 0x00;                // reset the count
+9D000F44  3C02BF84   LUI V0, -16508
+9D000F48  AC400210   SW ZERO, 528(V0)
+440:                     T2CONbits.TCS = 0;          // Select internal PBCLK3 (8 MHz) as clock source
+9D000F4C  3C03BF84   LUI V1, -16508
+9D000F50  94620200   LHU V0, 512(V1)
+9D000F54  7C020844   INS V0, ZERO, 1, 1
+9D000F58  A4620200   SH V0, 512(V1)
+441:                     T2CONbits.TCKPS = 3;        // 1:8 prescale (1 MHz)
+9D000F5C  3C03BF84   LUI V1, -16508
+9D000F60  94620200   LHU V0, 512(V1)
+9D000F64  24040003   ADDIU A0, ZERO, 3
+9D000F68  7C823104   INS V0, A0, 4, 3
+9D000F6C  A4620200   SH V0, 512(V1)
+442:                     PR2 = 1000;                 // set the PWM period value for 1000 uS (1mS)
+9D000F70  3C02BF84   LUI V0, -16508
+9D000F74  240303E8   ADDIU V1, ZERO, 1000
+9D000F78  AC430220   SW V1, 544(V0)
+443:                     
+444:                     OC1CONbits.ON = 0;          // turn OC1 off
+9D000F7C  3C03BF84   LUI V1, -16508
+9D000F80  94624000   LHU V0, 16384(V1)
+9D000F84  7C027BC4   INS V0, ZERO, 15, 1
+9D000F88  A4624000   SH V0, 16384(V1)
+445:                     OC1R = 500;                 // set up 50% duty cycle on output (count = 500)
+9D000F8C  3C02BF84   LUI V0, -16508
+9D000F90  240301F4   ADDIU V1, ZERO, 500
+9D000F94  AC434010   SW V1, 16400(V0)
+446:                     OC1RS = 500;
+9D000F98  3C02BF84   LUI V0, -16508
+9D000F9C  240301F4   ADDIU V1, ZERO, 500
+9D000FA0  AC434020   SW V1, 16416(V0)
+447:                     CFGCONbits.OCACLK = 0;      // set OC1 Timerx CLK source to be Timer 2
+9D000FA4  3C03BF80   LUI V1, -16512
+9D000FA8  8C620000   LW V0, 0(V1)
+9D000FAC  7C028404   INS V0, ZERO, 16, 1
+9D000FB0  AC620000   SW V0, 0(V1)
+448:                     OC1CONbits.OCTSEL = 0;      // select Timer 2 as the OC time base
+9D000FB4  3C03BF84   LUI V1, -16508
+9D000FB8  94624000   LHU V0, 16384(V1)
+9D000FBC  7C0218C4   INS V0, ZERO, 3, 1
+9D000FC0  A4624000   SH V0, 16384(V1)
+449:                     OC1CONbits.OCM = 0b110;     // set OC1 mode to PWM (Edge PWM)
+9D000FC4  3C03BF84   LUI V1, -16508
+9D000FC8  94624000   LHU V0, 16384(V1)
+9D000FCC  24040006   ADDIU A0, ZERO, 6
+9D000FD0  7C821004   INS V0, A0, 0, 3
+9D000FD4  A4624000   SH V0, 16384(V1)
+450:                     
+451:                     IFS0bits.T2IF = 0;          // clear Timer 2 interrupt flag
+9D000FD8  3C03BF81   LUI V1, -16511
+9D000FDC  8C620040   LW V0, 64(V1)
+9D000FE0  7C024A44   INS V0, ZERO, 9, 1
+9D000FE4  AC620040   SW V0, 64(V1)
+452:                     IPC2bits.T2IP = 4;          // set interrupt priority level (IPL) to 4
+9D000FE8  3C03BF81   LUI V1, -16511
+9D000FEC  8C620160   LW V0, 352(V1)
+9D000FF0  24040004   ADDIU A0, ZERO, 4
+9D000FF4  7C826284   INS V0, A0, 10, 3
+9D000FF8  AC620160   SW V0, 352(V1)
+453:                     IEC0bits.T2IE = 1;          // enable Timer 2 interrupts
+9D000FFC  3C03BF81   LUI V1, -16511
+9D001000  8C6200C0   LW V0, 192(V1)
+9D001004  24040001   ADDIU A0, ZERO, 1
+9D001008  7C824A44   INS V0, A0, 9, 1
+9D00100C  AC6200C0   SW V0, 192(V1)
+454:                     T2CONbits.TON = 1;          // start timer
+9D001010  3C03BF84   LUI V1, -16508
+9D001014  94620200   LHU V0, 512(V1)
+9D001018  24040001   ADDIU A0, ZERO, 1
+9D00101C  7C827BC4   INS V0, A0, 15, 1
+9D001020  A4620200   SH V0, 512(V1)
+455:                     OC1CONbits.ON = 1;          // turn OC1 on
+9D001024  3C03BF84   LUI V1, -16508
+9D001028  94624000   LHU V0, 16384(V1)
+9D00102C  24040001   ADDIU A0, ZERO, 1
+9D001030  7C827BC4   INS V0, A0, 15, 1
+9D001034  A4624000   SH V0, 16384(V1)
+456:                     
+457:                 #endif    
+458:                     
+459:                 }
+9D001038  03C0E821   ADDU SP, FP, ZERO
+9D00103C  8FBE0004   LW FP, 4(SP)
+9D001040  27BD0008   ADDIU SP, SP, 8
+9D001044  03E00008   JR RA
+9D001048  00000000   NOP
+460:                 
+461:                 // 1 kHz ISR (generated on rising edge of PWM signal) to toggle USER LED
+462:                 
+463:                 #if defined(PIC16F19197_BH)
+464:                 
+465:                 void __interrupt() interruptHandler(void)
+466:                 {
+467:                     LATEbits.LATE5 ^= 1;        // toggle USER LED
+468:                     PIR4bits.TMR2IF = 0;        // acknowledge interrupt
+469:                 }
+470:                 
+471:                 #elif defined(PIC24FJ1024GA606_BH)
+472:                 
+473:                 void __attribute__((interrupt, no_auto_psv, shadow)) _OC1Interrupt(void)
+474:                 {
+475:                     LATEbits.LATE2 ^= 1;        // toggle USER LED
+476:                     IFS0bits.OC1IF = 0;         // acknowledge interrupt
+477:                 }
+478:                 
+479:                 #elif defined(PIC32MZ1024EFH064_BH)
+480:                 
+481:                 void __ISR_AT_VECTOR (_TIMER_2_VECTOR, IPL4SRS) _T2Interrupt(void)
+482:                 {
+9D000200  415DE800   RDPGPR SP, SP
+9D000204  401A7000   MFC0 K0, EPC
+9D000208  401B6000   MFC0 K1, Status
+9D00020C  27BDFFF0   ADDIU SP, SP, -16
+9D000210  AFBA000C   SW K0, 12(SP)
+9D000214  401A6002   MFC0 K0, SRSCtl
+9D000218  AFBB0008   SW K1, 8(SP)
+9D00021C  AFBA0004   SW K0, 4(SP)
+9D000220  7C1B7844   INS K1, ZERO, 1, 15
+9D000224  377B1000   ORI K1, K1, 4096
+9D000228  409B6000   MTC0 K1, Status
+9D00022C  03A0F021   ADDU FP, SP, ZERO
+483:                     LATEbits.LATE2 ^= 1;        // toggle USER LED
+9D000230  3C02BF86   LUI V0, -16506
+9D000234  8C420430   LW V0, 1072(V0)
+9D000238  7C420080   EXT V0, V0, 2, 1
+9D00023C  304200FF   ANDI V0, V0, 255
+9D000240  38420001   XORI V0, V0, 1
+9D000244  304200FF   ANDI V0, V0, 255
+9D000248  30420001   ANDI V0, V0, 1
+9D00024C  304400FF   ANDI A0, V0, 255
+9D000250  3C03BF86   LUI V1, -16506
+9D000254  90620430   LBU V0, 1072(V1)
+9D000258  7C821084   INS V0, A0, 2, 1
+9D00025C  A0620430   SB V0, 1072(V1)
+484:                     IFS0bits.T2IF = 0;          // acknowledge interrupt
+9D000260  3C03BF81   LUI V1, -16511
+9D000264  8C620040   LW V0, 64(V1)
+9D000268  7C024A44   INS V0, ZERO, 9, 1
+9D00026C  AC620040   SW V0, 64(V1)
+485:                 }
+9D000270  03C0E821   ADDU SP, FP, ZERO
+9D000274  41606000   DI ZERO
+9D000278  000000C0   EHB
+9D00027C  8FBB0004   LW K1, 4(SP)
+9D000280  8FBA000C   LW K0, 12(SP)
+9D000284  409B6002   MTC0 K1, SRSCtl
+9D000288  8FBB0008   LW K1, 8(SP)
+9D00028C  409A7000   MTC0 K0, EPC
+9D000290  27BD0010   ADDIU SP, SP, 16
+9D000294  41DDE800   WRPGPR SP, SP
+9D000298  409B6000   MTC0 K1, Status
+9D00029C  42000018   ERET
+486:                 
+487:                 //void __ISR_AT_VECTOR (_TIMER_2_VECTOR, IPL4SOFT) _T2Interrupt(void)
+488:                 //{
+489:                 //    LATEbits.LATE2 ^= 1;        // toggle USER LED
+490:                 //    IFS0bits.T2IF = 0;          // acknowledge interrupt
+491:                 //}
+492:                 
+493:                 #endif
+494:                 
+495:                 
+496:                 
+497:                 
